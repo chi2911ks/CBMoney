@@ -54,7 +54,6 @@ fun RegisterScreen(modifier: Modifier = Modifier, onBackClick: () -> Unit) {
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .statusBarsPadding()
     ) {
         LanguageToggle(
             modifier = Modifier

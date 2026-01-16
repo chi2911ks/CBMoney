@@ -49,12 +49,11 @@ import com.cbmoney.utils.setAppLocale
 
 
 @Composable
-fun LoginScreen(onRegister: () -> Unit) {
+fun LoginScreen(modifier: Modifier = Modifier, onRegister: () -> Unit) {
     val context = LocalContext.current
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .statusBarsPadding()
     ) {
         LanguageToggle(
             modifier = Modifier

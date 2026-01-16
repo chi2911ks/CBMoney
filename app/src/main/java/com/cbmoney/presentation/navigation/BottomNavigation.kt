@@ -22,67 +22,68 @@ import com.cbmoney.ui.theme.Gray
 import com.cbmoney.ui.theme.GreenColor
 
 val items = listOf(
-    NavItem.Home, NavItem.Reports, NavItem.Budget, NavItem.Profile
+    NavDestination.BottomNavItem.Home,
+    NavDestination.BottomNavItem.Reports,
+    NavDestination.BottomNavItem.Budget,
+    NavDestination.BottomNavItem.Profile
 )
 
-//@Preview(showBackground = true)
-//@Composable
-//private fun BottomNavigationPreview() {
-//    BottomNavigation()
-//}
-
 @Composable
-fun BottomNavigation(navController: NavController, modifier: Modifier = Modifier) {
+fun BottomNavigation(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    isVisibility: Boolean = true
+) {
     val navHostController = navController
 
     val backStackEntry = navHostController.currentBackStackEntryAsState()
 
     val currentRoute = backStackEntry.value?.destination?.route
-
-    BottomAppBar(
-        modifier = modifier.clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)),
-        containerColor = Color.White
-    ) {
-
-        items.forEach { item ->
-            NavigationBarItem(
-                selected = item.route == currentRoute,
-                onClick = {
-                    navHostController.navigate(route = item.route) {
-                        navHostController.graph.startDestinationRoute?.let {
-                            popUpTo(it)
+    if (isVisibility) {
+        BottomAppBar(
+            modifier = modifier.clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)),
+            containerColor = Color.White,
+        ) {
+            items.forEach { item ->
+                NavigationBarItem(
+                    selected = item.route == currentRoute,
+                    onClick = {
+                        navHostController.navigate(route = item.route) {
+                            navHostController.graph.startDestinationRoute?.let {
+                                popUpTo(it)
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = GreenColor,
-                    selectedTextColor = GreenColor,
-                    indicatorColor = Color.Transparent,
-                    unselectedIconColor = Gray,
-                    unselectedTextColor = Gray
-                ),
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = GreenColor,
+                        selectedTextColor = GreenColor,
+                        indicatorColor = Color.Transparent,
+                        unselectedIconColor = Gray,
+                        unselectedTextColor = Gray
+                    ),
 
-                modifier = Modifier
-                    .height(55.dp)
-                    .background(Color.Transparent),
-                label = {
-                    Text(
-                        text = stringResource(id = item.labelRes),
-                    )
-                },
-                icon = {
-                    Icon(
-                        painter = painterResource(item.iconRes), contentDescription = null,
-                        modifier = Modifier
-                            .size(24.dp)
-                            .background(Color.Transparent),
+                    modifier = Modifier
+                        .height(55.dp)
+                        .background(Color.Transparent),
+                    label = {
+                        Text(
+                            text = stringResource(id = item.labelResId),
+                        )
+                    },
+                    icon = {
+                        Icon(
+                            painter = painterResource(item.iconResId), contentDescription = null,
+                            modifier = Modifier
+                                .size(24.dp)
+                                .background(Color.Transparent),
 
-                    )
-                })
+                            )
+                    })
+            }
         }
-
     }
+
 }
 

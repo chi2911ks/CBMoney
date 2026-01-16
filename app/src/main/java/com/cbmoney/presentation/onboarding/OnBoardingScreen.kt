@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -41,13 +40,12 @@ import com.cbmoney.ui.theme.GreenColor
 import com.cbmoney.utils.setAppLocale
 
 @Composable
-fun OnBoardingScreen(onContinueClicked: () -> Unit) {
+fun OnBoardingScreen(modifier: Modifier = Modifier, onContinueClicked: () -> Unit) {
     val context = LocalContext.current
     context.setAppLocale("vi")
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .statusBarsPadding()
     ) {
         LanguageToggle(
             modifier = Modifier
@@ -149,7 +147,7 @@ fun OnboardingGetStarted(modifier: Modifier = Modifier, onContinueClicked: () ->
             pushLink(
                 LinkAnnotation.Clickable(
                     tag = "LOGIN"
-                ){
+                ) {
                     onContinueClicked()
                 }
             )

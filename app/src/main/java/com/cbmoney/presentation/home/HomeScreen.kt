@@ -36,148 +36,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.cbmoney.presentation.login.LoginScreen
 import com.cbmoney.presentation.navigation.BottomNavigation
+import com.cbmoney.presentation.navigation.NavDestination
+import com.cbmoney.presentation.onboarding.OnBoardingScreen
+import com.cbmoney.presentation.register.RegisterScreen
 
 @Composable
-fun HomeScreen(navController: NavController) {
-
-    Scaffold(bottomBar = {
-        BottomNavigation(navController)
-    })
-    { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        ){
-            Column(
-                modifier = Modifier.align(Alignment.Center).padding(16.dp)
-
-
-            ) {
-                WeeklySpendingCard(weeklyData)
-            }
-        }
-
+fun HomeScreen(modifier: Modifier) {
+    Box(modifier = modifier.fillMaxSize()){
+        Text("Home Screen", modifier = Modifier.align(Alignment.Center))
     }
 
-}
-
-data class WeeklySpending(
-    val day: String,
-    val amount: Int
-)
-
-val weeklyData = listOf(
-    WeeklySpending("T2", 120_000),
-    WeeklySpending("T3", 300_000),
-    WeeklySpending("T4", 0),
-    WeeklySpending("T5", 150_000),
-    WeeklySpending("T6", 520_000),
-    WeeklySpending("T7", 200_000),
-    WeeklySpending("CN", 100_000),
-)
-
-@Composable
-fun WeeklySpendingCard(
-    data: List<WeeklySpending>
-) {
-    var selectedIndex by remember { mutableStateOf(4) } // T6
-
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-
-            // Header
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Text("Chi tiêu hàng tuần", fontWeight = FontWeight.Bold)
-                    Text("Weekly Spending", fontSize = 12.sp, color = Color.Gray)
-                }
-                Icon(
-                    Icons.Default.ChevronRight,
-                    contentDescription = null
-                )
-            }
-
-            Spacer(Modifier.height(16.dp))
-
-            // Biểu đồ
-            WeeklyBarChart(
-                data = data,
-                selectedIndex = selectedIndex,
-                onSelect = { selectedIndex = it }
-            )
-
-            Spacer(Modifier.height(12.dp))
-
-            // Day selector
-            DaySelector(
-                data = data,
-                selectedIndex = selectedIndex,
-                onSelect = { selectedIndex = it }
-            )
-        }
-    }
-}
-
-@Composable
-fun WeeklyBarChart(
-    data: List<WeeklySpending>,
-    selectedIndex: Int,
-    onSelect: (Int) -> Unit
-) {
-    val maxAmount = data.maxOf { it.amount }.coerceAtLeast(1)
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(120.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.Bottom
-    ) {
-        data.forEachIndexed { index, item ->
-            val heightRatio = item.amount / maxAmount.toFloat()
-
-            Box(
-                modifier = Modifier
-                    .width(24.dp)
-                    .fillMaxHeight(heightRatio)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(
-                        if (index == selectedIndex) Color(0xFF22C55E)
-                        else Color(0xFFE5E7EB)
-                    )
-                    .clickable { onSelect(index) }
-            )
-        }
-    }
-}
-
-@Composable
-fun DaySelector(
-    data: List<WeeklySpending>,
-    selectedIndex: Int,
-    onSelect: (Int) -> Unit
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        data.forEachIndexed { index, item ->
-            Text(
-                text = item.day,
-                fontWeight = if (index == selectedIndex) FontWeight.Bold else FontWeight.Normal,
-                color = if (index == selectedIndex) Color(0xFF22C55E) else Color.Gray,
-                modifier = Modifier.clickable { onSelect(index) }
-            )
-        }
-    }
 }
