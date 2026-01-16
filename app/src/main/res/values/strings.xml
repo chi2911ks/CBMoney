@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CBMoney</string>
+    <string name="onboarding_get_started">Get Started</string>
+    <string name="already_account">Already have an account?</string>
+
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="register_new_account">Register new account</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="expense_management">Expense management</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+
+
+
+    <string name="smart_money_management">Smart money management</string>
+
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="vietnamese">Vietnamese"</string>
+
+    <string name="login_h1">Hello!</string>
+    <string name="login_h3">Manage your expenses easily &amp; effectively.</string>
+
+    <string name="continue_with">Or continue with</string>
+
+    <string name="create_account">Create account</string>
+    <string name="signup_manage">Sign up to manage your spending more effectively.</string>
+    <string name="full_name">Full name</string>
+    <string name="back_to_login">Back to login</string>
+    <string name="or_register_with">Or register with</string>
+
+
+    //Bottom Nav
+    <string name="home">Home</string>
+    <string name="reports">Reports</string>
+    <string name="budget">Budget</string>
+    <string name="profile">Profile</string>
+</resources>

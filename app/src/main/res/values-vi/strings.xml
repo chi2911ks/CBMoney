@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">CBMoney</string>
+    <string name="onboarding_get_started">Bắt đầu</string>
+    <string name="already_account">Đã có tài khoản?</string>
+
+    <string name="login">Đăng nhập</string>
+    <string name="register">Đăng ký</string>
+    <string name="register_new_account">Đăng ký tài khoản mới</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+
+    <string name="expense_management">Quản lý chi tiêu</string>
+    <string name="smart_money_management">Quản lý tiền bạc thông minh</string>
+
+    <string name="language">Ngôn ngữ</string>
+    <string name="english">Tiếng Anh</string>
+    <string name="vietnamese">Tiếng Việt"</string>
+
+    <string name="login_h1">Xin chào!</string>
+    <string name="login_h3">Quản lý chi tiêu dễ dàng &amp; hiệu quả.</string>
+
+    <string name="continue_with">Hoặc tiếp tục với</string>
+    <string name="create_account">Tạo tài khoản</string>
+    <string name="signup_manage">Đăng ký để quản lý chi tiêu hiệu quả hơn.</string>
+    <string name="full_name">Họ và tên</string>
+    <string name="back_to_login">Quay lại đăng nhập</string>
+    <string name="or_register_with">Hoặc đăng ký với</string>
+
+    <string name="home">Trang chủ</string>
+    <string name="reports">Báo cáo</string>
+    <string name="budget">Ngân sách</string>
+    <string name="profile">Tài khoản</string>
+</resources>
