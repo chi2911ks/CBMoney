@@ -1,7 +1,6 @@
 package com.cbmoney.presentation.onboarding
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,28 +38,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cbmoney.R
 import com.cbmoney.presentation.components.LanguageToggle
-import com.cbmoney.ui.theme.CBMoneyTheme
-import com.cbmoney.ui.theme.GreenColor
-import com.cbmoney.utils.setAppLocale
+import com.cbmoney.presentation.theme.CBMoneyTheme
+import com.cbmoney.presentation.theme.GreenColor
+import com.cbmoney.utils.getLanguageCode
+import com.cbmoney.utils.handleOnSaveLanguage
 
 @Composable
-fun OnBoardingScreen(modifier: Modifier = Modifier, onContinueClicked: () -> Unit) {
+fun OnBoardingScreen(onContinueClicked: () -> Unit) {
     val context = LocalContext.current
-    context.setAppLocale("vi")
+    var lang = context.getLanguageCode()
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
             .statusBarsPadding()
     ) {
         LanguageToggle(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(horizontal = 16.dp),
-            initialIsVN = true,
+            initialIsVN = lang == "vi",
         ) { isVN ->
-            val lang = if (isVN) "" else "en"
-            context.setAppLocale(lang)
+            lang = if (isVN) "vi" else "en"
+            context.handleOnSaveLanguage(lang)
         }
         OnboardingHeader(
             Modifier

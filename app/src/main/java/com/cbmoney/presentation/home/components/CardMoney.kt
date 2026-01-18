@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cbmoney.R
-import com.cbmoney.ui.theme.CBMoneyTheme
+import com.cbmoney.presentation.theme.CBMoneyTheme
 import com.cbmoney.utils.formatMoney
 
 @Composable

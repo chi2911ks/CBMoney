@@ -28,9 +28,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cbmoney.R
 import com.cbmoney.presentation.main.model.MainTab
-import com.cbmoney.ui.theme.CBMoneyTheme
-import com.cbmoney.ui.theme.Gray
-import com.cbmoney.ui.theme.GreenColor
+import com.cbmoney.presentation.theme.CBMoneyTheme
+import com.cbmoney.presentation.theme.Gray
+import com.cbmoney.presentation.theme.GreenColor
 
 @Composable
 fun BottomNavBar(

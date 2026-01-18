@@ -43,30 +43,31 @@ import com.cbmoney.presentation.components.DividerWithText
 import com.cbmoney.presentation.components.LanguageToggle
 import com.cbmoney.presentation.components.OutlineButtonPrimary
 import com.cbmoney.presentation.components.OutlinedText
-import com.cbmoney.ui.theme.BrightBlue
-import com.cbmoney.ui.theme.GreenColor
-import com.cbmoney.ui.theme.NeutralGray
-import com.cbmoney.utils.setAppLocale
+import com.cbmoney.presentation.theme.BrightBlue
+import com.cbmoney.presentation.theme.GreenColor
+import com.cbmoney.presentation.theme.NeutralGray
+import com.cbmoney.utils.getLanguageCode
+import com.cbmoney.utils.handleOnSaveLanguage
 
 
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier, onRegister: () -> Unit) {
     val context = LocalContext.current
+    var lang = context.getLanguageCode()
     Box(
         modifier = modifier
             .fillMaxSize()
-            .statusBarsPadding()
             .verticalScroll(rememberScrollState())
+            .statusBarsPadding()
     ) {
         LanguageToggle(
             modifier = Modifier
                 .align(Alignment.TopEnd)
-
                 .padding(horizontal = 16.dp),
-            initialIsVN = true,
+            initialIsVN = lang == "vi",
         ) { isVN ->
-            val lang = if (isVN) "" else "en"
-            context.setAppLocale(lang)
+            lang = if (isVN) "vi" else "en"
+            context.handleOnSaveLanguage(lang)
         }
         Column(
             modifier = Modifier.padding(

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -41,34 +42,38 @@ import com.cbmoney.presentation.components.ButtonPrimary
 import com.cbmoney.presentation.components.LanguageToggle
 import com.cbmoney.presentation.components.OutlinedText
 import com.cbmoney.presentation.login.AuthProviders
-import com.cbmoney.ui.theme.Gray
-import com.cbmoney.ui.theme.GreenColor
-import com.cbmoney.ui.theme.NeutralGray
-import com.cbmoney.utils.setAppLocale
+import com.cbmoney.presentation.theme.Gray
+import com.cbmoney.presentation.theme.GreenColor
+import com.cbmoney.presentation.theme.NeutralGray
+import com.cbmoney.utils.getLanguageCode
+import com.cbmoney.utils.handleOnSaveLanguage
 
 @Composable
-fun RegisterScreen(modifier: Modifier = Modifier, onBackClick: () -> Unit) {
+fun RegisterScreen(onBackClick: () -> Unit) {
     val context = LocalContext.current
+    var lang = context.getLanguageCode()
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .statusBarsPadding()
     ) {
         LanguageToggle(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(horizontal = 16.dp),
-            initialIsVN = true,
+            initialIsVN = lang == "vi",
         ) { isVN ->
-            val lang = if (isVN) "" else "en"
-            context.setAppLocale(lang)
+            lang = if (isVN) "vi" else "en"
+            context.handleOnSaveLanguage(lang)
         }
         Column(
             modifier = Modifier.padding(
                 top = 55.dp,
                 start = 16.dp,
                 end = 16.dp
-            ), horizontalAlignment = Alignment.CenterHorizontally
+            ),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
                 painter = painterResource(id = R.drawable.img_coin),

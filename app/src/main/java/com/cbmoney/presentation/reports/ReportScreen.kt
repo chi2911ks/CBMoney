@@ -8,8 +8,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun ReportScreen(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize()){
+fun ReportScreen() {
+    Box(modifier = Modifier.fillMaxSize()){
         Text("Report Screen", modifier = Modifier.align(Alignment.Center))
     }
 }

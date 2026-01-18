@@ -19,8 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.cbmoney.ui.theme.CBMoneyTheme
-import com.cbmoney.ui.theme.SoftGrey
+import com.cbmoney.presentation.theme.CBMoneyTheme
+import com.cbmoney.presentation.theme.SoftGrey
 
 @Composable
 fun LanguageToggle(
@@ -52,9 +52,9 @@ fun LanguageToggle(
 fun LanguageItem(text: String, selected: Boolean, onCLick: () -> Unit) {
     Box(
         modifier = Modifier
-            .clickable(onClick = onCLick)
             .clip(RoundedCornerShape(50.dp))
             .background(if (selected) Color.White else Color.Transparent)
+            .clickable(onClick = onCLick)
             .padding(horizontal = 16.dp, vertical = 8.dp),
         contentAlignment = Alignment.Center
     ) {

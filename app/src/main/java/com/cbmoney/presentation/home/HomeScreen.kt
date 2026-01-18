@@ -1,6 +1,7 @@
 package com.cbmoney.presentation.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,46 +38,38 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cbmoney.R
-import com.cbmoney.presentation.components.ButtonPrimary
 import com.cbmoney.presentation.components.ButtonWithIcon
 import com.cbmoney.presentation.home.components.CarMoney
 import com.cbmoney.presentation.home.components.FinanceCard
 import com.cbmoney.presentation.home.components.MonthlySpendingCard
 import com.cbmoney.presentation.home.components.model.MonthlyData
-import com.cbmoney.ui.theme.CBMoneyTheme
-import com.cbmoney.ui.theme.GreenColor
+import com.cbmoney.presentation.theme.CBMoneyTheme
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Color(0xFFf6f8f6))
+fun HomeScreen(navigateToReport: () -> Unit) {
 
-            .statusBarsPadding()
+    HomeScreenContent(navigateToReport = navigateToReport)
 
-
-    ) {
-        HomeScreenContent()
-    }
 }
 
 @Composable
-fun HomeScreenContent() {
+fun HomeScreenContent(
+    navigateToReport: () -> Unit
+) {
     var selectedIndex by remember { mutableIntStateOf(0) }
     val listData = listOf(
-        MonthlyData("Tháng 1", 10000000L, 20000000L),
-        MonthlyData("Tháng 2", 7000000L, 2000000L),
-        MonthlyData("Tháng 3", 20000000L, 10000000L),
-        MonthlyData("Tháng 4", 10000000L, 20000000L),
-        MonthlyData("Tháng 5", 7000000L, 2000000L),
-        MonthlyData("Tháng 6", 20000000L, 10000000L),
-        MonthlyData("Tháng 7", 10000000L, 20000000L),
-        MonthlyData("Tháng 8", 7000000L, 2000000L),
-        MonthlyData("Tháng 9", 20000000L, 10000000L),
-        MonthlyData("Tháng 10", 10000000L, 20000000L),
-        MonthlyData("Tháng 11", 7000000L, 2000000L),
-        MonthlyData("Tháng 12", 20000000L, 10000000L),
+        MonthlyData(stringResource(R.string.month_1), 10000000L, 20000000L),
+        MonthlyData(stringResource(R.string.month_2), 7000000L, 2000000L),
+        MonthlyData(stringResource(R.string.month_3), 2000000L, 1000000L),
+        MonthlyData(stringResource(R.string.month_4), 10000000L, 20000000L),
+        MonthlyData(stringResource(R.string.month_5), 3000000L, 200000L),
+        MonthlyData(stringResource(R.string.month_6), 2000000L, 1000000L),
+        MonthlyData(stringResource(R.string.month_7), 10000000L, 2000000L),
+        MonthlyData(stringResource(R.string.month_8), 1000000L, 200000L),
+        MonthlyData(stringResource(R.string.month_9), 7000000L, 10000000L),
+        MonthlyData(stringResource(R.string.month_10), 9000000L, 20000000L),
+        MonthlyData(stringResource(R.string.month_11), 6000000L, 2000000L),
+        MonthlyData(stringResource(R.string.month_12), 26000000L, 10000000L),
     )
     val income = listData[selectedIndex].income
     val expense = listData[selectedIndex].expense
@@ -86,7 +79,10 @@ fun HomeScreenContent() {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 8.dp)
-            .padding(bottom = 16.dp),
+            .padding(bottom = 70.dp)
+            .statusBarsPadding()
+        ,
+
     ) {
 
         HeaderSection()
@@ -116,6 +112,7 @@ fun HomeScreenContent() {
         MonthlySpendingCard(
             selectedIndex,
             { selectedIndex = it },
+            {navigateToReport()},
             listData,
             Modifier
                 .padding(top = 8.dp)
@@ -126,7 +123,7 @@ fun HomeScreenContent() {
                 .padding(top = 8.dp),
         ) {
             ButtonWithIcon(
-                modifier =  Modifier
+                modifier = Modifier
                     .weight(1f),
                 text = stringResource(R.string.additional_expenses),
                 onClick = {},
@@ -134,7 +131,7 @@ fun HomeScreenContent() {
             )
             Spacer(Modifier.width(4.dp))
             ButtonWithIcon(
-                modifier =  Modifier
+                modifier = Modifier
                     .weight(1f),
                 text = stringResource(R.string.additional_income),
                 onClick = {},
@@ -152,7 +149,12 @@ fun HomeScreenContent() {
 }
 
 @Composable
-fun HeaderSection(modifier: Modifier = Modifier) {
+fun HeaderSection(
+    modifier: Modifier = Modifier,
+    user: String = "Đỗ Chi",
+    onClickProfile: () -> Unit = {},
+    onClickNotification: () -> Unit = {}
+) {
     Box(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -160,22 +162,36 @@ fun HeaderSection(modifier: Modifier = Modifier) {
             modifier = modifier,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                Icons.Default.AccountCircle,
-                contentDescription = null,
-                tint = Color.Black,
-                modifier = Modifier.size(40.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(Color.Transparent)
+                    .size(40.dp)
+                    .clickable {
+                        onClickProfile()
+                    },
+                contentAlignment = Alignment.Center
+            ){
+                Icon(
+                    Icons.Default.AccountCircle,
+                    contentDescription = null,
+                    tint = Color.Black,
+                    modifier = Modifier
+                        .size(40.dp)
+
+                )
+            }
+
             Spacer(Modifier.width(8.dp))
             Column {
                 Text(
-                    text = "Xin chào,",
+                    text = stringResource(R.string.hello_user),
                     color = Color(0xFF6B7280),
                     fontSize = 14.sp,
                     style = MaterialTheme.typography.labelLarge
                 )
                 Text(
-                    text = "Minh Anh",
+                    text = user,
                     color = Color.Black,
                     fontSize = 16.sp,
                     style = MaterialTheme.typography.displayMedium
@@ -189,8 +205,11 @@ fun HeaderSection(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .clip(CircleShape)
-                .background(Color.White)
-                .size(40.dp),
+                .background(Color.Transparent)
+                .size(40.dp)
+                .clickable {
+                    onClickNotification()
+                },
 
             contentAlignment = Alignment.Center
 
@@ -199,6 +218,9 @@ fun HeaderSection(modifier: Modifier = Modifier) {
                 Icons.Default.Notifications,
                 contentDescription = null,
                 tint = Color.Black,
+                modifier = Modifier
+                    .size(36.dp)
+
             )
         }
 
@@ -209,6 +231,6 @@ fun HeaderSection(modifier: Modifier = Modifier) {
 @Composable
 private fun HomeScreenPreview() {
     CBMoneyTheme {
-        HomeScreen()
+        HomeScreen({})
     }
 }

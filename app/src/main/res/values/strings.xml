@@ -53,4 +53,31 @@
 
     <string name="additional_expenses">Additional expenses</string>
     <string name="additional_income">Additional income</string>
+
+    <string name="recent_transactions">Recent transactions</string>
+
+    <!-- Months (Short - UI) -->
+    <string name="month_1">Jan</string>
+    <string name="month_2">Feb</string>
+    <string name="month_3">Mar</string>
+    <string name="month_4">Apr</string>
+    <string name="month_5">May</string>
+    <string name="month_6">Jun</string>
+    <string name="month_7">Jul</string>
+    <string name="month_8">Aug</string>
+    <string name="month_9">Sep</string>
+    <string name="month_10">Oct</string>
+    <string name="month_11">Nov</string>
+    <string name="month_12">Dec</string>
+
+    <!-- Profile Screen -->
+    <string name="settings_account">Account settings</string>
+    <string name="person_info">Personal information</string>
+    <string name="bank_account">Account &amp; Bank</string>
+
+
+    <string name="application">Application</string>
+    <string name="app_setting">Settings</string>
+    <string name="help_center">Help center</string>
+    <string name="logout">Logout</string>
 </resources>

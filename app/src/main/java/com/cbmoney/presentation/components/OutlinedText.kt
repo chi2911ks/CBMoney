@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.cbmoney.ui.theme.LightSageGreen
+import com.cbmoney.presentation.theme.LightSageGreen
 
 @Composable
 fun OutlinedText(

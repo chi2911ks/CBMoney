@@ -11,14 +11,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,29 +30,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cbmoney.R
 import com.cbmoney.presentation.home.components.model.MonthlyData
 
 @Composable
 fun MonthlySpendingCard(
     selectedIndex: Int,
     onSelected: (Int) -> Unit,
+    navigateToReport: () -> Unit,
     listData: List<MonthlyData>,
     modifier: Modifier = Modifier
 ) {
     val labelMonthly = listData[selectedIndex].label
-    Card(
+    Box(
         modifier = modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        shape = RoundedCornerShape(24.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+            .wrapContentHeight()
+            .background(Color.White, shape = RoundedCornerShape(24.dp)),
     ) {
         Column(
             modifier = Modifier
@@ -65,7 +63,7 @@ fun MonthlySpendingCard(
             ) {
                 Column {
                     Text(
-                        text = "Chi tiêu tháng này",
+                        text = stringResource(R.string.monthly_spending),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -78,13 +76,20 @@ fun MonthlySpendingCard(
                 Icon(
                     imageVector = Icons.Default.ChevronRight,
                     contentDescription = null,
-                    tint = Color.Gray
+                    tint = Color.Gray,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable {
+                            navigateToReport()
+                        }
+
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
             BarChart(
                 selectedIndex = selectedIndex,
-                onSelected = { onSelected(it)},
+                onSelected = { onSelected(it) },
                 listData = listData
             )
         }
@@ -128,57 +133,50 @@ fun BarItem(
     monthlyData: MonthlyData
 ) {
     val maxHeight = 120
+    val alpha = if (isSelected) 1f else 0.1f
     Column(
         modifier = Modifier
             .padding(horizontal = 8.dp)
             .clip(
-                RoundedCornerShape(12.dp)
+                RoundedCornerShape(8.dp)
             )
             .clickable {
                 onClick()
             },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
+
+        Row(
             modifier = Modifier
-                .clip(
-                    RoundedCornerShape(12.dp)
-                )
-                .background(
-                    color = if (isSelected) Color.Gray.copy(0.2f) else Color.Transparent,
-                )
-                .padding(4.dp)
+                .padding(top = 8.dp),
+            verticalAlignment = Alignment.Bottom,
         ) {
-            Row(
-                verticalAlignment = Alignment.Bottom,
-            ) {
-                Box(
-                    modifier = Modifier
-                        .width(20.dp)
-                        .height(
-                            ((monthlyData.income * maxHeight) / maxValue).coerceAtLeast(1L)
-                                .toInt().dp
+            Box(
+                modifier = Modifier
+                    .width(20.dp)
+                    .height(
+                        ((monthlyData.income * maxHeight) / maxValue).coerceAtLeast(1L)
+                            .toInt().dp
+                    )
+                    .background(
+                        Color(0xFF16A34A).copy(alpha),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+            )
+            Spacer(Modifier.width(4.dp))
+            Box(
+                modifier = Modifier
+                    .width(20.dp)
+                    .height(((monthlyData.expense * maxHeight) / maxValue).toInt().dp)
+                    .background(
+                        Color(0xFFDC2626).copy(alpha),
+                        shape = RoundedCornerShape(
+                            8.dp
                         )
-                        .background(
-                            Color(0xFF16A34A),
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                )
-                Spacer(Modifier.width(4.dp))
-                Box(
-                    modifier = Modifier
-                        .width(20.dp)
-                        .height(((monthlyData.expense * maxHeight) / maxValue).toInt().dp)
-                        .background(
-                            Color(0xFFDC2626),
-                            shape = RoundedCornerShape(
-                                12.dp
-                            )
-                        )
-                )
-            }
-            Spacer(Modifier.height(8.dp))
+                    )
+            )
         }
+        Spacer(Modifier.height(8.dp))
 
         Text(
             text = monthlyData.label,
@@ -193,13 +191,14 @@ fun BarItem(
 private fun BarChartPreview() {
     var selectedIndex by remember { mutableIntStateOf(0) }
     val listData = listOf(
-        MonthlyData("Tháng 1", 1000000000L, 20000000L),
-        MonthlyData("Tháng 2", 7000000L, 2000000L),
-        MonthlyData("Tháng 3", 20000000L, 10000000L),
+        MonthlyData(stringResource(R.string.month_1), 100000000L, 20000000L),
+        MonthlyData(stringResource(R.string.month_2), 7000000L, 2000000L),
+        MonthlyData(stringResource(R.string.month_3), 20000000L, 10000000L),
     )
     MonthlySpendingCard(
         selectedIndex = selectedIndex,
         onSelected = { selectedIndex = it },
+        {},
         listData
     )
 }

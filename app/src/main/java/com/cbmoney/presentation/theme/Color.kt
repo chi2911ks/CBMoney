@@ -1,4 +1,4 @@
-package com.cbmoney.ui.theme
+package com.cbmoney.presentation.theme
 
 
 import androidx.compose.ui.graphics.Color

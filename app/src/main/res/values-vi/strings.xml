@@ -33,7 +33,7 @@
     <string name="budget">Ngân sách</string>
     <string name="profile">Tài khoản</string>
 
-    //Home
+
     <string name="hello_user">Xin chào,</string>
     <string name="cash_and_bank">"Ví tiền mặt + Tài khoản"</string>
 
@@ -44,6 +44,28 @@
     <string name="monthly_spending">Chi tiêu hàng tháng</string>
     <string name="additional_expenses">Thêm chi tiêu</string>
     <string name="additional_income">Thêm thu nhập</string>
+    <string name="recent_transactions">Giao dịch gần đây</string>
 
+    <!-- Months (Short - UI) -->
+    <string name="month_1">Th1</string>
+    <string name="month_2">Th2</string>
+    <string name="month_3">Th3</string>
+    <string name="month_4">Th4</string>
+    <string name="month_5">Th5</string>
+    <string name="month_6">Th6</string>
+    <string name="month_7">Th7</string>
+    <string name="month_8">Th8</string>
+    <string name="month_9">Th9</string>
+    <string name="month_10">Th10</string>
+    <string name="month_11">Th11</string>
+    <string name="month_12">Th12</string>
 
+    <!-- Profile Screen -->
+    <string name="settings_account">Cài đặt tài khoản</string>
+    <string name="person_info">Thông tin cá nhân</string>
+    <string name="bank_account">Tài khoản &amp; Ngân hàng</string>
+    <string name="application">Ứng dụng</string>
+    <string name="app_setting">Cài đặt</string>
+    <string name="help_center">Trung tâm trợ giúp</string>
+    <string name="logout">Đăng xuất</string>
 </resources>

@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.cbmoney.presentation.navigation.NavRoutes
-import com.cbmoney.ui.theme.CBMoneyTheme
+import com.cbmoney.presentation.theme.CBMoneyTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
