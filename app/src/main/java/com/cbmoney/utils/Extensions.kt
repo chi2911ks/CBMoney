@@ -1,6 +1,7 @@
 package com.cbmoney.utils
 
 import android.content.Context
+import java.text.NumberFormat
 import java.util.Locale
 
 fun Context.setAppLocale(language: String) {
@@ -12,3 +13,5 @@ fun Context.setAppLocale(language: String) {
     @Suppress("DEPRECATION")
     resources.updateConfiguration(config, resources.displayMetrics)
 }
+fun Long.formatMoney(): String =
+    NumberFormat.getInstance(Locale("vi", "VN")).format(this)

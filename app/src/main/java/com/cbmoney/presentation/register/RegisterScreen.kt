@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -38,10 +37,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cbmoney.R
-import com.cbmoney.presentation.login.AuthProviders
 import com.cbmoney.presentation.components.ButtonPrimary
 import com.cbmoney.presentation.components.LanguageToggle
 import com.cbmoney.presentation.components.OutlinedText
+import com.cbmoney.presentation.login.AuthProviders
 import com.cbmoney.ui.theme.Gray
 import com.cbmoney.ui.theme.GreenColor
 import com.cbmoney.ui.theme.NeutralGray
@@ -103,7 +102,11 @@ fun RegisterScreen(modifier: Modifier = Modifier, onBackClick: () -> Unit) {
 }
 
 @Composable
-fun SignUpForm(modifier: Modifier = Modifier, onBackClick: () -> Unit = {}, onRegister: () -> Unit = {}) {
+fun SignUpForm(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit = {},
+    onRegister: () -> Unit = {}
+) {
     var fullName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -175,13 +178,12 @@ fun SignUpForm(modifier: Modifier = Modifier, onBackClick: () -> Unit = {}, onRe
                 .fillMaxWidth()
                 .height(56.dp),
             text = stringResource(R.string.register),
+            onClick = { onRegister() },
             colors = ButtonDefaults.buttonColors(
                 containerColor = GreenColor,
                 contentColor = Color.Black,
             )
-        ) {
-            onRegister()
-        }
+        )
 
         Text(
             text = stringResource(R.string.back_to_login),

@@ -1,6 +1,7 @@
 package com.cbmoney.presentation.onboarding
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -32,10 +34,12 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cbmoney.R
 import com.cbmoney.presentation.components.LanguageToggle
+import com.cbmoney.ui.theme.CBMoneyTheme
 import com.cbmoney.ui.theme.GreenColor
 import com.cbmoney.utils.setAppLocale
 
@@ -46,11 +50,12 @@ fun OnBoardingScreen(modifier: Modifier = Modifier, onContinueClicked: () -> Uni
     Box(
         modifier = modifier
             .fillMaxSize()
+            .background(Color.Black)
+            .statusBarsPadding()
     ) {
         LanguageToggle(
             modifier = Modifier
                 .align(Alignment.TopEnd)
-
                 .padding(horizontal = 16.dp),
             initialIsVN = true,
         ) { isVN ->
@@ -154,6 +159,7 @@ fun OnboardingGetStarted(modifier: Modifier = Modifier, onContinueClicked: () ->
 
             withStyle(
                 SpanStyle(
+                    color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
                     textDecoration = TextDecoration.Underline
@@ -174,3 +180,10 @@ fun OnboardingGetStarted(modifier: Modifier = Modifier, onContinueClicked: () ->
     }
 }
 
+@Preview
+@Composable
+private fun OnBoardingPreview() {
+    CBMoneyTheme { 
+
+    }
+}

@@ -32,4 +32,18 @@
     <string name="reports">Báo cáo</string>
     <string name="budget">Ngân sách</string>
     <string name="profile">Tài khoản</string>
+
+    //Home
+    <string name="hello_user">Xin chào,</string>
+    <string name="cash_and_bank">"Ví tiền mặt + Tài khoản"</string>
+
+    <string name="income">Tổng thu</string>
+    <string name="expense">Tổng chi</string>
+
+    <string name="total_balance">Tổng số dư</string>
+    <string name="monthly_spending">Chi tiêu hàng tháng</string>
+    <string name="additional_expenses">Thêm chi tiêu</string>
+    <string name="additional_income">Thêm thu nhập</string>
+
+
 </resources>

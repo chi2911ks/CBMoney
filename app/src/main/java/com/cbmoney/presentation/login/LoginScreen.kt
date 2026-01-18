@@ -12,7 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
@@ -54,6 +55,8 @@ fun LoginScreen(modifier: Modifier = Modifier, onRegister: () -> Unit) {
     Box(
         modifier = modifier
             .fillMaxSize()
+            .statusBarsPadding()
+            .verticalScroll(rememberScrollState())
     ) {
         LanguageToggle(
             modifier = Modifier
@@ -101,9 +104,6 @@ fun LoginScreen(modifier: Modifier = Modifier, onRegister: () -> Unit) {
                     .padding(vertical = 25.dp)
             )
         }
-
-
-
     }
 }
 
@@ -159,15 +159,15 @@ fun AuthForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
+            onClick = { onLogin() },
             text = stringResource(R.string.login),
-
             colors = ButtonDefaults.buttonColors(
                 containerColor = GreenColor,
                 contentColor = Color.Black,
             )
-        ) {
+        )
 
-        }
+
         Spacer(Modifier.height(8.dp))
         OutlineButtonPrimary(
             modifier = Modifier

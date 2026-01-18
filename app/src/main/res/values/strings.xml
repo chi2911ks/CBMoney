@@ -38,4 +38,19 @@
     <string name="reports">Reports</string>
     <string name="budget">Budget</string>
     <string name="profile">Profile</string>
+
+
+    //Home
+    <string name="hello_user">Hello,</string>
+    <string name="cash_and_bank">Cash + Bank accounts</string>
+
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+
+    <string name="total_balance">Total balance</string>
+
+    <string name="monthly_spending">Monthly spending</string>
+
+    <string name="additional_expenses">Additional expenses</string>
+    <string name="additional_income">Additional income</string>
 </resources>
