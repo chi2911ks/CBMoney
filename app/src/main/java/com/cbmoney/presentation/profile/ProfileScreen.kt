@@ -31,25 +31,42 @@ import com.cbmoney.R
 import com.cbmoney.presentation.components.ButtonPrimary
 import com.cbmoney.presentation.profile.components.EditableAvatar
 import com.cbmoney.presentation.profile.components.SettingItem
+import com.cbmoney.presentation.theme.Background
 import com.cbmoney.presentation.theme.CBMoneyTheme
 import com.cbmoney.presentation.theme.NeutralGray
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    navigateToPersonInfo: () -> Unit,
+    navigateToSettings: () -> Unit,
+    navigateToHelpCenter: () -> Unit,
+) {
 
-    ProfileScreenContent()
+    ProfileScreenContent(
+        navigateToPersonInfo = navigateToPersonInfo,
+        navigateToSettings = navigateToSettings,
+        navigateToHelpCenter = navigateToHelpCenter
+    )
 
 }
 
 @Composable
-fun ProfileScreenContent() {
+fun ProfileScreenContent(
+    navigateToPersonInfo: () -> Unit,
+    navigateToSettings: () -> Unit,
+    navigateToHelpCenter: () -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            ,
+            .background(Background),
     ) {
         HeaderSection()
-        UserProfileSettings()
+        UserProfileSettings(
+            navigateToPersonInfo = navigateToPersonInfo,
+            navigateToSettings = navigateToSettings,
+            navigateToHelpCenter = navigateToHelpCenter
+        )
         ButtonPrimary(
             modifier = Modifier
                 .fillMaxWidth()
@@ -63,7 +80,7 @@ fun ProfileScreenContent() {
                 )
             },
             onClick = {},
-            colors  = ButtonDefaults.buttonColors(
+            colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Red.copy(0.1f),
                 contentColor = Color.Red,
             ),
@@ -79,7 +96,7 @@ fun HeaderSection() {
             .fillMaxWidth()
             .background(Color.White)
             .statusBarsPadding()
-            .padding(vertical = 16.dp),
+            .padding(bottom = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -109,7 +126,11 @@ fun HeaderSection() {
 }
 
 @Composable
-fun UserProfileSettings() {
+fun UserProfileSettings(
+    navigateToPersonInfo: () -> Unit,
+    navigateToSettings: () -> Unit,
+    navigateToHelpCenter: () -> Unit,
+) {
 
     Text(
         text = stringResource(R.string.settings_account).uppercase(),
@@ -124,17 +145,17 @@ fun UserProfileSettings() {
             .background(Color.White)
     ) {
         SettingItem(
-            text = stringResource(R.string.person_info),
+            title = stringResource(R.string.person_info),
             leadingIcon = Icons.Default.Person,
             trailingIcon = Icons.Default.ChevronRight,
-        ){
-
+        ) {
+            navigateToPersonInfo()
         }
         SettingItem(
-            text = stringResource(R.string.bank_account),
+            title = stringResource(R.string.bank_account),
             leadingIcon = Icons.Default.Wallet,
             trailingIcon = Icons.Default.ChevronRight,
-        ){
+        ) {
 
         }
     }
@@ -151,20 +172,20 @@ fun UserProfileSettings() {
             .background(Color.White)
     ) {
         SettingItem(
-            text = stringResource(R.string.app_setting),
+            title = stringResource(R.string.app_setting),
             leadingIcon = Icons.Default.Settings,
             trailingIcon = Icons.Default.ChevronRight,
             tintColor = Color.Black
-        ){
-
+        ) {
+            navigateToSettings()
         }
         SettingItem(
-            text = stringResource(R.string.help_center),
+            title = stringResource(R.string.help_center),
             leadingIcon = Icons.AutoMirrored.Filled.HelpCenter,
             trailingIcon = Icons.Default.ChevronRight,
             tintColor = Color.Black
-        ){
-
+        ) {
+            navigateToHelpCenter()
         }
     }
 }
@@ -173,6 +194,6 @@ fun UserProfileSettings() {
 @Composable
 private fun ProfileScreenPreview() {
     CBMoneyTheme {
-        ProfileScreen()
+        ProfileScreen({}, {}, {})
     }
 }

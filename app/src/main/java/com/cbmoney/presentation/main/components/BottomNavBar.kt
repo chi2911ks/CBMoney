@@ -2,6 +2,7 @@ package com.cbmoney.presentation.main.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,6 +33,7 @@ import com.cbmoney.presentation.main.model.MainTab
 import com.cbmoney.presentation.theme.CBMoneyTheme
 import com.cbmoney.presentation.theme.Gray
 import com.cbmoney.presentation.theme.GreenColor
+import com.cbmoney.presentation.theme.Spacing
 
 @Composable
 fun BottomNavBar(
@@ -58,20 +61,18 @@ fun BottomNavBar(
                 val isSelected = tab == currentTab
                 Column(
                     modifier = Modifier
-
                         .weight(1f)
                         .then(
                             when (index) {
-                                0 -> Modifier.padding(start = 20.dp)
                                 1 -> Modifier.padding(end = 20.dp)
                                 2 -> Modifier.padding(start = 20.dp)
-                                3 -> Modifier.padding(end = 20.dp)
                                 else -> Modifier
                             }
                         )
                         .clip(RoundedCornerShape(16.dp))
                         .clickable(
-                            interactionSource = null
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
                         ) {
                             onTabChange(tab)
                         },
@@ -88,7 +89,7 @@ fun BottomNavBar(
                         painter = painterResource(tab.iconResId),
                         contentDescription = title,
                         tint = if (isSelected) GreenColor else Gray,
-                        modifier = Modifier.padding(10.dp)
+                        modifier = Modifier.padding(Spacing.xs)
                     )
                     Text(
                         title,

@@ -1,28 +1,36 @@
 package com.cbmoney.presentation.navigation
 
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.cbmoney.presentation.login.LoginScreen
 import com.cbmoney.presentation.main.MainScreen
+import com.cbmoney.presentation.main.MainViewModel
 import com.cbmoney.presentation.onboarding.OnBoardingScreen
 import com.cbmoney.presentation.register.RegisterScreen
+import com.cbmoney.presentation.settings.LanguageBottomSheet
+import com.cbmoney.presentation.settings.SettingsScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavRoutes() {
+    val bottomSheetStrategy = remember { BottomSheetSceneStrategy<NavKey>() }
     val backStack = rememberNavBackStack(Destination.Main).apply {
         NavDisplay(
             backStack = this,
             onBack = { removeLastOrNull() },
+            sceneStrategy = bottomSheetStrategy,
             entryDecorators = listOf(
                 rememberSaveableStateHolderNavEntryDecorator(),
                 rememberViewModelStoreNavEntryDecorator()
@@ -44,42 +52,64 @@ fun NavRoutes() {
                         add(Destination.Main)
                     })
                 }
+                entry<Destination.Settings> {
+                    SettingsScreen(
+                        onNavigationBack = {
+                            removeLastOrNull()
+                        },
+                        onShowLanguageBottomSheet = {
+                            add(Destination.LanguageBottomSheet)
+                        }
+                    )
+                }
                 entry<Destination.Main> {
-                    MainScreen()
+                    val viewModel = viewModel<MainViewModel>()
+                    MainScreen(
+                        navigateToPersonInfo = {
+
+                        },
+                        navigateToSettings = {
+                            add(Destination.Settings)
+                        },
+                        navigateToHelpCenter = {},
+                        viewModel
+                    )
+                }
+                entry<Destination.LanguageBottomSheet>(
+                    metadata = BottomSheetSceneStrategy.bottomSheet()
+                ) {
+                    LanguageBottomSheet()
                 }
             },
-            // Navigate forward
             transitionSpec = {
+                // Slide in from right when navigating forward
                 slideInHorizontally(
                     initialOffsetX = { it },
                     animationSpec = tween(1000)
-                ) + fadeIn() togetherWith
-                        slideOutHorizontally(
-                            targetOffsetX = { -it / 3 },
-                            animationSpec = tween(1000)
-                        ) + fadeOut()
-            },
-
-            // Pop back
-            popTransitionSpec = {
-                slideInHorizontally(
-                    initialOffsetX = { -it / 3 },
+                ) togetherWith slideOutHorizontally(
+                    targetOffsetX = { -it },
                     animationSpec = tween(1000)
-                ) + fadeIn() togetherWith
-                        slideOutHorizontally(
-                            targetOffsetX = { it },
-                            animationSpec = tween(1000)
-                        ) + fadeOut()
+                )
             },
-
-            // Predictive back (Android 14+)
-            predictivePopTransitionSpec = {
+            popTransitionSpec = {
+                // Slide in from left when navigating back
                 slideInHorizontally(
-                    initialOffsetX = { -it / 4 }
-                ) togetherWith
-                        slideOutHorizontally(
-                            targetOffsetX = { it }
-                        )
+                    initialOffsetX = { -it },
+                    animationSpec = tween(1000)
+                ) togetherWith slideOutHorizontally(
+                    targetOffsetX = { it },
+                    animationSpec = tween(1000)
+                )
+            },
+            predictivePopTransitionSpec = {
+                // Slide in from left when navigating back
+                slideInHorizontally(
+                    initialOffsetX = { -it },
+                    animationSpec = tween(1000)
+                ) togetherWith slideOutHorizontally(
+                    targetOffsetX = { it },
+                    animationSpec = tween(1000)
+                )
             }
         )
     }

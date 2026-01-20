@@ -15,5 +15,13 @@ sealed interface Destination : NavKey {
     data object Register : Destination
 
     @Serializable
+    data object Settings : Destination
+
+    @Serializable
+    data object LanguageBottomSheet : Destination
+
+
+
+    @Serializable
     data object Main : Destination
 }

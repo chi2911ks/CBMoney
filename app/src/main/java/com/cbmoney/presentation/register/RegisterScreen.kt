@@ -1,6 +1,7 @@
 package com.cbmoney.presentation.register
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,7 @@ import com.cbmoney.presentation.components.ButtonPrimary
 import com.cbmoney.presentation.components.LanguageToggle
 import com.cbmoney.presentation.components.OutlinedText
 import com.cbmoney.presentation.login.AuthProviders
+import com.cbmoney.presentation.theme.Background
 import com.cbmoney.presentation.theme.Gray
 import com.cbmoney.presentation.theme.GreenColor
 import com.cbmoney.presentation.theme.NeutralGray
@@ -55,8 +57,9 @@ fun RegisterScreen(onBackClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .background(Background)
             .statusBarsPadding()
+            .verticalScroll(rememberScrollState())
     ) {
         LanguageToggle(
             modifier = Modifier

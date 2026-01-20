@@ -43,6 +43,7 @@ import com.cbmoney.presentation.home.components.CarMoney
 import com.cbmoney.presentation.home.components.FinanceCard
 import com.cbmoney.presentation.home.components.MonthlySpendingCard
 import com.cbmoney.presentation.home.components.model.MonthlyData
+import com.cbmoney.presentation.theme.Background
 import com.cbmoney.presentation.theme.CBMoneyTheme
 
 @Composable
@@ -77,10 +78,11 @@ fun HomeScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .background(Background)
+            .statusBarsPadding()
             .padding(horizontal = 8.dp)
             .padding(bottom = 70.dp)
-            .statusBarsPadding()
+            .verticalScroll(rememberScrollState())
         ,
 
     ) {

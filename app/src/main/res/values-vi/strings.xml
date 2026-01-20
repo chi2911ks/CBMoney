@@ -68,4 +68,17 @@
     <string name="app_setting">Cài đặt</string>
     <string name="help_center">Trung tâm trợ giúp</string>
     <string name="logout">Đăng xuất</string>
+
+
+    <!-- Setting Screen -->
+    <string name="notification">Thông báo</string>
+    <string name="expense_reminder">Nhắc nhở chi tiêu</string>
+    <string name="currency">Tiền tệ</string>
+    <string name="customize">Tuỳ chỉnh</string>
+
+    <string name="select_language">Chọn ngôn ngữ</string>
+    <string name="select_display_language">Vui lòng chọn ngôn ngữ hiển thị</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="dark_mode">Chế độ tối</string>
+    <string name="finance">Tài chính</string>
 </resources>

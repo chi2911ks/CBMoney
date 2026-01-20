@@ -57,8 +57,8 @@ fun LoginScreen(modifier: Modifier = Modifier, onRegister: () -> Unit) {
     Box(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
             .statusBarsPadding()
+            .verticalScroll(rememberScrollState())
     ) {
         LanguageToggle(
             modifier = Modifier

@@ -1,4 +1,4 @@
-package com.cbmoney.presentation.profile.components
+package com.cbmoney.presentation.settings.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,32 +18,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cbmoney.presentation.components.ToggleButton
 import com.cbmoney.presentation.theme.CBMoneyShapes
-import com.cbmoney.presentation.theme.CBMoneyTheme
 import com.cbmoney.presentation.theme.GreenColor
 
 @Composable
-fun SettingItem(
-    modifier: Modifier = Modifier,
+fun SettingToggleItem(
     title: String,
     subtitle: String? = null,
-    shape: Shape = RectangleShape,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     leadingIcon: ImageVector? = null,
-    trailingIcon: ImageVector? = null,
-    tintColor: Color = GreenColor,
-    onClick: () -> Unit,
+    tintColor: Color = GreenColor
 ) {
-
     Row(
-        modifier = modifier
+        modifier = Modifier
             .height(60.dp)
-            .clip(shape)
-            .clickable { onClick() }
+            .clip(RectangleShape)
+            .clickable {
+                onCheckedChange(!checked)
+            }
             .background(Color.White)
             .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -99,15 +94,11 @@ fun SettingItem(
                 }
 
             }
-
-
-            if (trailingIcon != null) {
-                Icon(
-                    imageVector = trailingIcon,
-                    contentDescription = null,
-                    tint = Color.Gray
-                )
-            }
+           ToggleButton(
+                checked = checked,
+                onCheckedChange = onCheckedChange,
+                height = 20,
+           )
 
         }
 
@@ -116,14 +107,6 @@ fun SettingItem(
 
 @Preview
 @Composable
-private fun SettingItemPreview() {
-    CBMoneyTheme {
-        SettingItem(
-            onClick = {},
-            title = "Thông tin cá nhân",
-            subtitle = "Hồ sơ cá nhân",
-            trailingIcon = Icons.Default.ChevronRight,
-            leadingIcon = Icons.Default.Person
-        )
-    }
+private fun SettingToggleItemPreview() {
+    SettingToggleItem("Chế độ tối", checked = true, onCheckedChange = {})
 }

@@ -19,7 +19,7 @@
 
     <string name="language">Language</string>
     <string name="english">English</string>
-    <string name="vietnamese">Vietnamese"</string>
+    <string name="vietnamese">Tiếng Việt</string>
 
     <string name="login_h1">Hello!</string>
     <string name="login_h3">Manage your expenses easily &amp; effectively.</string>
@@ -80,4 +80,18 @@
     <string name="app_setting">Settings</string>
     <string name="help_center">Help center</string>
     <string name="logout">Logout</string>
+
+    <!-- Setting Screen -->
+    <string name="notification">Notification</string>
+    <string name="expense_reminder">Expense reminder</string>
+    <string name="currency">Currency</string>
+    <string name="customize">Customize</string>
+
+
+    <string name="select_language">Select Language</string>
+    <string name="select_display_language">Please select a display language</string>
+    <string name="confirm">Confirm</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="finance">Finance</string>
+
 </resources>

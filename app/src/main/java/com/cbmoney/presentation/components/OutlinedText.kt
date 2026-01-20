@@ -27,6 +27,7 @@ fun OutlinedText(
     trailingIcon: @Composable (() -> Unit)? = null,
     isPasswordVisible: Boolean = true
 ) {
+
     Text(text = label, color = Color.Black)
     Spacer(Modifier.height(8.dp))
     OutlinedTextField(
