@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -30,9 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cbmoney.R
 import com.cbmoney.presentation.main.model.MainTab
-import com.cbmoney.presentation.theme.CBMoneyTheme
-import com.cbmoney.presentation.theme.Gray
-import com.cbmoney.presentation.theme.GreenColor
+import com.cbmoney.presentation.theme.CBMoneyColors
+import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
 
 @Composable
@@ -45,14 +43,13 @@ fun BottomNavBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .heightIn(100.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(70.dp)
-                .background(MaterialTheme.colorScheme.surface)
-                .align(Alignment.BottomCenter),
+                .background(CBMoneyColors.White)
+                .align(Alignment.Center),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
 
@@ -88,13 +85,13 @@ fun BottomNavBar(
                     Icon(
                         painter = painterResource(tab.iconResId),
                         contentDescription = title,
-                        tint = if (isSelected) GreenColor else Gray,
+                        tint = if (isSelected) CBMoneyColors.Primary.Primary else CBMoneyColors.Gray.Gray,
                         modifier = Modifier.padding(Spacing.xs)
                     )
                     Text(
                         title,
-                        color = if (isSelected) GreenColor else Gray,
-                        style = MaterialTheme.typography.labelSmall,
+                        color = if (isSelected) CBMoneyColors.Primary.Primary  else CBMoneyColors.Gray.Gray,
+                        style = CBMoneyTypography.Body.Small.Medium,
                     )
                 }
             }
@@ -102,10 +99,10 @@ fun BottomNavBar(
 
         Box(
             modifier = Modifier
-                .align(Alignment.TopCenter)
-                .size(60.dp)
+                .align(Alignment.Center)
+                .size(40.dp)
                 .clip(CircleShape)
-                .background(GreenColor)
+                .background(CBMoneyColors.Primary.Primary )
                 .clickable{
                     onAddClick()
                 },
@@ -124,7 +121,7 @@ fun BottomNavBar(
 @Preview
 @Composable
 private fun BottomNavBarPreview() {
-    CBMoneyTheme {
+
         BottomNavBar(MainTab.HOME, {}, {})
-    }
+
 }

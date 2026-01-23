@@ -14,7 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.cbmoney.presentation.theme.LightSageGreen
+import com.cbmoney.presentation.theme.CBMoneyColors
+import com.cbmoney.presentation.theme.CBMoneyTypography
+
 
 @Composable
 fun OutlinedText(
@@ -28,7 +30,11 @@ fun OutlinedText(
     isPasswordVisible: Boolean = true
 ) {
 
-    Text(text = label, color = Color.Black)
+    Text(
+        text = label,
+        color = CBMoneyColors.Text.TextPrimary,
+        style = CBMoneyTypography.Title.Small.SemiBold
+    )
     Spacer(Modifier.height(8.dp))
     OutlinedTextField(
         value = value,
@@ -40,8 +46,8 @@ fun OutlinedText(
         singleLine = true,
         shape = RoundedCornerShape(24.dp),
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = LightSageGreen,
-            unfocusedBorderColor = LightSageGreen,
+            focusedBorderColor = CBMoneyColors.Border.BorderMedium,
+            unfocusedBorderColor = CBMoneyColors.Border.BorderLight,
             focusedTextColor = Color.Black,
             unfocusedTextColor = Color.DarkGray,
 

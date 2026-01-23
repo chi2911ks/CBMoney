@@ -16,7 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,10 +25,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.cbmoney.R
-import com.cbmoney.presentation.theme.CBMoneyTheme
-import com.cbmoney.utils.formatMoney
+import com.cbmoney.presentation.theme.CBMoneyTypography
+import com.cbmoney.presentation.theme.Spacing
+import com.cbmoney.utils.exts.formatMoney
+
 
 @Composable
 fun FinanceCard(
@@ -69,21 +69,19 @@ fun FinanceCard(
                         tint = if (isIncome) Color(0xFF16A34A) else Color(0xFFDC2626),
                     )
                 }
-                Spacer(Modifier.width(8.dp))
+                Spacer(Modifier.width(Spacing.sm))
                 Text(
                     text = if (isIncome) stringResource(R.string.income) else stringResource(R.string.expense),
-                    fontSize = 12.sp,
-                    style = MaterialTheme.typography.labelLarge,
+                    style = CBMoneyTypography.Title.Medium.Regular,
                     color = Color.Black
                 )
             }
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Spacing.sm))
             Text(
                 text = "${money.formatMoney()} ₫",
-                fontSize = 18.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.displayMedium,
+                style = CBMoneyTypography.Title.Medium.Bold,
             )
         }
 
@@ -95,17 +93,17 @@ fun FinanceCard(
 @Preview
 @Composable
 private fun FinanceCardPreview() {
-    CBMoneyTheme {
+
         FinanceCard(money = 200000000L)
 
-    }
+
 }
 
 @Preview
 @Composable
 private fun FinanceCardPreview2() {
-    CBMoneyTheme {
+
 
         FinanceCard(isIncome = false, money = 9000L)
-    }
+
 }

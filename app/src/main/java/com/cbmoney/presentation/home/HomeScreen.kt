@@ -22,7 +22,6 @@ import androidx.compose.material.icons.filled.AttachMoney
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,25 +35,34 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
 import com.cbmoney.presentation.components.ButtonWithIcon
 import com.cbmoney.presentation.home.components.CarMoney
 import com.cbmoney.presentation.home.components.FinanceCard
 import com.cbmoney.presentation.home.components.MonthlySpendingCard
 import com.cbmoney.presentation.home.components.model.MonthlyData
-import com.cbmoney.presentation.theme.Background
-import com.cbmoney.presentation.theme.CBMoneyTheme
+import com.cbmoney.presentation.theme.CBMoneyColors
+import com.cbmoney.presentation.theme.CBMoneyTypography
+import com.cbmoney.presentation.theme.Spacing
+import org.koin.androidx.compose.koinViewModel
+
 
 @Composable
-fun HomeScreen(navigateToReport: () -> Unit) {
-
-    HomeScreenContent(navigateToReport = navigateToReport)
-
+fun HomeScreen(
+    navigateToReport: () -> Unit,
+    homeViewModel: HomeViewModel = koinViewModel()
+) {
+    val uiState by homeViewModel.viewState.collectAsStateWithLifecycle()
+    HomeScreenContent(
+        uiState,
+        navigateToReport = navigateToReport
+    )
 }
 
 @Composable
 fun HomeScreenContent(
+    uiState: HomeState,
     navigateToReport: () -> Unit
 ) {
     var selectedIndex by remember { mutableIntStateOf(0) }
@@ -78,33 +86,37 @@ fun HomeScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Background)
+            .background(CBMoneyColors.BackGround.BackgroundPrimary)
             .statusBarsPadding()
-            .padding(horizontal = 8.dp)
+            .padding(horizontal = Spacing.sm)
             .padding(bottom = 70.dp)
             .verticalScroll(rememberScrollState())
         ,
 
     ) {
 
-        HeaderSection()
+        HeaderSection(
+            user = uiState.name,
+            onClickProfile = {},
+            onClickNotification = {}
+        )
         CarMoney(
             onClick = {},
             Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp)
+                .padding(top = Spacing.sm)
         )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp),
+                .padding(top = Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             FinanceCard(
                 modifier = Modifier.weight(1f),
                 money = income
             )
-            Spacer(Modifier.width(8.dp))
+            Spacer(Modifier.width(Spacing.sm))
             FinanceCard(
                 modifier = Modifier.weight(1f),
                 isIncome = false,
@@ -117,12 +129,12 @@ fun HomeScreenContent(
             {navigateToReport()},
             listData,
             Modifier
-                .padding(top = 8.dp)
+                .padding(top = Spacing.sm)
         )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp),
+                .padding(top = Spacing.sm),
         ) {
             ButtonWithIcon(
                 modifier = Modifier
@@ -131,18 +143,18 @@ fun HomeScreenContent(
                 onClick = {},
                 iconVector = Icons.Default.Add
             )
-            Spacer(Modifier.width(4.dp))
+            Spacer(Modifier.width(Spacing.sm))
             ButtonWithIcon(
                 modifier = Modifier
                     .weight(1f),
                 text = stringResource(R.string.additional_income),
                 onClick = {},
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
-                    contentColor = Color.Black,
+                    containerColor = CBMoneyColors.White,
+                    contentColor = CBMoneyColors.Text.TextPrimary,
                 ),
                 iconVector = Icons.Default.AttachMoney,
-                tint = MaterialTheme.colorScheme.primary
+                tint = CBMoneyColors.Black
             )
 
         }
@@ -184,19 +196,17 @@ fun HeaderSection(
                 )
             }
 
-            Spacer(Modifier.width(8.dp))
+            Spacer(Modifier.width(Spacing.sm))
             Column {
                 Text(
                     text = stringResource(R.string.hello_user),
-                    color = Color(0xFF6B7280),
-                    fontSize = 14.sp,
-                    style = MaterialTheme.typography.labelLarge
+                    color = CBMoneyColors.Neutral.NeutralGray,
+                    style = CBMoneyTypography.Title.Small.Regular
                 )
                 Text(
                     text = user,
                     color = Color.Black,
-                    fontSize = 16.sp,
-                    style = MaterialTheme.typography.displayMedium
+                    style = CBMoneyTypography.Title.Medium.Medium
                 )
             }
 
@@ -232,7 +242,7 @@ fun HeaderSection(
 @Preview
 @Composable
 private fun HomeScreenPreview() {
-    CBMoneyTheme {
+
         HomeScreen({})
-    }
+
 }

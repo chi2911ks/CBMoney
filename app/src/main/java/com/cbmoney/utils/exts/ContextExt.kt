@@ -1,27 +1,11 @@
-package com.cbmoney.utils
+package com.cbmoney.utils.exts
 
-import android.app.Activity
 import android.app.LocaleManager
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.LocaleList
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
-import java.text.NumberFormat
-import java.util.Locale
-
-fun Context.setAppLocale(language: String) {
-    val locale = Locale(language)
-    Locale.setDefault(locale)
-
-    val config = resources.configuration
-    config.setLocale(locale)
-    @Suppress("DEPRECATION")
-    resources.updateConfiguration(config, resources.displayMetrics)
-}
-fun Long.formatMoney(): String =
-    NumberFormat.getInstance(Locale("vi", "VN")).format(this)
 
 fun Context.getLanguageCode(): String {
     return if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

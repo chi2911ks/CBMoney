@@ -19,8 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.cbmoney.presentation.theme.CBMoneyTheme
-import com.cbmoney.presentation.theme.SoftGrey
+import com.cbmoney.presentation.theme.CBMoneyColors
 
 @Composable
 fun LanguageToggle(
@@ -32,7 +31,7 @@ fun LanguageToggle(
     Row(
         modifier = modifier
             .background(
-                color = SoftGrey,
+                color = CBMoneyColors.Gray.Gray,
                 shape = RoundedCornerShape(50)
             )
             .padding(4.dp)
@@ -69,10 +68,10 @@ fun LanguageItem(text: String, selected: Boolean, onCLick: () -> Unit) {
 @Preview
 @Composable
 private fun LanguageTogglePreview() {
-    CBMoneyTheme {
+
         LanguageToggle() {
 
         }
 
-    }
+
 }

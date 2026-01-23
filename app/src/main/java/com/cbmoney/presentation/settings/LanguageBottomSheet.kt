@@ -37,12 +37,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cbmoney.R
 import com.cbmoney.presentation.settings.model.Languages
+import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
-import com.cbmoney.presentation.theme.GreenColor
-import com.cbmoney.presentation.theme.Spacing
-import com.cbmoney.utils.getLanguageCode
-import com.cbmoney.utils.handleOnSaveLanguage
 
+import com.cbmoney.presentation.theme.Spacing
+import com.cbmoney.utils.exts.getLanguageCode
+import com.cbmoney.utils.exts.handleOnSaveLanguage
 
 
 @Composable
@@ -88,7 +88,7 @@ fun LanguageBottomSheet() {
                 )
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = GreenColor,
+                containerColor = CBMoneyColors.Primary.Primary ,
                 contentColor = Color.Black
             ),
             modifier = Modifier
@@ -113,7 +113,7 @@ fun LanguageItem(
             .clickable {
                 onChangeLanguage(language)
             }
-            .border(2.dp, GreenColor.copy(alpha = 0.5f), CBMoneyShapes.large)
+            .border(2.dp, CBMoneyColors.Primary.Primary.copy(alpha = 0.5f), CBMoneyShapes.large)
             .background(Color.White)
             .padding(Spacing.md),
     ) {

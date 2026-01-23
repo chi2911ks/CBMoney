@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Error
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,24 +20,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.cbmoney.presentation.theme.CBMoneyTheme
-import com.cbmoney.presentation.theme.GreenColor
+import coil3.compose.AsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
+import com.cbmoney.presentation.theme.CBMoneyColors
+
 
 @Composable
 fun EditableAvatar(
-    imageRes: Int,
+//    imageRes: Int,
+    imageURL: String? = null,
     onEditClick: () -> Unit,
     onAvatarClick: () -> Unit
 ) {
+    val painter = rememberAsyncImagePainter(imageURL)
     Box(
         modifier = Modifier.size(150.dp),
     ) {
         // Avatar
         Image(
-            painter = painterResource(imageRes),
+            painter = painter,
             contentDescription = "avatar",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -45,6 +50,34 @@ fun EditableAvatar(
                 .clickable { onAvatarClick() }
         )
 
+//        AsyncImage(
+//            model = ImageRequest.Builder(LocalContext.current)
+//                .data(imageURL)
+//                .crossfade(true)
+//                .build(),
+//            placeholder = painterResource(R.drawable.avatar_boy),
+//            error = painterResource(R.drawable.avatar_boy),
+//            contentDescription = null,
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .clip(CircleShape)
+//                .border(1.dp, Color.Gray, CircleShape)
+//                .clickable { onAvatarClick() }
+//        )
+        when (painter.state) {
+            is AsyncImagePainter.State.Loading -> {
+                CircularProgressIndicator()
+            }
+            is AsyncImagePainter.State.Error -> {
+                Icon(
+                    imageVector = Icons.Default.Error,
+                    contentDescription = "Error loading image"
+                )
+            }
+            else -> {
+                // Success or Empty state handled by the Image composable
+            }
+        }
 
 
         // Edit icon
@@ -54,7 +87,7 @@ fun EditableAvatar(
                 .align(Alignment.BottomEnd)
                 .offset(x = (-4).dp, y = (-4).dp)
                 .clip(CircleShape)
-                .background(GreenColor) // xanh lá
+                .background(CBMoneyColors.Primary.Primary ) // xanh lá
                 .clickable { onEditClick() },
             contentAlignment = Alignment.Center
         ) {
@@ -71,11 +104,10 @@ fun EditableAvatar(
 @Preview
 @Composable
 private fun EditableAvatarPreview() {
-    CBMoneyTheme {
+
         EditableAvatar(
-            imageRes = com.cbmoney.R.drawable.avatar_boy,
             onEditClick = {},
-            {}
+            onAvatarClick = {}
         )
-    }
+
 }

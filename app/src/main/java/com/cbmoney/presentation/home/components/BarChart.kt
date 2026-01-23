@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cbmoney.R
 import com.cbmoney.presentation.home.components.model.MonthlyData
+import com.cbmoney.presentation.theme.CBMoneyColors
 
 @Composable
 fun MonthlySpendingCard(
@@ -51,7 +52,9 @@ fun MonthlySpendingCard(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .background(Color.White, shape = RoundedCornerShape(24.dp)),
+            .background(
+                CBMoneyColors.White,
+                shape = RoundedCornerShape(24.dp)),
     ) {
         Column(
             modifier = Modifier

@@ -1,15 +1,28 @@
 package com.cbmoney.presentation.main
 
-import androidx.lifecycle.ViewModel
+import com.cbmoney.base.BaseMviViewModel
+import com.cbmoney.base.MviEvent
+import com.cbmoney.base.MviIntent
+import com.cbmoney.base.MviState
 import com.cbmoney.presentation.main.model.MainTab
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
-class MainViewModel: ViewModel(){
-    private val _viewState: MutableStateFlow<MainTab> = MutableStateFlow(MainTab.HOME)
-    val viewState: StateFlow<MainTab> = _viewState.asStateFlow()
-    fun handleNavigateToTab(mainTab: MainTab) {
-        _viewState.value = mainTab
+data class MainState(
+    val currentTab: MainTab = MainTab.HOME
+): MviState
+sealed class MainEvent: MviEvent {
+
+}
+sealed class MainIntent: MviIntent {
+    data class NavigateTab(val tab: MainTab): MainIntent()
+}
+class MainViewModel: BaseMviViewModel<MainState, MainEvent, MainIntent>(){
+    override fun initialState(): MainState = MainState()
+    override fun processIntent(intent: MainIntent){
+        when(intent){
+            is MainIntent.NavigateTab -> handleNavigateToTab(intent.tab)
+        }
+    }
+    fun handleNavigateToTab(tab: MainTab) {
+        updateState { copy(currentTab = tab) }
     }
 }

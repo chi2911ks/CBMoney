@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,20 +31,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.cbmoney.R
 import com.cbmoney.presentation.profile.components.SettingItem
 import com.cbmoney.presentation.settings.components.SettingToggleItem
-import com.cbmoney.presentation.theme.CBMoneyTheme
-import com.cbmoney.presentation.theme.NeutralGray
-import com.cbmoney.utils.getLanguageCode
+import com.cbmoney.presentation.theme.CBMoneyColors.Neutral.NeutralGray
+import com.cbmoney.presentation.theme.CBMoneyTypography
+import com.cbmoney.utils.exts.getLanguageCode
 
 @Composable
 fun SettingsScreen(
     onNavigationBack: () -> Unit,
     onShowLanguageBottomSheet: () -> Unit
 ) {
-    SettingScreenContent(onNavigationBack = onNavigationBack, onShowLanguageBottomSheet= onShowLanguageBottomSheet)
+    SettingScreenContent(onNavigationBack = onNavigationBack, onShowLanguageBottomSheet=onShowLanguageBottomSheet)
 }
 
 @Composable
@@ -76,8 +74,7 @@ fun SettingScreenContent(
                 text = stringResource(R.string.app_setting),
                 modifier = Modifier
                     .align(Alignment.Center),
-                fontSize = 16.sp,
-                style = MaterialTheme.typography.displayMedium
+                style = CBMoneyTypography.Body.Large.Medium,
             )
         }
         HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
@@ -96,8 +93,7 @@ private fun FinanceContent(
     Text(
         text = stringResource(R.string.finance).uppercase(),
         color = NeutralGray,
-        fontSize = 14.sp,
-        style = MaterialTheme.typography.displayMedium,
+        style = CBMoneyTypography.Title.Small.Medium,
         modifier = Modifier.padding(8.dp)
     )
     Column(
@@ -130,8 +126,7 @@ fun CustomizeContent(
     Text(
         text = stringResource(R.string.customize).uppercase(),
         color = NeutralGray,
-        fontSize = 14.sp,
-        style = MaterialTheme.typography.displayMedium,
+        style = CBMoneyTypography.Title.Small.Medium,
         modifier = Modifier.padding(8.dp)
     )
     Column(
@@ -167,8 +162,7 @@ fun NotificationContent(
     Text(
         text = stringResource(R.string.notification).uppercase(),
         color = NeutralGray,
-        fontSize = 14.sp,
-        style = MaterialTheme.typography.displayMedium,
+        style = CBMoneyTypography.Title.Small.Medium,
         modifier = Modifier.padding(8.dp)
     )
     Column(
@@ -189,7 +183,7 @@ fun NotificationContent(
 @Preview
 @Composable
 private fun SettingScreenContentPreview() {
-    CBMoneyTheme {
+
         SettingScreenContent({}, {})
-    }
+
 }

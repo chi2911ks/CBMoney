@@ -10,7 +10,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,10 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.cbmoney.presentation.theme.GreenColor
-import com.cbmoney.presentation.theme.LightSageGreen
+import com.cbmoney.presentation.theme.CBMoneyColors
+import com.cbmoney.presentation.theme.CBMoneyTypography
 
 
 @Composable
@@ -30,8 +29,8 @@ fun ButtonWithIcon(
     text: String,
     onClick: () -> Unit,
     colors: ButtonColors = ButtonDefaults.buttonColors(
-        containerColor = GreenColor,
-        contentColor = Color.Black,
+        containerColor = CBMoneyColors.Primary.Primary,
+        contentColor = CBMoneyColors.Black,
     ),
     @DrawableRes iconInt: Int? = null,
     tint: Color = Color.Unspecified
@@ -58,8 +57,8 @@ fun ButtonWithIcon(
     text: String,
     onClick: () -> Unit,
     colors: ButtonColors = ButtonDefaults.buttonColors(
-        containerColor = GreenColor,
-        contentColor = Color.Black,
+        containerColor = CBMoneyColors.Primary.Primary,
+        contentColor = CBMoneyColors.Black
     ),
     iconVector: ImageVector? = null,
     tint: Color = Color.Unspecified
@@ -86,8 +85,8 @@ fun ButtonPrimary(
     onClick: () -> Unit,
     text: String,
     colors: ButtonColors = ButtonDefaults.buttonColors(
-        containerColor = GreenColor,
-        contentColor = Color.Black,
+        containerColor = CBMoneyColors.Primary.Primary,
+        contentColor = CBMoneyColors.Black
     ),
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null
@@ -103,8 +102,9 @@ fun ButtonPrimary(
         Spacer(Modifier.width(4.dp))
         Text(
             text = text,
-            fontSize = 14.sp,
-            style = MaterialTheme.typography.displayMedium
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            style = CBMoneyTypography.Body.Medium.Bold
         )
         if (trailingIcon != null) trailingIcon()
     }
@@ -125,7 +125,7 @@ fun OutlineButtonPrimary(
         colors = colors,
         border = BorderStroke(
             width = 1.dp,
-            color = LightSageGreen
+            color = CBMoneyColors.Border.BorderLight
         ),
     ) {
         if (iconInt != null) {
@@ -140,8 +140,7 @@ fun OutlineButtonPrimary(
 
         Text(
             text = text,
-            fontSize = 16.sp,
-            style = MaterialTheme.typography.displayMedium
+            style = CBMoneyTypography.Title.Small.Bold
         )
     }
 }

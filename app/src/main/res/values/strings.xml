@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- string autherror-->
+    <string name="error_empty_field">Empty field</string>
+    <string name="error_invalid_email">Invalid email</string>
+    <string name="error_wrong_password">Wrong password</string>
+    <string name="error_email_exists">Email already in use</string>
+    <string name="error_unknown">Something went wrong</string>
+    <string name="error_invalid_account">Invalid email or password</string>
+
     <string name="app_name">CBMoney</string>
     <string name="onboarding_get_started">Get Started</string>
     <string name="already_account">Already have an account?</string>

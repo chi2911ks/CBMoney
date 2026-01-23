@@ -16,9 +16,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.cbmoney.presentation.theme.CBMoneyColors
+import com.cbmoney.presentation.theme.CBMoneyColors.Neutral.NeutralGray
 import com.cbmoney.presentation.theme.CBMoneyShapes
-import com.cbmoney.presentation.theme.GreenColor
-import com.cbmoney.presentation.theme.NeutralGray
 import com.cbmoney.presentation.theme.Spacing
 
 @Composable
@@ -35,7 +35,7 @@ fun ToggleButton(
             .clickable {
                 onCheckedChange(!checked)
             }
-            .background(if (checked) GreenColor else NeutralGray)
+            .background(if (checked) CBMoneyColors.Primary.Primary else NeutralGray)
             .padding(horizontal = Spacing.xs),
     ){
         Box(

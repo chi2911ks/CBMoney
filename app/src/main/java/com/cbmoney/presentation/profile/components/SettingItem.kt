@@ -13,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,10 +24,10 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
-import com.cbmoney.presentation.theme.CBMoneyTheme
-import com.cbmoney.presentation.theme.GreenColor
+import com.cbmoney.presentation.theme.CBMoneyTypography
+
 
 @Composable
 fun SettingItem(
@@ -38,7 +37,7 @@ fun SettingItem(
     shape: Shape = RectangleShape,
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
-    tintColor: Color = GreenColor,
+    tintColor: Color = CBMoneyColors.Primary.Primary,
     onClick: () -> Unit,
 ) {
 
@@ -83,17 +82,15 @@ fun SettingItem(
                 ) {
                     Text(
                         text = title,
-                        fontSize = 14.sp,
                         color = Color.Black,
-                        style = MaterialTheme.typography.displayMedium
+                        style = CBMoneyTypography.Body.Medium.Medium
                     )
 
                     if (subtitle != null) {
                         Text(
                             text = subtitle,
-                            fontSize = 12.sp,
                             color = Color.Gray,
-                            style = MaterialTheme.typography.bodyMedium
+                            style = CBMoneyTypography.Body.Small.Medium
                         )
                     }
                 }
@@ -117,7 +114,7 @@ fun SettingItem(
 @Preview
 @Composable
 private fun SettingItemPreview() {
-    CBMoneyTheme {
+
         SettingItem(
             onClick = {},
             title = "Thông tin cá nhân",
@@ -125,5 +122,5 @@ private fun SettingItemPreview() {
             trailingIcon = Icons.Default.ChevronRight,
             leadingIcon = Icons.Default.Person
         )
-    }
+
 }

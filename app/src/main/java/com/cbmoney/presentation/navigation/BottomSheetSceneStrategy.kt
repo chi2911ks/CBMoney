@@ -19,7 +19,8 @@ import androidx.navigation3.scene.Scene
 import androidx.navigation3.scene.SceneStrategy
 import androidx.navigation3.scene.SceneStrategyScope
 import com.cbmoney.presentation.navigation.BottomSheetSceneStrategy.Companion.bottomSheet
-import com.cbmoney.presentation.theme.Background
+import com.cbmoney.presentation.theme.CBMoneyColors
+
 
 /** An [OverlayScene] that renders an [entry] within a [ModalBottomSheet]. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,7 +39,7 @@ internal class BottomSheetScene<T : Any>(
         ModalBottomSheet(
             onDismissRequest = onBack,
             properties = modalBottomSheetProperties,
-            containerColor = Background,
+            containerColor = CBMoneyColors.BackGround.BackgroundPrimary,
             dragHandle = {
                 Box(
                     modifier = Modifier

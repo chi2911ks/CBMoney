@@ -28,8 +28,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cbmoney.R
-import com.cbmoney.presentation.theme.CBMoneyTheme
-import com.cbmoney.utils.formatMoney
+import com.cbmoney.utils.exts.formatMoney
 
 @Composable
 fun CarMoney(onClick: () -> Unit,  modifier: Modifier = Modifier, money: Long = 0) {
@@ -141,8 +140,8 @@ fun GlowBox(
 @Preview(showBackground = true)
 @Composable
 fun CarMoneyPreview(modifier: Modifier = Modifier) {
-    CBMoneyTheme {
+
         CarMoney({}, Modifier)
-    }
+
 
 }

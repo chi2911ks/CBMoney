@@ -16,13 +16,15 @@ import com.cbmoney.presentation.main.components.BottomNavBar
 import com.cbmoney.presentation.main.model.MainTab
 import com.cbmoney.presentation.profile.ProfileScreen
 import com.cbmoney.presentation.reports.ReportScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MainScreen(
     navigateToPersonInfo: () -> Unit,
     navigateToSettings: () -> Unit,
     navigateToHelpCenter: () -> Unit,
-    viewModel: MainViewModel
+    logout: () -> Unit,
+    viewModel: MainViewModel = koinViewModel()
 ) {
 //    var currentTab by remember { mutableStateOf(MainTab.HOME) }
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
@@ -30,11 +32,10 @@ fun MainScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-
     ) {
-        when (viewState) {
+        when (viewState.currentTab) {
             MainTab.HOME -> HomeScreen(
-                navigateToReport = { viewModel.handleNavigateToTab(MainTab.REPORTS)}
+                navigateToReport = { viewModel.handleNavigateToTab(MainTab.REPORTS) }
             )
 
             MainTab.REPORTS -> ReportScreen()
@@ -42,12 +43,15 @@ fun MainScreen(
             MainTab.PROFILE -> ProfileScreen(
                 navigateToPersonInfo = navigateToPersonInfo,
                 navigateToSettings = navigateToSettings,
-                navigateToHelpCenter = navigateToHelpCenter
+                navigateToHelpCenter = navigateToHelpCenter,
+                logout = {
+                    logout()
+                }
             )
         }
         BottomNavBar(
-            currentTab = viewState,
-            onTabChange = { newTab -> viewModel.handleNavigateToTab(newTab) },
+            currentTab = viewState.currentTab,
+            onTabChange = { newTab -> viewModel.processIntent(MainIntent.NavigateTab(newTab)) },
             {},
             modifier = Modifier
                 .fillMaxWidth()
@@ -62,5 +66,5 @@ fun MainScreen(
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
-    MainScreen({}, {}, {}, MainViewModel())
+    MainScreen({}, {}, {}, {})
 }
