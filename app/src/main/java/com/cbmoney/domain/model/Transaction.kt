@@ -3,7 +3,7 @@ package com.cbmoney.domain.model
 import com.google.firebase.Timestamp
 
 data class Transaction(
-    val id: Int,
+    val id: String,
     val amount: Long,
     val type: String, //("income" | "expense")
     val categoryId: String,

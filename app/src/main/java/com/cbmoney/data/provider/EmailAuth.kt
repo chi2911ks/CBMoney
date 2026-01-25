@@ -1,8 +1,8 @@
 package com.cbmoney.data.provider
 
 import android.util.Log
-import com.cbmoney.domain.auth.model.AuthError
-import com.cbmoney.domain.auth.model.AuthResult
+import com.cbmoney.data.provider.model.AuthError
+import com.cbmoney.data.provider.model.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException

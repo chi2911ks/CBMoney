@@ -36,7 +36,7 @@ fun SplashScreen(
         viewModel.processIntent(SplashIntent.CheckLogin)
     }
     LaunchedEffect(Unit) {
-        delay(1500)
+        delay(1000)
         viewModel.singleEvent.collect { event ->
             when (event) {
                 is SplashEvent.NavigateToMain -> navigateToHome()

@@ -52,8 +52,8 @@
     <string name="hello_user">Hello,</string>
     <string name="cash_and_bank">Cash + Bank accounts</string>
 
-    <string name="income">Income</string>
-    <string name="expense">Expense</string>
+    <string name="total_expenditure">Total expenditure</string>
+    <string name="total_income">Total income</string>
 
     <string name="total_balance">Total balance</string>
 
@@ -101,5 +101,20 @@
     <string name="confirm">Confirm</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="finance">Finance</string>
+
+
+    <string name="add_transaction">Add transaction</string>
+    <string name="amount">Amount</string>
+    <string name="categories">Categories</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="date">Date</string>
+    <string name="note">Note</string>
+    <string name="add_trans_des">Add transaction description…</string>
+    <string name="cancel">Cancel</string>
+    <string name="select">Select</string>
+    <string name="add_income_des">Add income description…</string>
+    <string name="save_transaction">Save transaction</string>
+    <string name="see_all">See all</string>
 
 </resources>

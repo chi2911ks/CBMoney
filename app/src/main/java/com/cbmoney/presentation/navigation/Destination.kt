@@ -18,6 +18,8 @@ sealed interface Destination : NavKey {
 
     @Serializable
     data object Settings : Destination
+    @Serializable
+    data object Transaction : Destination
 
     @Serializable
     data object LanguageBottomSheet : Destination

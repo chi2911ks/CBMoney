@@ -1,4 +1,4 @@
-package com.cbmoney.domain.auth.model
+package com.cbmoney.data.provider.model
 
 sealed class AuthResult {
     object Success : AuthResult()

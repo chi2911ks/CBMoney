@@ -1,4 +1,4 @@
-package com.cbmoney.domain.auth.model
+package com.cbmoney.data.provider.model
 
 sealed class AuthError {
     object InvalidCredential : AuthError()
@@ -8,5 +8,4 @@ sealed class AuthError {
     object Fail : AuthError()
     object WrongPassword : AuthError()
     object InvalidAccount : AuthError()
-
 }

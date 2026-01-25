@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
 import com.cbmoney.presentation.components.ButtonPrimary
@@ -124,7 +123,6 @@ fun HeaderSection(
     ) {
         Text(
             text = "Hồ sơ",
-            fontSize = 16.sp,
             style = CBMoneyTypography.Body.Large.Bold
         )
         Spacer(Modifier.height(16.dp))

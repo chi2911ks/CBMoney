@@ -3,7 +3,7 @@ package com.cbmoney.domain.model
 import com.google.firebase.Timestamp
 
 data class Budget(
-    val id: Int,
+    val id: String,
     val categoryId: String,
     val amount: Long,
     val period: String, //("monthly" | "yearly")

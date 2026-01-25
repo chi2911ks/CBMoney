@@ -4,7 +4,7 @@ import android.app.Activity
 import com.cbmoney.base.MviEvent
 import com.cbmoney.base.MviIntent
 import com.cbmoney.base.MviState
-import com.cbmoney.domain.auth.model.AuthError
+import com.cbmoney.data.provider.model.AuthError
 
 data class RegisterState(
     val isLoading: Boolean = false,

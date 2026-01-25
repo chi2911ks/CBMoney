@@ -20,6 +20,7 @@ import com.cbmoney.presentation.register.RegisterScreen
 import com.cbmoney.presentation.settings.LanguageBottomSheet
 import com.cbmoney.presentation.settings.SettingsScreen
 import com.cbmoney.presentation.splash.SplashScreen
+import com.cbmoney.presentation.transaction.TransactionScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -96,8 +97,11 @@ fun NavRoutes() {
                             add(Destination.Settings)
                         },
                         navigateToHelpCenter = {},
+                        navigateToTransaction = {
+                            add(Destination.Transaction)
+                        },
                         logout = {
-//                            clear()
+                            clear()
                             add(Destination.Login)
                         }
                     )
@@ -106,6 +110,13 @@ fun NavRoutes() {
                     metadata = BottomSheetSceneStrategy.bottomSheet()
                 ) {
                     LanguageBottomSheet()
+                }
+                entry<Destination.Transaction> {
+                    TransactionScreen(
+                        onBackNavigation = {
+                            removeLastOrNull()
+                        }
+                    )
                 }
             },
             transitionSpec = {

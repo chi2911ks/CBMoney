@@ -11,7 +11,7 @@ object CBMoneyColors {
     val Red = Color(0xFFFF3429)
     val Blue = Color(0xFF007AFF)
     val Green = Color(0xFF34C759)
-
+    val Transparent = Color(0x00000000)
     object Primary {
         val Primary = Color(0xFF13EC5B)
         val PrimaryBackground = Color(0xFFF0F8FF)
@@ -58,7 +58,7 @@ val BackgroundPrimary = Color(0xFFf6f8f6)
         val Gray3 = Color(0xFFF7F7F7)
         val Gray4 = Color(0xFFEEEEEF)
         val Gray5 = Color(0xFF8E8E93)
-
+        val Gray6 = Color(0xFFE0E0E0)
         val OnGray = Color(0xFFB2B2B5)
     }
 

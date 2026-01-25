@@ -45,8 +45,9 @@
     <string name="hello_user">Xin chào,</string>
     <string name="cash_and_bank">"Ví tiền mặt + Tài khoản"</string>
 
-    <string name="income">Tổng thu</string>
-    <string name="expense">Tổng chi</string>
+
+    <string name="total_expenditure">Tổng chi tiêu</string>
+    <string name="total_income">Tổng thu nhập</string>
 
     <string name="total_balance">Tổng số dư</string>
     <string name="monthly_spending">Chi tiêu hàng tháng</string>
@@ -89,4 +90,19 @@
     <string name="confirm">Xác nhận</string>
     <string name="dark_mode">Chế độ tối</string>
     <string name="finance">Tài chính</string>
+
+
+    <string name="add_transaction">Thêm giao dịch</string>
+    <string name="amount">Số tiền</string>
+    <string name="categories">Hạng mục</string>
+    <string name="income">Thu nhập</string>
+    <string name="expense">Chi tiêu</string>
+    <string name="date">Ngày</string>
+    <string name="note">Ghi chú</string>
+    <string name="add_trans_des">Thêm mô tả giao dịch…</string>
+    <string name="cancel">Huỷ</string>
+    <string name="select">Chọn</string>
+    <string name="add_income_des">Thêm mô tả thu nhập…</string>
+    <string name="save_transaction">Lưu giao dịch</string>
+    <string name="see_all">Xem tất cả</string>
 </resources>

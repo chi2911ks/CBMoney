@@ -1,7 +1,7 @@
 package com.cbmoney.data.mapper
 
 import com.cbmoney.R
-import com.cbmoney.domain.auth.model.AuthError
+import com.cbmoney.data.provider.model.AuthError
 
 
 fun AuthError.toMessage(context: android.content.Context): String {

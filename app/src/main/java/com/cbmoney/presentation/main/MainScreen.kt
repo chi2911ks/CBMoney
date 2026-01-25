@@ -23,6 +23,7 @@ fun MainScreen(
     navigateToPersonInfo: () -> Unit,
     navigateToSettings: () -> Unit,
     navigateToHelpCenter: () -> Unit,
+    navigateToTransaction: () -> Unit,
     logout: () -> Unit,
     viewModel: MainViewModel = koinViewModel()
 ) {
@@ -52,7 +53,7 @@ fun MainScreen(
         BottomNavBar(
             currentTab = viewState.currentTab,
             onTabChange = { newTab -> viewModel.processIntent(MainIntent.NavigateTab(newTab)) },
-            {},
+            navigateToTransaction,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
@@ -66,5 +67,5 @@ fun MainScreen(
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
-    MainScreen({}, {}, {}, {})
+    MainScreen({}, {}, {}, {},{})
 }
