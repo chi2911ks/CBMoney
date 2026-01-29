@@ -244,10 +244,17 @@ object CBMoneyTypography {
             )
 
             val SemiBold = TextStyle(
-                fontSize = 14.sp,
-                lineHeight = 20.sp,
+                fontSize = 12.sp,
+                lineHeight = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = AppFontSemiBold,
+                lineBreak = LineBreak.Simple
+            )
+            val Bold = TextStyle(
+                fontSize = 12.sp,
+                lineHeight = 16.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = AppFontBold,
                 lineBreak = LineBreak.Simple
             )
         }

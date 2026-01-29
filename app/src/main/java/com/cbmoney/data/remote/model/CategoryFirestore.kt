@@ -3,7 +3,8 @@ package com.cbmoney.data.remote.model
 import com.google.firebase.Timestamp
 
 data class CategoryFirestore(
-    val categoryId: String = "",
+    val id: String = "",
+    val userId: String? = null,
     val name: String = "",
     val type: String = "",
     val icon: String = "",

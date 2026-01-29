@@ -3,11 +3,12 @@ package com.cbmoney.presentation.login
 import android.app.Activity
 import androidx.lifecycle.viewModelScope
 import com.cbmoney.base.BaseMviViewModel
-import com.cbmoney.data.provider.EmailAuth
-import com.cbmoney.data.provider.GoogleAuth
+import com.cbmoney.data.provider.EmailAuthClient
+import com.cbmoney.data.provider.GoogleAuthClient
 import com.cbmoney.data.provider.model.AuthError
 import com.cbmoney.data.provider.model.AuthResult
 import com.cbmoney.domain.model.User
+import com.cbmoney.domain.usecase.category.InitCategoriesDefaultUseCase
 import com.cbmoney.domain.usecase.user.GetUserUseCase
 import com.cbmoney.domain.usecase.user.SaveUserToUseCase
 import com.google.firebase.Timestamp
@@ -16,11 +17,12 @@ import kotlinx.coroutines.launch
 
 
 class LoginViewModel(
-    private val googleAuth: GoogleAuth,
-    private val emailAuth: EmailAuth,
+    private val googleAuthClient: GoogleAuthClient,
+    private val emailAuthClient: EmailAuthClient,
     private val firebaseAuth: FirebaseAuth,
     private val getUserUseCase: GetUserUseCase,
-    private val saveUserToUseCase: SaveUserToUseCase
+    private val saveUserToUseCase: SaveUserToUseCase,
+    private val initCategoriesDefaultUseCase: InitCategoriesDefaultUseCase
 ) : BaseMviViewModel<LoginState, LoginEvent, LoginIntent>() {
     override fun initialState(): LoginState = LoginState()
 
@@ -35,7 +37,7 @@ class LoginViewModel(
     private fun handleGoogleAuth(activity: Activity) {
         viewModelScope.launch {
             updateState { copy(isLoading = true) }
-            val result = googleAuth.signInGoogle(activity)
+            val result = googleAuthClient.signInGoogle(activity)
             if (result) {
                 checkUser()
 
@@ -49,7 +51,7 @@ class LoginViewModel(
     private fun handleEmailAuth(username: String, password: String) {
         viewModelScope.launch {
             updateState { copy(isLoading = true) }
-            val result = emailAuth.signIn(username, password)
+            val result = emailAuthClient.signIn(username, password)
             when (result) {
                 is AuthResult.Success -> checkUser()
                 is AuthResult.Failure -> {
@@ -64,7 +66,7 @@ class LoginViewModel(
 
         val currentUser = firebaseAuth.currentUser
         if (currentUser == null) {
-            googleAuth.signOut()
+            googleAuthClient.signOut()
             sendEvent(LoginEvent.LoginError(AuthError.Fail))
             return
         }
@@ -76,16 +78,17 @@ class LoginViewModel(
                     name = currentUser.displayName.orEmpty(),
                     email = currentUser.email.orEmpty(),
                     photoUrl = currentUser.photoUrl.toString(),
-                    createdAt = Timestamp.now().toDate().toString()
+                    createdAt = Timestamp.now().toDate().time
                 )
                 saveUserToUseCase(saveUser)
             } else {
                 saveUserToUseCase(user)
             }
+            initCategoriesDefaultUseCase()
             sendEvent(LoginEvent.NavigateToHome)
         }
         getUser.onFailure {
-            googleAuth.signOut()
+            googleAuthClient.signOut()
             sendEvent(LoginEvent.LoginError(AuthError.Fail))
         }
     }

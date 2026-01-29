@@ -14,6 +14,7 @@ class KoinApp : Application() {
                 appModule,
                 useCaseModule,
                 dataSourceModule,
+                roomModule,
                 repositoryModule,
                 viewModelModule
             )

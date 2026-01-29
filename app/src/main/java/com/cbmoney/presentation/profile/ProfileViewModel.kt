@@ -2,14 +2,14 @@ package com.cbmoney.presentation.profile
 
 import androidx.lifecycle.viewModelScope
 import com.cbmoney.base.BaseMviViewModel
-import com.cbmoney.data.provider.GoogleAuth
+import com.cbmoney.data.provider.GoogleAuthClient
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 
 class ProfileViewModel(
     private val firebaseAuth: FirebaseAuth,
-    private val googleAuth: GoogleAuth
+    private val googleAuthClient: GoogleAuthClient
 
 ) : BaseMviViewModel<ProfileState, ProfileEvent, ProfileIntent>() {
     init {
@@ -35,7 +35,7 @@ class ProfileViewModel(
     }
     private fun handleLogOut(){
         viewModelScope.launch {
-            googleAuth.signOut()
+            googleAuthClient.signOut()
             sendEvent(ProfileEvent.LogOut)
         }
 

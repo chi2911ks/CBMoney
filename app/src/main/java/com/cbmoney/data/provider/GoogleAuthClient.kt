@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.tasks.await
 
-class GoogleAuth(
+class GoogleAuthClient(
     private val firebaseAuth: FirebaseAuth
 ) {
     suspend fun signInGoogle(activity: Activity): Boolean {

@@ -1,16 +1,15 @@
 package com.cbmoney.data.local.room.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
 import androidx.room.Query
+import com.cbmoney.base.BaseDao
 import com.cbmoney.data.local.room.entities.BudgetEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface BudgetDao {
-    @Insert
-    suspend fun insertBudget(budget: BudgetEntity)
+interface BudgetDao: BaseDao<BudgetEntity> {
     @Query("SELECT * FROM budgets WHERE userId = :userId")
-    suspend fun getAllBudgets(userId: String): List<BudgetEntity>
+    fun getAllBudgets(userId: String): Flow<List<BudgetEntity>>
     @Query("SELECT * FROM budgets WHERE id = :id")
     suspend fun getBudgetById(id: String): BudgetEntity
 

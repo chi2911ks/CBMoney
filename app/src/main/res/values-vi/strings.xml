@@ -94,7 +94,7 @@
 
     <string name="add_transaction">Thêm giao dịch</string>
     <string name="amount">Số tiền</string>
-    <string name="categories">Hạng mục</string>
+    <string name="categories">Danh mục</string>
     <string name="income">Thu nhập</string>
     <string name="expense">Chi tiêu</string>
     <string name="date">Ngày</string>
@@ -105,4 +105,15 @@
     <string name="add_income_des">Thêm mô tả thu nhập…</string>
     <string name="save_transaction">Lưu giao dịch</string>
     <string name="see_all">Xem tất cả</string>
+
+    <string name="category_management">Quản lý danh mục</string>
+
+    <string name="category_list">Danh sách danh mục</string>
+    <string name="add_category">Thêm danh mục</string>
+    <string name="edit_category">Chỉnh sửa danh mục</string>
+    <string name="color">Màu sắc</string>
+    <string name="icon">Biểu tượng</string>
+    <string name="name_category">Tên danh mục</string>
+    <string name="example_category">Ví dụ: Thức ăn, Di chuyển…</string>
+    <string name="save">Lưu</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.cbmoney.presentation.transaction
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,26 +12,22 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDefaults
-import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -37,8 +35,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
-import com.cbmoney.domain.constants.DefaultCategoriesMap
+import com.cbmoney.domain.model.Category
 import com.cbmoney.domain.model.CategoryType
 import com.cbmoney.presentation.components.ButtonPrimary
 import com.cbmoney.presentation.theme.CBMoneyColors
@@ -46,29 +45,49 @@ import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.presentation.transaction.components.AmountInput
 import com.cbmoney.presentation.transaction.components.CategoryItem
-import com.cbmoney.presentation.transaction.components.DatePickerField
+import com.cbmoney.presentation.transaction.components.DateInputDialog
 import com.cbmoney.presentation.transaction.components.NoteTextField
 import com.cbmoney.presentation.transaction.components.TabTransaction
+import com.cbmoney.utils.exts.formatDigit
 import com.cbmoney.utils.exts.formatMoney
-import com.cbmoney.utils.exts.toFormatDate
+import org.koin.androidx.compose.koinViewModel
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TransactionScreen(
-    onBackNavigation: () -> Unit
+    onBackNavigation: () -> Unit,
+    navigateToCategory: (CategoryType) -> Unit,
+    viewModel: TransactionsViewModel = koinViewModel()
 ) {
+    val uiState by viewModel.viewState.collectAsStateWithLifecycle()
+
     TransactionScreenContent(
+        uiState,
         onBackNavigation = onBackNavigation,
-        navigateToCategory = {}
+        navigateToCategory = navigateToCategory,
+        processIntent = viewModel::processIntent
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TransactionScreenContent(
+    uiState: TransactionsState,
     onBackNavigation: () -> Unit,
-    navigateToCategory: (CategoryType) -> Unit
+    navigateToCategory: (CategoryType) -> Unit,
+    processIntent: (TransactionsIntent) -> Unit = {},
 ) {
-    var currentTab by remember { mutableStateOf(CategoryType.EXPENSE) }
+//    var currentTab by remember { mutableStateOf(CategoryType.EXPENSE) }
+    val categories = uiState.categories.filter { it.type == uiState.selectedType }
+    val datePickerState =
+        rememberDatePickerState()
+//    var selectedId by remember { mutableStateOf("") }
+    LaunchedEffect(datePickerState.selectedDateMillis) {
+        datePickerState.selectedDateMillis?.let {
+            processIntent(TransactionsIntent.ChangeDate(it))
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -98,30 +117,30 @@ fun TransactionScreenContent(
         }
         Spacer(modifier = Modifier.height(Spacing.xl))
         TabTransaction(
-            tabSelected = currentTab,
-            onTabSelected = { currentTab = it }
+            tabSelected = uiState.selectedType,
+            onTabSelected = {
+                processIntent(TransactionsIntent.ChangeTab(it))
+            }
         )
         Spacer(modifier = Modifier.height(Spacing.md))
-        val datePickerState =
-            rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = Spacing.lg),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            var amount by remember { mutableStateOf("0") }
+
             Text(
                 text = stringResource(R.string.amount),
                 style = CBMoneyTypography.Body.Large.Bold
             )
             AmountInput(
-                value = amount.formatMoney(),
-                onValueChange = { input ->
-                    val clean = input
-                        .replace(".", "")
-                    if (clean.all { it.isDigit() }) {
-                        amount = clean
+                value = uiState.amount.formatMoney(),
+                onValueChange = {
+                    val input = it.formatDigit()
+                    if (input != null) {
+                        processIntent(TransactionsIntent.ChangeAmount(input.toString()))
                     }
                 },
                 modifier = Modifier
@@ -132,19 +151,26 @@ fun TransactionScreenContent(
             )
             Spacer(modifier = Modifier.height(Spacing.sm))
             CategoriesContent(
-                currentTab,
-                navigateToCategory
+                categories,
+                uiState.selectedCategory,
+                {
+                    processIntent(TransactionsIntent.SelectCategory(it))
+                },
+                {
+                    navigateToCategory(uiState.selectedType)
+                }
             )
             Spacer(modifier = Modifier.height(Spacing.sm))
             DateInputDialog(datePickerState)
             Spacer(modifier = Modifier.height(Spacing.sm))
             NoteTextField(
                 label = stringResource(R.string.note),
-                value = "",
+                value = uiState.note,
                 placeholder = stringResource(R.string.add_trans_des),
-                onValueChange = {},
-
-                )
+                onValueChange = {
+                     processIntent(TransactionsIntent.ChangeNote(it))
+                }
+            )
         }
         Spacer(modifier = Modifier.height(Spacing.md))
         ButtonPrimary(
@@ -157,79 +183,12 @@ fun TransactionScreenContent(
 
 
 @Composable
-fun DateInputDialog(
-    datePickerState: DatePickerState,
-) {
-    var showDialog by remember { mutableStateOf(false) }
-    if (showDialog) {
-        DatePickerDialog(
-            onDismissRequest = { showDialog = false },
-            confirmButton = {
-                Text(
-                    text = stringResource(R.string.select),
-                    color = CBMoneyColors.Primary.Primary,
-                    style = CBMoneyTypography.Body.Large.Bold,
-                    modifier = Modifier
-                        .padding(Spacing.sm)
-                        .clickable { showDialog = false }
-                )
-            },
-            dismissButton = {
-                Text(
-                    text = stringResource(R.string.cancel),
-                    color = CBMoneyColors.Black,
-                    style = CBMoneyTypography.Body.Large.Bold,
-                    modifier = Modifier
-                        .padding(Spacing.sm)
-                        .clickable { showDialog = false }
-                )
-            },
-            colors = DatePickerDefaults.colors(
-                containerColor = CBMoneyColors.BackGround.BackgroundPrimary,
-            )
-        ){
-            DatePicker(
-                state = datePickerState,
-                colors = DatePickerDefaults.colors(
-                    containerColor = CBMoneyColors.BackGround.BackgroundPrimary,
-
-                    // ngày được chọn
-                    selectedDayContainerColor = CBMoneyColors.Primary.Primary.copy(0.3f),
-                    selectedDayContentColor = CBMoneyColors.Text.TextPrimary,
-
-                    // ngày hôm nay (vòng tròn)
-                    todayDateBorderColor = CBMoneyColors.BackGround.BackgroundPrimary,
-                    todayContentColor = CBMoneyColors.Text.TextPrimary,
-
-                    // ngày bình thường
-                    dayContentColor = CBMoneyColors.Text.TextPrimary,
-                    weekdayContentColor = CBMoneyColors.Text.TextSecondary
-                )
-            )
-
-        }
-    }
-    val selectedMillis = datePickerState.selectedDateMillis
-    selectedMillis?.let{
-        DatePickerField(
-            label = stringResource(R.string.date).uppercase(),
-            value = selectedMillis.toFormatDate(),
-            onClick = { showDialog = true },
-        )
-    }
-
-
-
-
-}
-@Composable
 fun CategoriesContent(
-    type: CategoryType = CategoryType.EXPENSE,
-    navigateToCategory: (CategoryType) -> Unit
+    categories: List<Category>,
+    selectedCategory: Category?,
+    onSelectedChange: (Category) -> Unit,
+    navigateToCategory: () -> Unit
 ) {
-    val default = DefaultCategoriesMap.categories[type]
-    var selected by remember { mutableStateOf(default?.get(0)["name"]) }
-
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -241,7 +200,7 @@ fun CategoriesContent(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Text(
                 text = stringResource(R.string.categories),
                 style = CBMoneyTypography.Body.Large.Bold,
@@ -253,7 +212,7 @@ fun CategoriesContent(
                 color = CBMoneyColors.Primary.Primary,
                 modifier = Modifier
                     .clickable {
-                        navigateToCategory(type)
+                        navigateToCategory()
                     }
             )
         }
@@ -262,23 +221,20 @@ fun CategoriesContent(
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             modifier = Modifier
-                .height(250.dp),
+                .heightIn(max = 250.dp),
             verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             horizontalArrangement = Arrangement.spacedBy(Spacing.sm)
         ) {
-            DefaultCategoriesMap.categories[type]?.let {
-                items(it.size) { index ->
-                    val item = it[index]
-                    CategoryItem(
-                        selected == item["name"] as String,
-                        { name-> selected = name },
-                        item["icon"] as String,
-                        item["name"] as String,
-                        item["color"] as String,
-                    )
-                }
+            items(
+                items = categories,
+                key = { it.id }
+            ) { cate ->
+                CategoryItem(
+                    selectedCategory == cate,
+                    { onSelectedChange(cate) },
+                    category = cate
+                )
             }
-
         }
 
     }
@@ -287,8 +243,6 @@ fun CategoriesContent(
 @Preview
 @Composable
 private fun TransactionScreenContentPreview() {
-    TransactionScreenContent({}, {})
-
 
 
 }

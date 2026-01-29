@@ -20,6 +20,6 @@ fun UserFirestore.toDomain(): User {
         name = name,
         email = email,
         photoUrl = photoUrl,
-        createdAt = createdAt.toString()
+        createdAt = createdAt?.toDate()?.time!!
     )
 }

@@ -1,14 +1,20 @@
 package com.cbmoney.domain.model
 
-import com.google.firebase.Timestamp
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Category(
-    val id: String,
+    val id: String = "",
+    val userId: String? = null,
     val name: String,
-    val type: String,
+    val type: CategoryType = CategoryType.EXPENSE,
     val icon: String,
-    val color: String,
-    val order: Int,
+    val iconColor: String,
+    val order: Int = 0,
     val isDefault: Boolean,
-    val createdAt: Timestamp,
+    val createdAt: Long = 0,
 )
+enum class CategoryType{
+    EXPENSE,
+    INCOME
+}

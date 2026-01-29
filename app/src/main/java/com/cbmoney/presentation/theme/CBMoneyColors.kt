@@ -9,8 +9,10 @@ object CBMoneyColors {
     val White60 = Color(0x99FFFFFF)
     val Black = Color(0xFF000000)
     val Red = Color(0xFFFF3429)
+    val Red2 = Color(0xFFF44336)
     val Blue = Color(0xFF007AFF)
     val Green = Color(0xFF34C759)
+    val Green2 = Color(0xFF4CAF50)
     val Transparent = Color(0x00000000)
     object Primary {
         val Primary = Color(0xFF13EC5B)
@@ -19,10 +21,48 @@ object CBMoneyColors {
 
     object BackGround {
 //        val BackgroundPrimary = Color(0xFFF5F7FA)
-val BackgroundPrimary = Color(0xFFf6f8f6)
+        val BackgroundPrimary = Color(0xFFf6f8f6)
         val BackgroundSecondary = Color(0xFFFAFAFA)
         val BackgroundOnboardingDots = Color(0xFFF5F5F5)
         val BackgroundLightBlue = Color(0xFFF2F8FF)
+    }
+    object CategoryColorList {
+        val list = listOf(
+            // --- Existing ---
+            Color(0xFFFF6B6B), // FOOD
+            Color(0xFF4ECDC4), // TRANSPORT
+            Color(0xFF95E1D3), // SHOPPING
+            Color(0xFFF38181), // ENTERTAINMENT
+            Color(0xFFFFA07A), // BILLS
+            Color(0xFF98D8C8), // HEALTH
+            Color(0xFF6C5CE7), // EDUCATION
+            Color(0xFFFDCB6E), // FASHION
+            Color(0xFFA29BFE), // HOME
+            Color(0xFF00B894), // INCOME
+            Color(0xFFBDBDBD), // OTHER
+
+            // --- Added (20) ---
+            Color(0xFFEF5350), // Red
+            Color(0xFFEC407A), // Pink
+            Color(0xFFAB47BC), // Purple
+            Color(0xFF7E57C2), // Deep Purple
+            Color(0xFF5C6BC0), // Indigo
+            Color(0xFF42A5F5), // Blue
+            Color(0xFF29B6F6), // Light Blue
+            Color(0xFF26C6DA), // Cyan
+            Color(0xFF26A69A), // Teal
+            Color(0xFF66BB6A), // Green
+            Color(0xFF9CCC65), // Light Green
+            Color(0xFFD4E157), // Lime
+            Color(0xFFFFEE58), // Yellow
+            Color(0xFFFFCA28), // Amber
+            Color(0xFFFFA726), // Orange
+            Color(0xFFFF7043), // Deep Orange
+            Color(0xFF8D6E63), // Brown
+            Color(0xFFBCAAA4), // Light Brown
+            Color(0xFF90A4AE), // Blue Grey
+            Color(0xFF78909C)  // Dark Blue Grey
+        )
     }
 
     object ListColors {

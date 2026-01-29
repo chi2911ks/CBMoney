@@ -39,6 +39,7 @@ import com.cbmoney.R
 import com.cbmoney.presentation.settings.model.Languages
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
+import com.cbmoney.presentation.theme.CBMoneyTypography
 
 import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.utils.exts.getLanguageCode
@@ -58,12 +59,12 @@ fun LanguageBottomSheet() {
     ){
         Text(
             text = stringResource(R.string.select_language),
-            style = MaterialTheme.typography.titleLarge
+            style = CBMoneyTypography.Title.Large.Medium
         )
         Text(
             text = stringResource(R.string.select_display_language),
             color = Color.Gray,
-            style = MaterialTheme.typography.bodyMedium
+            style = CBMoneyTypography.Body.Small.Regular
         )
         Spacer(Modifier.height(Spacing.sm))
         Languages.entries.forEach { language ->
@@ -113,7 +114,10 @@ fun LanguageItem(
             .clickable {
                 onChangeLanguage(language)
             }
-            .border(2.dp, CBMoneyColors.Primary.Primary.copy(alpha = 0.5f), CBMoneyShapes.large)
+            .border(
+                2.dp,
+                CBMoneyColors.Primary.Primary.copy(alpha = 0.3f),
+                CBMoneyShapes.large)
             .background(Color.White)
             .padding(Spacing.md),
     ) {
@@ -135,13 +139,12 @@ fun LanguageItem(
             {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleLarge
+                    style = CBMoneyTypography.Title.Medium.Medium
                 )
                 Text(
                     text = subtitle,
                     color = Color.Gray,
-                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = CBMoneyTypography.Body.Small.Regular
                 )
             }
         }

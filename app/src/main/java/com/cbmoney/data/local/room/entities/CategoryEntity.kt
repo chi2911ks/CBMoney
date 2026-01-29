@@ -9,15 +9,14 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["userId"])]
 )
 data class CategoryEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: String,
-    val userId: String,
+    val userId: String? = null,
     val name: String,
     val type: String,
     val icon: String,
     val color: String,
     val order: Int,
-    val isDefault: Boolean,
-    val createdAt: Long,
-
+    val isDefault: Boolean = true,
+    val createdAt: Long
 )

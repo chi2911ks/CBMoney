@@ -8,6 +8,6 @@ data class User(
     val name: String,
     val email: String,
     val photoUrl: String,
-    val createdAt: String,
+    val createdAt: Long,
 )
 

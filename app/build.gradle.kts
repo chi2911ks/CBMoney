@@ -90,6 +90,9 @@ dependencies {
     ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
 
+    //color picker
+    implementation(libs.compose.colorpicker)
+
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.kotlinx.serialization.json)
 

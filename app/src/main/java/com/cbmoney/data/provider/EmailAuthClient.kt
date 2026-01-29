@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.coroutines.tasks.await
 
 
-class EmailAuth(
+class EmailAuthClient(
     val firebaseAuth: FirebaseAuth
 ) {
     private val tag = "EmailPasswordAuth"

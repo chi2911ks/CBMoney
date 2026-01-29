@@ -117,4 +117,13 @@
     <string name="save_transaction">Save transaction</string>
     <string name="see_all">See all</string>
 
+    <string name="category_management">Category management</string>
+    <string name="category_list">Category list</string>
+    <string name="add_category">Add category</string>
+    <string name="edit_category">Edit category</string>
+    <string name="color">Color</string>
+    <string name="icon">Icon</string>
+    <string name="name_category">Name category</string>
+    <string name="example_category">Example: Food, Transport, etc.</string>
+    <string name="save">Save</string>
 </resources>

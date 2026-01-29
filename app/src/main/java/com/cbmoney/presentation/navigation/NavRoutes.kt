@@ -13,6 +13,9 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.cbmoney.presentation.category.AddCategoryScreen
+import com.cbmoney.presentation.category.CategoriesScreen
+import com.cbmoney.presentation.category.EditCategoryScreen
 import com.cbmoney.presentation.login.LoginScreen
 import com.cbmoney.presentation.main.MainScreen
 import com.cbmoney.presentation.onboarding.OnBoardingScreen
@@ -113,6 +116,42 @@ fun NavRoutes() {
                 }
                 entry<Destination.Transaction> {
                     TransactionScreen(
+                        onBackNavigation = {
+                            removeLastOrNull()
+                        },
+                        navigateToCategory = {
+                            add(Destination.Categories(it))
+                        }
+                    )
+                }
+                entry<Destination.Categories>{
+                    CategoriesScreen(
+                        categoryCurrent = it.type,
+                        onBackNavigation = {
+                            removeLastOrNull()
+                        },
+                        navigateToAddCategory = {type->
+//                            removeLastOrNull()
+                            add(Destination.AddCategory(type))
+                        },
+                        navigateToEditCategory = {cate->
+//                            removeLastOrNull()
+                            add(Destination.EditCategory(cate))
+                        }
+                    )
+                }
+                entry<Destination.AddCategory>{
+                    AddCategoryScreen(
+                        currentType = it.type,
+                        onBackNavigation = {
+                            removeLastOrNull()
+//                            add(Destination.Categories(it.type))
+                        }
+                    )
+                }
+                entry<Destination.EditCategory>{
+                    EditCategoryScreen(
+                        category = it.category,
                         onBackNavigation = {
                             removeLastOrNull()
                         }

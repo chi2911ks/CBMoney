@@ -12,7 +12,6 @@ class SaveUserToUseCase(
         return try {
             val result = userRepository.saveUserFirestore(user)
             if (result.isSuccess) {
-                userRepository.initCategoriesDefault(user.id)
                 dataStoreManager.saveUserInfo(user)
                 Result.success(true)
             } else {
