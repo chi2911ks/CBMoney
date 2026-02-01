@@ -78,6 +78,7 @@ object CBMoneyColors {
     object Border {
         val BorderLight = Color(0xFFE4E4E6)
         val BorderMedium = Color(0xFFD1D1D6)
+        val BorderBland = Color(0xFFEAEAEA)
         val BorderSummaryInactive = Color(0xFFE4E4E6)
         val BorderDropDown = Color(0x8080808C)
         val Correct = Color(0xFF4CAF50)

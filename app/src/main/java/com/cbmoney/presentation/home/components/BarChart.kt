@@ -162,7 +162,7 @@ fun BarItem(
                             .toInt().dp
                     )
                     .background(
-                        Color(0xFF16A34A).copy(alpha),
+                        CBMoneyColors.Green2.copy(alpha),
                         shape = RoundedCornerShape(8.dp)
                     )
             )
@@ -172,7 +172,7 @@ fun BarItem(
                     .width(20.dp)
                     .height(((monthlyData.expense * maxHeight) / maxValue).toInt().dp)
                     .background(
-                        Color(0xFFDC2626).copy(alpha),
+                        CBMoneyColors.Red2.copy(alpha),
                         shape = RoundedCornerShape(
                             8.dp
                         )

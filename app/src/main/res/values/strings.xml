@@ -126,4 +126,6 @@
     <string name="name_category">Name category</string>
     <string name="example_category">Example: Food, Transport, etc.</string>
     <string name="save">Save</string>
+
+    <string name="budget_management">Budget management</string>
 </resources>
