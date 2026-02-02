@@ -43,6 +43,7 @@ fun BottomNavBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
+            .heightIn(70.dp)
     ) {
         Row(
             modifier = Modifier

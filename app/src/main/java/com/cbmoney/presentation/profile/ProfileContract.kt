@@ -3,12 +3,10 @@ package com.cbmoney.presentation.profile
 import com.cbmoney.base.MviEvent
 import com.cbmoney.base.MviIntent
 import com.cbmoney.base.MviState
+import com.cbmoney.domain.model.User
 
 data class ProfileState(
-    val imageURL: String? = null,
-    val name: String = "",
-    val email: String = "",
-    val isLoading: Boolean = false
+    val user: User? = null,
 ) : MviState
 
 sealed class ProfileEvent : MviEvent {

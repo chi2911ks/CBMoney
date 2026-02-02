@@ -91,6 +91,13 @@ object CBMoneyTypography {
 
     object Title {
         object Large {
+            val Regular = TextStyle(
+                fontSize = 22.sp,
+                lineHeight = 28.sp,
+                fontWeight = FontWeight.Normal,
+                fontFamily = AppFontRegular,
+                lineBreak = LineBreak.Simple
+            )
             val Medium = TextStyle(
                 fontSize = 22.sp,
                 lineHeight = 28.sp,

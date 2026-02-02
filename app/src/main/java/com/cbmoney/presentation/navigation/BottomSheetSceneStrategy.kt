@@ -20,6 +20,7 @@ import androidx.navigation3.scene.SceneStrategy
 import androidx.navigation3.scene.SceneStrategyScope
 import com.cbmoney.presentation.navigation.BottomSheetSceneStrategy.Companion.bottomSheet
 import com.cbmoney.presentation.theme.CBMoneyColors
+import com.cbmoney.presentation.theme.Spacing
 
 
 /** An [OverlayScene] that renders an [entry] within a [ModalBottomSheet]. */
@@ -41,9 +42,10 @@ internal class BottomSheetScene<T : Any>(
             properties = modalBottomSheetProperties,
             containerColor = CBMoneyColors.BackGround.BackgroundPrimary,
             dragHandle = {
+
                 Box(
                     modifier = Modifier
-                        .padding(vertical = 12.dp)
+                        .padding(vertical = Spacing.md)
                         .size(36.dp, 4.dp)
                         .clip(RoundedCornerShape(50))
                         .background(Color.Gray)
@@ -51,6 +53,7 @@ internal class BottomSheetScene<T : Any>(
                             // expand / collapse
                         }
                 )
+
             }
         ) {
             entry.Content()

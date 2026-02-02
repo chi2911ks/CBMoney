@@ -127,20 +127,24 @@ fun HeaderSection(
         )
         Spacer(Modifier.height(16.dp))
         EditableAvatar(
-            imageURL = uiState.imageURL,
+            imageURL = uiState.user?.photoUrl,
             onEditClick = {},
             onAvatarClick = {}
         )
         Spacer(Modifier.height(8.dp))
-        Text(
-            text = uiState.name,
-            style = CBMoneyTypography.Title.Medium.Medium
-        )
+        uiState.user?.name?.let {
+            Text(
+                text = it,
+                style = CBMoneyTypography.Title.Medium.Medium
+            )
+        }
         Spacer(Modifier.height(8.dp))
-        Text(
-            text = uiState.email,
-            style = CBMoneyTypography.Body.Small.Medium
-        )
+        uiState.user?.email?.let {
+            Text(
+                text = it,
+                style = CBMoneyTypography.Body.Small.Medium
+            )
+        }
     }
 }
 

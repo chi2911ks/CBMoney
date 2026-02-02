@@ -18,9 +18,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
+import com.cbmoney.R
 import com.cbmoney.domain.constants.DefaultCategories
 import com.cbmoney.domain.model.Category
 import com.cbmoney.presentation.components.IconResolver
@@ -38,8 +43,16 @@ fun BudgetCategoryItem(
     budgetAmount: Long? = null,
     spentAmount: Long? = null,
 ) {
-    val (perTextColor, processColor) = when()
-    val color = Color(category.iconColor.toColorInt())
+    val remaining = budgetAmount?.minus(spentAmount ?: 0)
+    val (colorProcess, colorText) =
+        remaining?.takeIf { it > 0 }?.let {
+            CBMoneyColors.Primary.Primary to CBMoneyColors.Text.TextPrimary
+        } ?: (
+                CBMoneyColors.Error.ErrorDark to CBMoneyColors.Error.ErrorDark
+                )
+
+
+    val colorCategory = Color(category.iconColor.toColorInt())
     val percentage = (spentAmount?.toFloat() ?: 0f) / (budgetAmount?.toFloat() ?: 1f)
     Column(
         modifier = modifier
@@ -47,7 +60,7 @@ fun BudgetCategoryItem(
             .clip(CBMoneyShapes.large)
             .background(CBMoneyColors.White)
             .padding(Spacing.sm)
-    ){
+    ) {
         Row(
             modifier = Modifier,
             verticalAlignment = Alignment.CenterVertically
@@ -56,58 +69,95 @@ fun BudgetCategoryItem(
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CBMoneyShapes.medium)
-                    .background(color.copy(0.2f)),
+                    .background(colorCategory.copy(0.2f)),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = IconResolver.getImageVector(category.icon),
                     contentDescription = null,
-                    tint = color
+                    tint = colorCategory
                 )
             }
             Spacer(modifier = Modifier.width(Spacing.sm))
-            Column (
+            Column(
                 verticalArrangement = Arrangement.Center
-            ){
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                ){
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
                         text = category.name,
                         style = CBMoneyTypography.Body.Medium.Bold
                     )
+                    val annotatedText = buildAnnotatedString {
+                        withStyle(
+                            SpanStyle(
+                                color = CBMoneyColors.Text.TextPrimary,
+
+                                fontWeight = CBMoneyTypography.Body.Small.Regular.fontWeight,
+                            )
+                        ) {
+                            append(stringResource(R.string.remaining))
+                        }
+                        append(": ")
+                        withStyle(
+                            SpanStyle(
+                                color = colorText,
+
+                                fontWeight = CBMoneyTypography.Body.Medium.Bold.fontWeight,
+                            )
+                        ) {
+                            append("${remaining?.formatMoney() ?: 0} đ")
+                        }
+                    }
                     Text(
-                        text = "${(percentage*100).toBigDecimal().setScale(1, RoundingMode.DOWN).toDouble()}%",
-                        style = CBMoneyTypography.Title.Small.Bold,
+                        text = annotatedText,
                     )
                 }
-                if (budgetAmount != null && spentAmount != null){
-                    val text =
-                        if (spentAmount > budgetAmount) "Vượt mức ${(spentAmount - budgetAmount).formatMoney()} đ"
-                        else "Đã dùng ${spentAmount.formatMoney()} / ${budgetAmount.formatMoney()} đ"
+                Spacer(modifier = Modifier.height(Spacing.xs))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    if (budgetAmount != null && spentAmount != null) {
+                        val text =
+                            "Đã dùng ${spentAmount.formatMoney()} / ${budgetAmount.formatMoney()} đ"
+                        Text(
+                            text = text,
+                            color = CBMoneyColors.Text.TextPrimary,
+                            style = CBMoneyTypography.Body.Small.Regular
+                        )
+                    }
                     Text(
-                        text = text,
-                        style = CBMoneyTypography.Body.Small.Regular
+                        text = "${
+                            (percentage * 100).toBigDecimal().setScale(1, RoundingMode.DOWN)
+                                .toDouble()
+                        }%",
+                        color = CBMoneyColors.Text.TextPrimary,
+                        style = CBMoneyTypography.Body.Small.Regular,
                     )
                 }
+
             }
         }
         Spacer(modifier = Modifier.height(Spacing.sm))
+
         Box(
             modifier = Modifier
-
                 .fillMaxWidth()
+                .height(10.dp)
                 .clip(CBMoneyShapes.extraLarge)
-                .background(CBMoneyColors.Primary.Primary.copy(0.25f))
-        ){
-
+                .background(CBMoneyColors.Gray.Gray.copy(0.5f))
+        ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth(percentage)
                     .height(10.dp)
                     .clip(CBMoneyShapes.extraLarge)
-                    .background(CBMoneyColors.Primary.Primary)
+                    .background(colorCategory)
             )
         }
 
@@ -121,6 +171,6 @@ private fun BudgetCategoryItemPreview() {
     BudgetCategoryItem(
         category = DefaultCategories.INCOME_CATEGORIES[0],
         budgetAmount = 2000000,
-        spentAmount =  3000000
+        spentAmount = 1000000
     )
 }

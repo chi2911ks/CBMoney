@@ -88,15 +88,15 @@ fun HomeScreenContent(
             .fillMaxSize()
             .background(CBMoneyColors.BackGround.BackgroundPrimary)
             .statusBarsPadding()
-            .padding(horizontal = Spacing.sm)
-            .padding(bottom = 70.dp)
+            .padding(horizontal = Spacing.md)
+//            .padding(bottom = 70.dp)
             .verticalScroll(rememberScrollState())
         ,
 
     ) {
 
         HeaderSection(
-            user = uiState.name,
+            user = uiState.user?.name?.ifEmpty { uiState.user.email.split('@')[0] } ?: "",
             onClickProfile = {},
             onClickNotification = {}
         )

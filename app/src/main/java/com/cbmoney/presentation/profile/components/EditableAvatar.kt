@@ -1,6 +1,5 @@
 package com.cbmoney.presentation.profile.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -11,19 +10,20 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Error
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImagePainter
-import coil3.compose.rememberAsyncImagePainter
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import com.cbmoney.R
 import com.cbmoney.presentation.theme.CBMoneyColors
 
 
@@ -34,51 +34,26 @@ fun EditableAvatar(
     onEditClick: () -> Unit,
     onAvatarClick: () -> Unit
 ) {
-    val painter = rememberAsyncImagePainter(imageURL)
+
     Box(
         modifier = Modifier.size(150.dp),
     ) {
-        // Avatar
-        Image(
-            painter = painter,
-            contentDescription = "avatar",
-            contentScale = ContentScale.Crop,
+
+
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imageURL)
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.avatar_boy),
+            error = painterResource(R.drawable.avatar_boy),
+            contentDescription = null,
             modifier = Modifier
                 .fillMaxSize()
                 .clip(CircleShape)
                 .border(1.dp, Color.Gray, CircleShape)
                 .clickable { onAvatarClick() }
         )
-
-//        AsyncImage(
-//            model = ImageRequest.Builder(LocalContext.current)
-//                .data(imageURL)
-//                .crossfade(true)
-//                .build(),
-//            placeholder = painterResource(R.drawable.avatar_boy),
-//            error = painterResource(R.drawable.avatar_boy),
-//            contentDescription = null,
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .clip(CircleShape)
-//                .border(1.dp, Color.Gray, CircleShape)
-//                .clickable { onAvatarClick() }
-//        )
-        when (painter.state) {
-            is AsyncImagePainter.State.Loading -> {
-                CircularProgressIndicator()
-            }
-            is AsyncImagePainter.State.Error -> {
-                Icon(
-                    imageVector = Icons.Default.Error,
-                    contentDescription = "Error loading image"
-                )
-            }
-            else -> {
-                // Success or Empty state handled by the Image composable
-            }
-        }
-
 
         // Edit icon
         Box(

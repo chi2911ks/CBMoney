@@ -8,7 +8,10 @@ import java.util.Locale
 
 fun String.formatMoney(): String {
     return try {
-        NumberFormat.getInstance(Locale("vi", "VN")).format(this.toLong())
+        val locale = Locale.forLanguageTag("vi-VN")
+        NumberFormat
+            .getInstance(locale)
+            .format(this.toLong())
     } catch (e: Exception) {
         this
     }

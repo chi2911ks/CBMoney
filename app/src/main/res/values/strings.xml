@@ -128,4 +128,6 @@
     <string name="save">Save</string>
 
     <string name="budget_management">Budget management</string>
+
+    <string name="remaining">Remaining</string>
 </resources>

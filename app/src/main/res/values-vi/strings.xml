@@ -117,4 +117,5 @@
     <string name="example_category">Ví dụ: Thức ăn, Di chuyển…</string>
     <string name="save">Lưu</string>
     <string name="budget_management">Quản lý ngân sách</string>
+    <string name="remaining">Còn lại</string>
 </resources>

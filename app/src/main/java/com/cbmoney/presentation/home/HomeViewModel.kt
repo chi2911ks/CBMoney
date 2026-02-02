@@ -20,7 +20,7 @@ class HomeViewModel(
         viewModelScope.launch {
          dataStoreManager.getUserInfo().collect { user->
              user?.let {
-                 updateState { copy(name = user.name) }
+                 updateState { copy(user = user) }
              }
             }
         }

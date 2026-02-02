@@ -19,8 +19,10 @@ fun Long.formatMoney(): String {
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun Long.toFormatDate(): String {
-    val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+fun Long.toFormatDate(
+    pattern: String = "dd/MM/yyyy"
+): String {
+    val formatter = DateTimeFormatter.ofPattern(pattern)
     val date = Instant.ofEpochMilli(this)
         .atZone(ZoneId.systemDefault())
         .toLocalDate()
