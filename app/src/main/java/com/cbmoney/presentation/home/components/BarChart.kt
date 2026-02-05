@@ -38,6 +38,8 @@ import androidx.compose.ui.unit.sp
 import com.cbmoney.R
 import com.cbmoney.presentation.home.components.model.MonthlyData
 import com.cbmoney.presentation.theme.CBMoneyColors
+import com.cbmoney.presentation.theme.CBMoneyShapes
+import com.cbmoney.utils.exts.shadowCustom
 
 @Composable
 fun MonthlySpendingCard(
@@ -48,13 +50,13 @@ fun MonthlySpendingCard(
     modifier: Modifier = Modifier
 ) {
     val labelMonthly = listData[selectedIndex].label
+
     Box(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .background(
-                CBMoneyColors.White,
-                shape = RoundedCornerShape(24.dp)),
+            .shadowCustom()
+            .background(Color.White, CBMoneyShapes.extraLarge)
     ) {
         Column(
             modifier = Modifier

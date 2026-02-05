@@ -32,38 +32,48 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.cbmoney.R
+import com.cbmoney.domain.model.CategoryType
+import com.cbmoney.domain.model.User
 import com.cbmoney.presentation.components.ButtonWithIcon
-import com.cbmoney.presentation.home.components.CarMoney
 import com.cbmoney.presentation.home.components.FinanceCard
 import com.cbmoney.presentation.home.components.MonthlySpendingCard
 import com.cbmoney.presentation.home.components.model.MonthlyData
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
+import com.cbmoney.utils.exts.shadowCustom
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun HomeScreen(
     navigateToReport: () -> Unit,
+    navigateToTransaction: (CategoryType) -> Unit,
     homeViewModel: HomeViewModel = koinViewModel()
 ) {
     val uiState by homeViewModel.viewState.collectAsStateWithLifecycle()
     HomeScreenContent(
         uiState,
-        navigateToReport = navigateToReport
+        navigateToReport = navigateToReport,
+        navigateToTransaction = navigateToTransaction
     )
 }
 
 @Composable
 fun HomeScreenContent(
     uiState: HomeState,
-    navigateToReport: () -> Unit
+    navigateToReport: () -> Unit,
+    navigateToTransaction: (CategoryType) -> Unit,
 ) {
     var selectedIndex by remember { mutableIntStateOf(0) }
     val listData = listOf(
@@ -96,16 +106,16 @@ fun HomeScreenContent(
     ) {
 
         HeaderSection(
-            user = uiState.user?.name?.ifEmpty { uiState.user.email.split('@')[0] } ?: "",
+            user = uiState.user,
             onClickProfile = {},
             onClickNotification = {}
         )
-        CarMoney(
-            onClick = {},
-            Modifier
-                .fillMaxWidth()
-                .padding(top = Spacing.sm)
-        )
+//        CarMoney(
+//            onClick = {},
+//            Modifier
+//                .fillMaxWidth()
+//                .padding(top = Spacing.sm)
+//        )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -138,17 +148,23 @@ fun HomeScreenContent(
         ) {
             ButtonWithIcon(
                 modifier = Modifier
+                    .shadowCustom()
                     .weight(1f),
                 text = stringResource(R.string.additional_expenses),
-                onClick = {},
+                onClick = {
+                    navigateToTransaction(CategoryType.EXPENSE)
+                },
                 iconVector = Icons.Default.Add
             )
             Spacer(Modifier.width(Spacing.sm))
             ButtonWithIcon(
                 modifier = Modifier
+                    .shadowCustom()
                     .weight(1f),
                 text = stringResource(R.string.additional_income),
-                onClick = {},
+                onClick = {
+                    navigateToTransaction(CategoryType.INCOME)
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = CBMoneyColors.White,
                     contentColor = CBMoneyColors.Text.TextPrimary,
@@ -165,7 +181,7 @@ fun HomeScreenContent(
 @Composable
 fun HeaderSection(
     modifier: Modifier = Modifier,
-    user: String = "Đỗ Chi",
+    user: User?,
     onClickProfile: () -> Unit = {},
     onClickNotification: () -> Unit = {}
 ) {
@@ -186,14 +202,22 @@ fun HeaderSection(
                     },
                 contentAlignment = Alignment.Center
             ){
-                Icon(
-                    Icons.Default.AccountCircle,
+
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(user?.photoUrl)
+                        .crossfade(true)
+                        .build(),
+                    placeholder = rememberVectorPainter(Icons.Default.AccountCircle),
+                    error = rememberVectorPainter(Icons.Default.AccountCircle),
                     contentDescription = null,
-                    tint = Color.Black,
                     modifier = Modifier
                         .size(40.dp)
-
+                        .clip(CircleShape)
+//                        .border(1.dp, Color.Gray, CircleShape)
+                        .clickable {  }
                 )
+
             }
 
             Spacer(Modifier.width(Spacing.sm))
@@ -204,7 +228,7 @@ fun HeaderSection(
                     style = CBMoneyTypography.Title.Small.Regular
                 )
                 Text(
-                    text = user,
+                    text = user?.name?.ifEmpty { user.email.split('@')[0] } ?: "",
                     color = Color.Black,
                     style = CBMoneyTypography.Title.Medium.Medium
                 )
@@ -216,9 +240,10 @@ fun HeaderSection(
         Box(
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .clip(CircleShape)
-                .background(Color.Transparent)
                 .size(40.dp)
+                .shadowCustom()
+                .background(Color.White, CircleShape)
+
                 .clickable {
                     onClickNotification()
                 },
@@ -231,7 +256,7 @@ fun HeaderSection(
                 contentDescription = null,
                 tint = Color.Black,
                 modifier = Modifier
-                    .size(36.dp)
+                    .size(24.dp)
 
             )
         }
@@ -243,6 +268,6 @@ fun HeaderSection(
 @Composable
 private fun HomeScreenPreview() {
 
-        HomeScreen({})
+        HomeScreen({}, {})
 
 }

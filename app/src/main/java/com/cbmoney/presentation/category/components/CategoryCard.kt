@@ -128,6 +128,8 @@ fun CategoryCard(
             ) {
                 Text(
                     text = category.name,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                    maxLines = 1,
                     style = CBMoneyTypography.Body.Medium.Bold
                 )
                 if (!isDefault){

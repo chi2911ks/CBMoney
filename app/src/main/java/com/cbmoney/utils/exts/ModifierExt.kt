@@ -13,7 +13,13 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.cbmoney.presentation.theme.CBMoneyShapes
 
 @SuppressLint("SuspiciousModifierThen")
 fun Modifier.rawClickable(onClick: () -> Unit): Modifier =
@@ -52,3 +58,19 @@ fun Modifier.safeClickable(
         }
     )
 }
+
+
+fun Modifier.shadowCustom(
+    elevation: Dp = 4.dp,
+    shape: Shape = CBMoneyShapes.extraLarge,
+    clip: Boolean = elevation > 0.dp,
+    ambientColor: Color = Color.Black.copy(alpha = 0.04f),
+    spotColor: Color = Color.Black.copy(alpha = 0.06f)
+): Modifier =
+    this.shadow(
+        elevation = elevation,
+        shape = shape,
+        clip = clip,
+        ambientColor = ambientColor,
+        spotColor = spotColor
+    )

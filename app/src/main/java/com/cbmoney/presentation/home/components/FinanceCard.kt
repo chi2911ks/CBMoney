@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
@@ -26,9 +25,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cbmoney.R
+import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.utils.exts.formatMoney
+import com.cbmoney.utils.exts.shadowCustom
 
 
 @Composable
@@ -38,11 +39,11 @@ fun FinanceCard(
     money: Long = 0L
 ) {
 
+
     Box(
         modifier = modifier
-            .background(Color.White, shape = RoundedCornerShape(32.dp))
-
-
+            .shadowCustom()
+            .background(Color.White, CBMoneyShapes.extraLarge)
     ) {
         Column(
             modifier = Modifier
@@ -71,8 +72,9 @@ fun FinanceCard(
                 }
                 Spacer(Modifier.width(Spacing.sm))
                 Text(
-                    text = if (isIncome) stringResource(R.string.income) else stringResource(R.string.expense),
-                    style = CBMoneyTypography.Title.Medium.Regular,
+                    text = (if (isIncome) stringResource(R.string.total_income)
+                    else stringResource(R.string.total_expense)).uppercase(),
+                    style = CBMoneyTypography.Body.Small.Bold,
                     color = Color.Black
                 )
             }
@@ -94,7 +96,7 @@ fun FinanceCard(
 @Composable
 private fun FinanceCardPreview() {
 
-        FinanceCard(money = 200000000L)
+    FinanceCard(money = 200000000L)
 
 
 }
@@ -104,6 +106,6 @@ private fun FinanceCardPreview() {
 private fun FinanceCardPreview2() {
 
 
-        FinanceCard(isIncome = false, money = 9000L)
+    FinanceCard(isIncome = false, money = 9000L)
 
 }

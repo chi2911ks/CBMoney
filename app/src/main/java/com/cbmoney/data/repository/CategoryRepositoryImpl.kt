@@ -19,6 +19,7 @@ class CategoryRepositoryImpl(
     private val categoryRemoteDataSource: CategoryRemoteDataSource,
     private val firebaseAuth: FirebaseAuth
 ) : CategoryRepository {
+    private val userId get() = firebaseAuth.currentUser!!.uid
 
     override suspend fun syncCategories(uid: String): Result<Boolean> {
         TODO("Not yet implemented")
@@ -33,7 +34,7 @@ class CategoryRepositoryImpl(
                     DefaultCategories.ALL_CATEGORIES.map {
                         it.toEntity().copy(
                             id = UUID.randomUUID().toString(),
-                            createdAt  = System.currentTimeMillis()
+                            createdAt = System.currentTimeMillis()
                         )
                     }
                 )
@@ -50,14 +51,24 @@ class CategoryRepositoryImpl(
 
     override fun getAllCategories(): Flow<List<Category>> {
         return try {
-            val userId = firebaseAuth.currentUser?.uid
-            categoryLocalDataSource.getAllCategories(userId!!).map {
-                it.map {
-                    categoryEntity -> categoryEntity.toDomain()
+            categoryLocalDataSource.getAllCategories(userId).map {
+                it.map { categoryEntity ->
+                    categoryEntity.toDomain()
                 }
             }
         } catch (e: Exception) {
             Log.w(TAG, "getAllCategories: ${e}")
+            flow { emptyList<Category>() }
+        }
+    }
+//    KsiFLX54gEV9CqT4LZIsaBW2t3u1
+    override fun getCategoriesByType(type: String): Flow<List<Category>> {
+        return try {
+            categoryLocalDataSource.getCategoriesByType(userId, type).map { categories ->
+                categories.map { categoryEntity -> categoryEntity.toDomain() }
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "getCategoriesByType: ${e}")
             flow { emptyList<Category>() }
         }
     }
@@ -84,7 +95,7 @@ class CategoryRepositoryImpl(
                 )
             )
             Result.success(true)
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.w(TAG, "saveCategory: ${e}")
             Result.failure(e)
         }
@@ -94,11 +105,13 @@ class CategoryRepositoryImpl(
         return try {
             categoryLocalDataSource.updateCategory(category.toEntity())
             Result.success(true)
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.w(TAG, "updateCategory: ${e}")
             Result.failure(e)
         }
     }
+
+
 
     companion object {
         private const val TAG = "CategoryRepositoryImpl"

@@ -17,7 +17,7 @@ class EmailAuthClient(
         return try {
             val authUser = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
             if (authUser.user != null) {
-                AuthResult.Success
+                AuthResult.Success(authUser.user)
             } else {
                 AuthResult.Failure(AuthError.Fail)
             }
@@ -35,7 +35,7 @@ class EmailAuthClient(
         return try {
             val authUser = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             if (authUser.user != null) {
-                AuthResult.Success
+                AuthResult.Success(authUser.user)
             } else {
                 AuthResult.Failure(AuthError.Fail)
             }

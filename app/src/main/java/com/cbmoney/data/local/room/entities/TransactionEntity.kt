@@ -23,7 +23,7 @@ data class TransactionEntity(
     val userId: String,
     val amount: Double,
     val type: String,  // "expense" or "income"
-    val categoryId: Int? = null,
+    val categoryId: String? = null,
     val description: String,
     val date: Long,
     val createdAt: Long,

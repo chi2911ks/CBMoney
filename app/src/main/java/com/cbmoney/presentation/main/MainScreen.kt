@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.cbmoney.domain.model.CategoryType
 import com.cbmoney.presentation.buget.BudgetScreen
 import com.cbmoney.presentation.home.HomeScreen
 import com.cbmoney.presentation.main.components.BottomNavBar
@@ -35,7 +36,10 @@ fun MainScreen(
         ){
             when (viewState.currentTab) {
                 MainTab.HOME -> HomeScreen(
-                    navigateToReport = { viewModel.handleNavigateToTab(MainTab.REPORTS) }
+                    navigateToReport = { viewModel.handleNavigateToTab(MainTab.REPORTS) },
+                    navigateToTransaction = {
+                        navigator.toTransaction(it)
+                    }
                 )
 
                 MainTab.REPORTS -> ReportScreen()
@@ -56,7 +60,7 @@ fun MainScreen(
             onTabChange = { newTab ->
                 viewModel.processIntent(MainIntent.NavigateTab(newTab))
             },
-            navigator.toTransaction,
+            {navigator.toTransaction(CategoryType.EXPENSE)},
             modifier = Modifier
 //                .align(Alignment.BottomCenter)
         )

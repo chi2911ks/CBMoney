@@ -6,6 +6,7 @@ import com.cbmoney.base.MviState
 import com.cbmoney.domain.model.User
 
 data class ProfileState(
+    val isLoading: Boolean = false,
     val user: User? = null,
 ) : MviState
 

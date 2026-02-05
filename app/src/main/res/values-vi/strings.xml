@@ -46,8 +46,9 @@
     <string name="cash_and_bank">"Ví tiền mặt + Tài khoản"</string>
 
 
-    <string name="total_expenditure">Tổng chi tiêu</string>
-    <string name="total_income">Tổng thu nhập</string>
+    <string name="total_expense">Tổng chi</string>
+    <string name="total_income">Tổng thu</string>
+
 
     <string name="total_balance">Tổng số dư</string>
     <string name="monthly_spending">Chi tiêu hàng tháng</string>
@@ -118,4 +119,16 @@
     <string name="save">Lưu</string>
     <string name="budget_management">Quản lý ngân sách</string>
     <string name="remaining">Còn lại</string>
+
+    <string name="budget_settings">Cài đặt ngân sách</string>
+    <string name="total_budget">Tổng ngân sách</string>
+    <string name="not_set">Chưa được đặt</string>
+
+    <string name="allocation_details">Chi tiết phân bổ</string>
+    <string name="total_budget_category">Tổng ngân sách theo hạng mục</string>
+    <string name="expenditure_category">Hạng mục chi tiêu</string>
+    <string name="budget_by_category">Ngân sách theo mục</string>
+    <string name="spent">Đã chi</string>
+    <string name="expense_statistics">Thống kê chi tiêu</string>
+
 </resources>

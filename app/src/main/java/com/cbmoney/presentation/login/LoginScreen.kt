@@ -25,8 +25,6 @@ import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,6 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
 import com.cbmoney.data.mapper.toMessage
+import com.cbmoney.presentation.app.AppSnackbarManager
+import com.cbmoney.presentation.app.UiMessage
 import com.cbmoney.presentation.components.ButtonPrimary
 import com.cbmoney.presentation.components.DividerWithText
 import com.cbmoney.presentation.components.LanguageToggle
@@ -53,29 +53,31 @@ import com.cbmoney.presentation.components.OutlinedText
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyColors.Neutral.NeutralGray
 import com.cbmoney.presentation.theme.CBMoneyTypography
-import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.utils.exts.getLanguageCode
 import com.cbmoney.utils.exts.handleOnSaveLanguage
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 
 @Composable
 fun LoginScreen(
     navigateToHome: () -> Unit,
     onRegister: () -> Unit,
-    loginViewModel: LoginViewModel = koinViewModel()
+    loginViewModel: LoginViewModel = koinViewModel(),
+    snackbarManager: AppSnackbarManager = koinInject()
 ) {
     val context = LocalContext.current
     val uiState by loginViewModel.viewState.collectAsStateWithLifecycle()
-    val snackBarHostState = remember { SnackbarHostState() }
     LaunchedEffect(Unit) {
         loginViewModel.singleEvent.collectLatest {
             when (it) {
                 is LoginEvent.NavigateToHome -> navigateToHome()
-                is LoginEvent.LoginError -> snackBarHostState.showSnackbar(
-                    it.authError.toMessage(
-                        context
+                is LoginEvent.LoginError -> snackbarManager.show(
+                    UiMessage.Text(
+                        it.authError.toMessage(
+                            context
+                        )
                     )
                 )
             }
@@ -86,7 +88,6 @@ fun LoginScreen(
     LoginScreenContent(
         onRegister = onRegister,
         uiState = uiState,
-        snackBarHostState = snackBarHostState,
         context = context,
         processIntent = loginViewModel::processIntent
     )
@@ -96,7 +97,6 @@ fun LoginScreen(
 fun LoginScreenContent(
     onRegister: () -> Unit,
     uiState: LoginState,
-    snackBarHostState: SnackbarHostState,
     context: Context,
     processIntent: (LoginIntent) -> Unit
 ) {
@@ -162,12 +162,6 @@ fun LoginScreenContent(
 
             )
         }
-        SnackbarHost(
-            hostState = snackBarHostState,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = Spacing.lg)
-        )
     }
     if (uiState.isLoading) {
         Box(

@@ -11,4 +11,7 @@ interface CategoryLocalDataSource {
     suspend fun deleteCategory(categoryId: String)
     suspend fun updateCategory(category: CategoryEntity)
     suspend fun getLastOrder(type: String): Int
+
+    fun getCategoriesByType(userId: String, type: String): Flow<List<CategoryEntity>>
+
 }

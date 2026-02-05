@@ -26,8 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import com.cbmoney.R
-import com.cbmoney.domain.constants.DefaultCategories
-import com.cbmoney.domain.model.Category
 import com.cbmoney.presentation.components.IconResolver
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
@@ -39,7 +37,10 @@ import java.math.RoundingMode
 @Composable
 fun BudgetCategoryItem(
     modifier: Modifier = Modifier,
-    category: Category,
+//    category: Category,
+    name: String,
+    iconColor: String,
+    icon: String,
     budgetAmount: Long? = null,
     spentAmount: Long? = null,
 ) {
@@ -48,11 +49,11 @@ fun BudgetCategoryItem(
         remaining?.takeIf { it > 0 }?.let {
             CBMoneyColors.Primary.Primary to CBMoneyColors.Text.TextPrimary
         } ?: (
-                CBMoneyColors.Error.ErrorDark to CBMoneyColors.Error.ErrorDark
+                CBMoneyColors.Red2 to CBMoneyColors.Red2
                 )
 
 
-    val colorCategory = Color(category.iconColor.toColorInt())
+    val colorCategory = Color(iconColor.toColorInt())
     val percentage = (spentAmount?.toFloat() ?: 0f) / (budgetAmount?.toFloat() ?: 1f)
     Column(
         modifier = modifier
@@ -73,7 +74,7 @@ fun BudgetCategoryItem(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = IconResolver.getImageVector(category.icon),
+                    imageVector = IconResolver.getImageVector(icon),
                     contentDescription = null,
                     tint = colorCategory
                 )
@@ -88,7 +89,7 @@ fun BudgetCategoryItem(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = category.name,
+                        text = name,
                         style = CBMoneyTypography.Body.Medium.Bold
                     )
                     val annotatedText = buildAnnotatedString {
@@ -124,7 +125,7 @@ fun BudgetCategoryItem(
                 ) {
                     if (budgetAmount != null && spentAmount != null) {
                         val text =
-                            "Đã dùng ${spentAmount.formatMoney()} / ${budgetAmount.formatMoney()} đ"
+                            "${stringResource(R.string.spent)}: ${spentAmount.formatMoney()} / ${budgetAmount.formatMoney()} đ"
                         Text(
                             text = text,
                             color = CBMoneyColors.Text.TextPrimary,
@@ -168,9 +169,9 @@ fun BudgetCategoryItem(
 @Preview
 @Composable
 private fun BudgetCategoryItemPreview() {
-    BudgetCategoryItem(
-        category = DefaultCategories.INCOME_CATEGORIES[0],
-        budgetAmount = 2000000,
-        spentAmount = 1000000
-    )
+//    BudgetCategoryItem(
+//        category = DefaultCategories.INCOME_CATEGORIES[0],
+//        budgetAmount = 2000000,
+//        spentAmount = 1000000
+//    )
 }

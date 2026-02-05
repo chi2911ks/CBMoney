@@ -10,13 +10,14 @@ import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.tasks.await
 
 class GoogleAuthClient(
     private val firebaseAuth: FirebaseAuth
 ) {
-    suspend fun signInGoogle(activity: Activity): Boolean {
+    suspend fun signInGoogle(activity: Activity): Result<FirebaseUser?> {
         return try {
             val credentialManager = CredentialManager.create(activity)
             val googleIdOption = GetGoogleIdOption.Builder()
@@ -34,25 +35,25 @@ class GoogleAuthClient(
                 firebaseAuthWithGoogle(googleIdTokenCredential.idToken)
             } else {
                 Log.w(TAG, "Credential is not of type Google ID!")
-                false
+                Result.success(null)
             }
         } catch (e: Exception) {
             Log.w(TAG, "signInGoogle:failure", e)
-            false
+            Result.failure(e)
         }
 
 
     }
 
-    private suspend fun firebaseAuthWithGoogle(idToken: String): Boolean {
+    private suspend fun firebaseAuthWithGoogle(idToken: String): Result<FirebaseUser?> {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         return try {
             val auth = firebaseAuth.signInWithCredential(credential).await()
             Log.d(TAG, "signInWithCredential:success ${auth.user}")
-            auth.user != null
+            Result.success(auth.user)
         }catch (e: Exception){
             Log.w(TAG, "signInWithCredential:failure", e)
-            false
+            Result.failure(e)
         }
     }
 

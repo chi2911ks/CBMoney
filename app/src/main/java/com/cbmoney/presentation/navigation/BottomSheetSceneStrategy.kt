@@ -1,18 +1,10 @@
 package com.cbmoney.presentation.navigation
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalBottomSheetProperties
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.scene.OverlayScene
 import androidx.navigation3.scene.Scene
@@ -20,7 +12,6 @@ import androidx.navigation3.scene.SceneStrategy
 import androidx.navigation3.scene.SceneStrategyScope
 import com.cbmoney.presentation.navigation.BottomSheetSceneStrategy.Companion.bottomSheet
 import com.cbmoney.presentation.theme.CBMoneyColors
-import com.cbmoney.presentation.theme.Spacing
 
 
 /** An [OverlayScene] that renders an [entry] within a [ModalBottomSheet]. */
@@ -31,6 +22,7 @@ internal class BottomSheetScene<T : Any>(
     override val overlaidEntries: List<NavEntry<T>>,
     private val entry: NavEntry<T>,
     private val modalBottomSheetProperties: ModalBottomSheetProperties,
+    private val sheetState: SheetState?,
     private val onBack: () -> Unit,
 ) : OverlayScene<T> {
 
@@ -38,23 +30,11 @@ internal class BottomSheetScene<T : Any>(
 
     override val content: @Composable (() -> Unit) = {
         ModalBottomSheet(
+            sheetState = sheetState ?: rememberModalBottomSheetState(),
             onDismissRequest = onBack,
             properties = modalBottomSheetProperties,
             containerColor = CBMoneyColors.BackGround.BackgroundPrimary,
-            dragHandle = {
-
-                Box(
-                    modifier = Modifier
-                        .padding(vertical = Spacing.md)
-                        .size(36.dp, 4.dp)
-                        .clip(RoundedCornerShape(50))
-                        .background(Color.Gray)
-                        .clickable {
-                            // expand / collapse
-                        }
-                )
-
-            }
+            dragHandle = null
         ) {
             entry.Content()
         }
@@ -69,10 +49,14 @@ internal class BottomSheetScene<T : Any>(
  */
 @OptIn(ExperimentalMaterial3Api::class)
 class BottomSheetSceneStrategy<T : Any> : SceneStrategy<T> {
-
     override fun SceneStrategyScope<T>.calculateScene(entries: List<NavEntry<T>>): Scene<T>? {
         val lastEntry = entries.lastOrNull()
-        val bottomSheetProperties = lastEntry?.metadata?.get(BOTTOM_SHEET_KEY) as? ModalBottomSheetProperties
+        val metadata = lastEntry?.metadata ?: return null
+        val data = metadata[BOTTOM_SHEET_KEY] as? Map<*, *>
+        val sheetState = data?.get("sheetState") as? SheetState
+        val bottomSheetProperties = data?.get("properties") as? ModalBottomSheetProperties
+
+
         return bottomSheetProperties?.let { properties ->
             @Suppress("UNCHECKED_CAST")
             BottomSheetScene(
@@ -80,6 +64,7 @@ class BottomSheetSceneStrategy<T : Any> : SceneStrategy<T> {
                 previousEntries = entries.dropLast(1),
                 overlaidEntries = entries.dropLast(1),
                 entry = lastEntry,
+                sheetState = sheetState,
                 modalBottomSheetProperties = properties,
                 onBack = onBack
             )
@@ -94,10 +79,17 @@ class BottomSheetSceneStrategy<T : Any> : SceneStrategy<T> {
          * @param modalBottomSheetProperties properties that should be passed to the containing
          * [ModalBottomSheet].
          */
+        @Composable
         @OptIn(ExperimentalMaterial3Api::class)
         fun bottomSheet(
+            sheetState: SheetState = rememberModalBottomSheetState(),
             modalBottomSheetProperties: ModalBottomSheetProperties = ModalBottomSheetProperties()
-        ): Map<String, Any> = mapOf(BOTTOM_SHEET_KEY to modalBottomSheetProperties)
+        ): Map<String, Map<String, Any>> =
+                mapOf(BOTTOM_SHEET_KEY to mapOf(
+                    "sheetState" to sheetState,
+                    "properties" to modalBottomSheetProperties
+                )
+            )
 
         internal const val BOTTOM_SHEET_KEY = "bottomsheet"
     }

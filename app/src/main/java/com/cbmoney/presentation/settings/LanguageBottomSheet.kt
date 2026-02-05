@@ -19,6 +19,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -148,21 +150,16 @@ fun LanguageItem(
                 )
             }
         }
-        Box(
+        RadioButton(
+            selected = isSelected,
+            onClick = null,
+            colors = RadioButtonDefaults.colors(
+                selectedColor = CBMoneyColors.Primary.Primary
+            ),
             modifier = Modifier
-                .size(18.dp)
-                .clip(CircleShape)
-                .border(2.dp, Color.Gray, CircleShape)
                 .align(Alignment.CenterEnd),
-            contentAlignment = Alignment.Center
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(8.dp)
-                    .clip(CircleShape)
-                    .background(if (isSelected) Color.Gray else Color.Transparent)
-            )
-        }
+        )
+
     }
 }
 

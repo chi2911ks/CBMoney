@@ -15,7 +15,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import com.cbmoney.presentation.buget.BudgetSettingsBottomSheet
+import com.cbmoney.presentation.buget.BudgetSettingsScreen
 import com.cbmoney.presentation.category.AddCategoryScreen
 import com.cbmoney.presentation.category.CategoriesScreen
 import com.cbmoney.presentation.category.EditCategoryScreen
@@ -36,6 +36,7 @@ import com.cbmoney.utils.exts.clearAll
 fun NavRoutes() {
     val bottomSheetStrategy = remember { BottomSheetSceneStrategy<NavKey>() }
     val backStack = rememberNavBackStack(Destination.Splash)
+
     NavDisplay(
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
@@ -108,7 +109,7 @@ fun NavRoutes() {
                         },
                         toHelpCenter = {},
                         toTransaction = {
-                            backStack.add(Destination.Transaction)
+                            backStack.add(Destination.Transactions(it))
                         },
                         toLogout = {
                             backStack.clearAll()
@@ -118,7 +119,7 @@ fun NavRoutes() {
                             backStack.removeLastOrNull()
                         },
                         toBudgetSettings = {
-                            backStack.add(Destination.BudgetSettingsBottomSheet)
+                            backStack.add(Destination.BudgetSettings)
                         }
                     )
                 )
@@ -128,13 +129,9 @@ fun NavRoutes() {
             ) {
                 LanguageBottomSheet()
             }
-            entry<Destination.BudgetSettingsBottomSheet>(
-                metadata = BottomSheetSceneStrategy.bottomSheet()
-            ) {
-                BudgetSettingsBottomSheet()
-            }
-            entry<Destination.Transaction> {
+            entry<Destination.Transactions> {
                 TransactionScreen(
+                    currentType = it.type,
                     onBackNavigation = {
                         backStack.removeLastOrNull()
                     },
@@ -150,11 +147,9 @@ fun NavRoutes() {
                         backStack.removeLastOrNull()
                     },
                     navigateToAddCategory = { type ->
-//                            removeLastOrNull()
                         backStack.add(Destination.AddCategory(type))
                     },
                     navigateToEditCategory = { cate ->
-//                            removeLastOrNull()
                         backStack.add(Destination.EditCategory(cate))
                     }
                 )
@@ -164,7 +159,6 @@ fun NavRoutes() {
                     currentType = it.type,
                     onBackNavigation = {
                         backStack.removeLastOrNull()
-//                            add(Destination.Categories(it.type))
                     }
                 )
             }
@@ -173,6 +167,16 @@ fun NavRoutes() {
                     category = it.category,
                     onBackNavigation = {
                         backStack.removeLastOrNull()
+                    }
+                )
+            }
+            entry<Destination.BudgetSettings>{
+                BudgetSettingsScreen(
+                    onBackNavigation = {
+                        backStack.removeLastOrNull()
+                    },
+                    navigateToAddCategory = {
+                        backStack.add(Destination.AddCategory())
                     }
                 )
             }

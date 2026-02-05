@@ -14,6 +14,7 @@ data class Category(
     val isDefault: Boolean,
     val createdAt: Long = 0,
 )
+
 enum class CategoryType{
     EXPENSE,
     INCOME

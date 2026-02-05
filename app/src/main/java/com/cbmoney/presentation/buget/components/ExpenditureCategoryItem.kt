@@ -20,12 +20,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
+import com.cbmoney.R
 import com.cbmoney.domain.constants.DefaultCategories
 import com.cbmoney.domain.model.Category
 import com.cbmoney.presentation.components.IconResolver
@@ -41,11 +43,17 @@ fun ExpenditureCategoryItem(
     modifier: Modifier = Modifier,
     category: Category,
     budget: String,
+//    iconColor: String,
+//    name: String,
+//    icon: String,
     onBudgetChange: (String) -> Unit,
 ) {
     val colorCategory = Color(category.iconColor.toColorInt())
     Row(
-        modifier = modifier.padding(Spacing.sm),
+        modifier = modifier
+            .clip(CBMoneyShapes.extraLarge)
+            .background(CBMoneyColors.White)
+            .padding(horizontal = Spacing.md, vertical = Spacing.sm),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -64,16 +72,18 @@ fun ExpenditureCategoryItem(
         Spacer(modifier = Modifier.width(Spacing.sm))
         Text(
             text = category.name,
+            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+            maxLines = 1,
             style = CBMoneyTypography.Body.Medium.Bold
         )
+        Spacer(modifier = Modifier.width(Spacing.xs))
         BasicTextField(
             modifier = Modifier.weight(1f),
             value = budget.formatMoney(),
             onValueChange = {
                 val input = it.formatDigit()
-                if (input != null) {
-                    onBudgetChange(input.toString())
-                }
+                onBudgetChange(input?.toString() ?: "")
+
             },
             textStyle = CBMoneyTypography.Body.Large.Bold.copy(
                 color = CBMoneyColors.Primary.Primary,
@@ -84,7 +94,7 @@ fun ExpenditureCategoryItem(
             decorationBox = {innerTextField->
                 if (budget.isEmpty()){
                     Text(
-                        text = "Chưa cài đặt",
+                        text = stringResource(R.string.not_set),
                         style = CBMoneyTypography.Body.Large.Regular.copy(
                             color = CBMoneyColors.Neutral.NeutralGray,
                             fontStyle = FontStyle.Italic,

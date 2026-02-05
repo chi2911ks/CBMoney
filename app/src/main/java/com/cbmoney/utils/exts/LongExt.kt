@@ -3,19 +3,12 @@ package com.cbmoney.utils.exts
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import java.text.NumberFormat
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 fun Long.formatMoney(): String {
-    return try {
-        NumberFormat.getInstance(Locale("vi", "VN")).format(this)
-    } catch (e: Exception) {
-        this.toString()
-    }
-
+    return this.toString().formatMoney()
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

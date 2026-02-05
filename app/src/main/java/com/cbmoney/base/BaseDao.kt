@@ -3,6 +3,7 @@ package com.cbmoney.base
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Update
+import androidx.room.Upsert
 
 interface BaseDao<T> {
     @Insert
@@ -21,4 +22,10 @@ interface BaseDao<T> {
     suspend fun delete(entity: T)
     @Delete
     suspend fun delete(entities: List<T>)
+
+    @Upsert
+    suspend fun upsert(entity: T)
+    @Upsert
+    suspend fun upsert(entities: List<T>)
+
 }

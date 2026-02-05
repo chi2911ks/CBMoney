@@ -1,7 +1,6 @@
 package com.cbmoney.presentation.transaction.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +21,7 @@ import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.utils.exts.rawClickable
+import com.cbmoney.utils.exts.shadowCustom
 
 @Composable
 fun TabTransaction(
@@ -32,13 +32,8 @@ fun TabTransaction(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(CBMoneyShapes.extraLarge)
-            .border(
-                1.dp,
-                CBMoneyColors.Border.BorderLight,
-                CBMoneyShapes.extraLarge
-            )
-            .background(CBMoneyColors.Gray.OnGray.copy(0.1f))
+            .shadowCustom()
+            .background(CBMoneyColors.Gray.OnGray.copy(0.1f), CBMoneyShapes.extraLarge)
             .padding(Spacing.xs),
     ) {
         TabItem(

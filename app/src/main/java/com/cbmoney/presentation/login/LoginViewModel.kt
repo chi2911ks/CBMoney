@@ -13,6 +13,7 @@ import com.cbmoney.domain.usecase.user.GetUserUseCase
 import com.cbmoney.domain.usecase.user.SaveUserToUseCase
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 
 
@@ -37,13 +38,15 @@ class LoginViewModel(
     private fun handleGoogleAuth(activity: Activity) {
         viewModelScope.launch {
             updateState { copy(isLoading = true) }
-            val result = googleAuthClient.signInGoogle(activity)
-            if (result) {
-                checkUser()
-
-            } else {
-                sendEvent(LoginEvent.LoginError(AuthError.Fail))
-            }
+            googleAuthClient.signInGoogle(activity).fold(
+                onSuccess = {
+                    checkUser(it)
+                },
+                onFailure = {
+                    googleAuthClient.signOut()
+                    sendEvent(LoginEvent.LoginError(AuthError.Fail))
+                }
+            )
             updateState { copy(isLoading = false) }
         }
     }
@@ -53,7 +56,7 @@ class LoginViewModel(
             updateState { copy(isLoading = true) }
             val result = emailAuthClient.signIn(username, password)
             when (result) {
-                is AuthResult.Success -> checkUser()
+                is AuthResult.Success -> checkUser(result.user)
                 is AuthResult.Failure -> {
                     sendEvent(LoginEvent.LoginError(result.error))
                 }
@@ -62,9 +65,8 @@ class LoginViewModel(
         }
     }
 
-    private suspend fun checkUser() {
+    private suspend fun checkUser(currentUser: FirebaseUser?) {
 
-        val currentUser = firebaseAuth.currentUser
         if (currentUser == null) {
             googleAuthClient.signOut()
             sendEvent(LoginEvent.LoginError(AuthError.Fail))

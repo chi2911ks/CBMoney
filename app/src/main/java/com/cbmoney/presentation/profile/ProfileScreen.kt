@@ -1,12 +1,14 @@
 package com.cbmoney.presentation.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.HelpCenter
@@ -30,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
 import com.cbmoney.presentation.components.ButtonPrimary
+import com.cbmoney.presentation.components.LottieView
 import com.cbmoney.presentation.profile.components.EditableAvatar
 import com.cbmoney.presentation.profile.components.SettingItem
 import com.cbmoney.presentation.theme.CBMoneyColors
@@ -42,13 +45,13 @@ fun ProfileScreen(
     navigateToPersonInfo: () -> Unit,
     navigateToSettings: () -> Unit,
     navigateToHelpCenter: () -> Unit,
-    logout: ()-> Unit,
+    logout: () -> Unit,
     profileViewModel: ProfileViewModel = koinViewModel()
 ) {
     val uiState by profileViewModel.viewState.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
         profileViewModel.singleEvent.collect {
-            when(it){
+            when (it) {
                 is ProfileEvent.LogOut -> logout()
             }
         }
@@ -107,6 +110,20 @@ fun ProfileScreenContent(
         )
 
     }
+    if (uiState.isLoading) {
+        Box(
+            modifier = Modifier
+                .background(Color.Transparent)
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            LottieView(
+                lottieResId = R.raw.anim_loading_gray,
+                modifier = Modifier
+                    .size(60.dp)
+            )
+        }
+    }
 }
 
 @Composable
@@ -142,6 +159,7 @@ fun HeaderSection(
         uiState.user?.email?.let {
             Text(
                 text = it,
+                color = NeutralGray,
                 style = CBMoneyTypography.Body.Small.Medium
             )
         }
@@ -215,6 +233,6 @@ fun UserProfileSettings(
 @Composable
 private fun ProfileScreenPreview() {
 
-        ProfileScreen({}, {}, {}, {})
+    ProfileScreen({}, {}, {}, {})
 
 }

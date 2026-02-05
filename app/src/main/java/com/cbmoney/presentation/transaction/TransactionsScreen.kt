@@ -56,12 +56,15 @@ import org.koin.androidx.compose.koinViewModel
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TransactionScreen(
+    currentType: CategoryType = CategoryType.EXPENSE,
     onBackNavigation: () -> Unit,
     navigateToCategory: (CategoryType) -> Unit,
     viewModel: TransactionsViewModel = koinViewModel()
 ) {
     val uiState by viewModel.viewState.collectAsStateWithLifecycle()
-
+    LaunchedEffect(Unit) {
+        viewModel.processIntent(TransactionsIntent.ChangeTab(currentType))
+    }
     TransactionScreenContent(
         uiState,
         onBackNavigation = onBackNavigation,
@@ -139,9 +142,8 @@ fun TransactionScreenContent(
                 value = uiState.amount.formatMoney(),
                 onValueChange = {
                     val input = it.formatDigit()
-                    if (input != null) {
-                        processIntent(TransactionsIntent.ChangeAmount(input.toString()))
-                    }
+                    processIntent(TransactionsIntent.ChangeAmount(input?.toString() ?: ""))
+
                 },
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -168,7 +170,7 @@ fun TransactionScreenContent(
                 value = uiState.note,
                 placeholder = stringResource(R.string.add_trans_des),
                 onValueChange = {
-                     processIntent(TransactionsIntent.ChangeNote(it))
+                    processIntent(TransactionsIntent.ChangeNote(it))
                 }
             )
         }

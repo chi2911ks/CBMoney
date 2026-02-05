@@ -21,7 +21,7 @@ sealed interface Destination : NavKey {
     @Serializable
     data object Settings : Destination
     @Serializable
-    data object Transaction : Destination
+    data class Transactions(val type: CategoryType = CategoryType.EXPENSE): Destination
     @Serializable
     data class Categories(val type: CategoryType = CategoryType.EXPENSE) : Destination
     @Serializable
@@ -32,7 +32,7 @@ sealed interface Destination : NavKey {
     @Serializable
     data object LanguageBottomSheet : Destination
     @Serializable
-    data object BudgetSettingsBottomSheet: Destination
+    data object BudgetSettings: Destination
 
 
 

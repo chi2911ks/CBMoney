@@ -33,4 +33,12 @@ class CategoryLocalDataSourceImpl(
     override suspend fun getLastOrder(type: String): Int {
         return categoryDao.getLastOrder(type)
     }
+
+    override fun getCategoriesByType(
+        userId: String,
+        type: String
+    ): Flow<List<CategoryEntity>> {
+        return categoryDao.getCategoriesByType(userId, type)
+    }
+
 }

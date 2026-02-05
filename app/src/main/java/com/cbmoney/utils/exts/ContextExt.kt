@@ -6,13 +6,16 @@ import android.os.Build
 import android.os.LocaleList
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import java.util.Locale
 
 fun Context.getLanguageCode(): String {
-    return if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        getSystemService(LocaleManager::class.java).applicationLocales[0]?.toLanguageTag()?.split("-")?.first() ?: "en"
-    } else {
-        AppCompatDelegate.getApplicationLocales()[0]?.toLanguageTag()?.split("-")?.first() ?: "en"
-    }
+    val languageCode = Locale.getDefault().language
+    return languageCode
+//    return if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//        getSystemService(LocaleManager::class.java).applicationLocales[0]?.toLanguageTag()?.split("-")?.first() ?: "en"
+//    } else {
+//        AppCompatDelegate.getApplicationLocales()[0]?.toLanguageTag()?.split("-")?.first() ?: "en"
+//    }
 }
 fun Context.handleOnSaveLanguage(languageCode: String) {
     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

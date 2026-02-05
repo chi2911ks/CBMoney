@@ -34,8 +34,10 @@ class ProfileViewModel(
     }
     private fun handleLogOut(){
         viewModelScope.launch {
+            updateState { copy(isLoading = true) }
             googleAuthClient.signOut()
             sendEvent(ProfileEvent.LogOut)
+            updateState { copy(isLoading = false) }
         }
 
 

@@ -25,8 +25,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,6 +43,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
 import com.cbmoney.data.mapper.toMessage
+import com.cbmoney.presentation.app.AppSnackbarManager
+import com.cbmoney.presentation.app.UiMessage
 import com.cbmoney.presentation.components.ButtonPrimary
 import com.cbmoney.presentation.components.LanguageToggle
 import com.cbmoney.presentation.components.LottieView
@@ -53,29 +53,31 @@ import com.cbmoney.presentation.login.AuthProviders
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyColors.Neutral.NeutralGray
 import com.cbmoney.presentation.theme.CBMoneyTypography
-import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.utils.exts.getLanguageCode
 import com.cbmoney.utils.exts.handleOnSaveLanguage
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 
 @Composable
 fun RegisterScreen(
     navigateToHome: () -> Unit,
     onBackClick: () -> Unit,
-    registerViewModel: RegisterViewModel = koinViewModel()
+    registerViewModel: RegisterViewModel = koinViewModel(),
+    snackbarManager: AppSnackbarManager = koinInject()
 ) {
     val context = LocalContext.current
     val uiState by registerViewModel.viewState.collectAsStateWithLifecycle()
-    val snackBarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         registerViewModel.singleEvent.collect {
             when (it) {
                 is RegisterEvent.NavigateToHome -> navigateToHome()
-                is RegisterEvent.RegisterError -> snackBarHostState.showSnackbar(
-                    it.authError.toMessage(
-                        context
+                is RegisterEvent.RegisterError -> snackbarManager.show(
+                    UiMessage.Text(
+                        it.authError.toMessage(
+                            context
+                        )
                     )
                 )
             }
@@ -84,7 +86,6 @@ fun RegisterScreen(
 
     RegisterScreenContent(
         uiState = uiState,
-        snackBarHostState,
         context = context,
         processIntent = registerViewModel::processIntent,
         onBackClick = onBackClick
@@ -95,7 +96,6 @@ fun RegisterScreen(
 @Composable
 fun RegisterScreenContent(
     uiState: RegisterState,
-    snackBarHostState: SnackbarHostState,
     context: Context,
     processIntent: (RegisterIntent) -> Unit,
     onBackClick: () -> Unit
@@ -159,12 +159,6 @@ fun RegisterScreenContent(
                 onLoginWithApple = {}
             )
         }
-        SnackbarHost(
-            hostState = snackBarHostState,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = Spacing.lg)
-        )
     }
     if (uiState.isLoading) {
         Box(
@@ -215,7 +209,8 @@ fun SignUpForm(
                 Icon(
                     Icons.Default.Email,
                     "icon email",
-                    tint = CBMoneyColors.Neutral.NeutralGray)
+                    tint = CBMoneyColors.Neutral.NeutralGray
+                )
             }
 
         )
@@ -303,7 +298,6 @@ fun PasswordInput(
 private fun RegisterScreenContentPreview() {
     RegisterScreenContent(
         uiState = RegisterState(),
-        snackBarHostState = TODO(),
         context = TODO(),
         processIntent = TODO(),
         onBackClick = TODO()

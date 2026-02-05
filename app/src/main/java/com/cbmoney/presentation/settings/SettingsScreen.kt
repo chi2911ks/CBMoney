@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.cbmoney.R
 import com.cbmoney.presentation.profile.components.SettingItem
 import com.cbmoney.presentation.settings.components.SettingToggleItem
+import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyColors.Neutral.NeutralGray
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.utils.exts.getLanguageCode
@@ -54,6 +55,7 @@ fun SettingScreenContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(CBMoneyColors.BackGround.BackgroundPrimary)
             .statusBarsPadding()
     ) {
         Box(

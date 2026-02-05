@@ -1,5 +1,7 @@
 package com.cbmoney.data.local.room.entities
 
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
@@ -31,17 +33,15 @@ data class BudgetEntity(
     val spent: Double, // Tiền đã tiêu
     val createdAt: Long,
     val updatedAt: Long,
-){
-    val remaining: Double
-        get() = amount - spent
+)
 
-    val percentage: Float
-        get() = if (amount > 0) (spent / amount * 100).toFloat() else 0f
-
-    val isOverBudget: Boolean
-        get() = spent > amount
-
-    val isNearLimit: Boolean
-        get() = percentage >= 80f
-}
-
+data class BudgetCategoryEntity(
+    @Embedded
+    val budget: BudgetEntity,
+    @ColumnInfo(name = "categoryName")
+    val categoryName: String?,
+    @ColumnInfo(name = "categoryIcon")
+    val categoryIcon: String?,
+    @ColumnInfo(name = "iconColor")
+    val iconColor: String?,
+)

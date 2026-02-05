@@ -1,10 +1,14 @@
 package com.cbmoney.di
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.cbmoney.data.local.datasource.BudgetLocalDataSource
+import com.cbmoney.data.local.datasource.BudgetLocalDataSourceImpl
 import com.cbmoney.data.local.datasource.CategoryLocalDataSource
 import com.cbmoney.data.local.datasource.CategoryLocalDataSourceImpl
 import com.cbmoney.data.local.datastore.DataStoreManager
@@ -16,17 +20,27 @@ import com.cbmoney.data.remote.datasource.CategoryRemoteDataSource
 import com.cbmoney.data.remote.datasource.CategoryRemoteDataSourceImpl
 import com.cbmoney.data.remote.datasource.UserRemoteDataSource
 import com.cbmoney.data.remote.datasource.UserRemoteDataSourceImpl
+import com.cbmoney.data.repository.BudgetRepositoryImpl
 import com.cbmoney.data.repository.CategoryRepositoryImpl
 import com.cbmoney.data.repository.UserRepositoryImpl
+import com.cbmoney.domain.repository.BudgetRepository
 import com.cbmoney.domain.repository.CategoryRepository
 import com.cbmoney.domain.repository.UserRepository
+import com.cbmoney.domain.usecase.budget.CountBudgetMonthUseCase
+import com.cbmoney.domain.usecase.budget.GetBudgetsCategoryUseCase
+import com.cbmoney.domain.usecase.budget.GetBudgetsMonthUseCase
+import com.cbmoney.domain.usecase.budget.UpsertBudgetsUseCase
 import com.cbmoney.domain.usecase.category.AddCategoryUseCase
 import com.cbmoney.domain.usecase.category.DeleteCategoryUseCase
 import com.cbmoney.domain.usecase.category.GetCategoriesUseCase
+import com.cbmoney.domain.usecase.category.GetCategoryByTypeUseCase
 import com.cbmoney.domain.usecase.category.InitCategoriesDefaultUseCase
 import com.cbmoney.domain.usecase.category.UpdateCategoryUseCase
 import com.cbmoney.domain.usecase.user.GetUserUseCase
 import com.cbmoney.domain.usecase.user.SaveUserToUseCase
+import com.cbmoney.presentation.app.AppSnackbarManager
+import com.cbmoney.presentation.buget.viewmodel.BudgetSettingsViewModel
+import com.cbmoney.presentation.buget.viewmodel.BudgetViewModel
 import com.cbmoney.presentation.category.viewmodel.AddCategoryViewModel
 import com.cbmoney.presentation.category.viewmodel.CategoriesViewModel
 import com.cbmoney.presentation.category.viewmodel.EditCategoryViewModel
@@ -59,15 +73,30 @@ val appModule = module {
     single { FirebaseFirestore.getInstance() }
     single { EmailAuthClient(get()) }
     single { GoogleAuthClient(get()) }
+
+    //AppSnackbarManager
+    single { AppSnackbarManager() }
 }
 val useCaseModule = module {
+    //user
     factoryOf(::GetUserUseCase)
     factoryOf(::SaveUserToUseCase)
+
+    //category
     factoryOf(::InitCategoriesDefaultUseCase)
     factoryOf(::GetCategoriesUseCase)
     factoryOf(::DeleteCategoryUseCase)
     factoryOf(::AddCategoryUseCase)
     factoryOf(::UpdateCategoryUseCase)
+    factoryOf(::GetCategoryByTypeUseCase)
+
+
+    //budget
+    factoryOf(::UpsertBudgetsUseCase)
+    factoryOf(::CountBudgetMonthUseCase)
+    factoryOf(::GetBudgetsCategoryUseCase)
+    factoryOf(::GetBudgetsMonthUseCase)
+
 }
 val dataSourceModule = module {
     //Remote
@@ -76,12 +105,16 @@ val dataSourceModule = module {
 
     //Local
     single<CategoryLocalDataSource> { CategoryLocalDataSourceImpl(get()) }
+    single<BudgetLocalDataSource> { BudgetLocalDataSourceImpl(get()) }
+
 
 }
 val repositoryModule = module {
     single<UserRepository> { UserRepositoryImpl(get()) }
     single<CategoryRepository> { CategoryRepositoryImpl(get(), get(), get()) }
+    single<BudgetRepository> { BudgetRepositoryImpl(get(), get(), get()) }
 }
+@RequiresApi(Build.VERSION_CODES.O)
 val viewModelModule = module {
     viewModelOf(::SplashViewModel)
     viewModelOf(::LoginViewModel)
@@ -93,6 +126,9 @@ val viewModelModule = module {
     viewModelOf(::CategoriesViewModel)
     viewModelOf(::AddCategoryViewModel)
     viewModelOf(::EditCategoryViewModel)
+    viewModelOf(::BudgetSettingsViewModel)
+    viewModelOf(::BudgetViewModel)
+
 }
 val roomModule = module {
     single {

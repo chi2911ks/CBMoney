@@ -72,8 +72,13 @@ fun CategoryItem(
 
         Text(
             text = category.name,
-            modifier = Modifier.padding(top = Spacing.xs),
+            modifier = Modifier
+                .padding(top = Spacing.xs)
+                .padding(horizontal = Spacing.xs)
+            ,
             textAlign = TextAlign.Center,
+            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+            maxLines = 1,
             style = CBMoneyTypography.Body.Small.Regular
         )
     }
