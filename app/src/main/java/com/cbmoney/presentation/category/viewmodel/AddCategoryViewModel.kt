@@ -3,7 +3,7 @@ package com.cbmoney.presentation.category.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.cbmoney.base.BaseMviViewModel
 import com.cbmoney.domain.model.Category
-import com.cbmoney.domain.usecase.category.AddCategoryUseCase
+import com.cbmoney.domain.usecase.category.SaveCategoryUseCase
 import com.cbmoney.presentation.category.contract.AddCategoryEvent
 import com.cbmoney.presentation.category.contract.AddCategoryIntent
 import com.cbmoney.presentation.category.contract.AddCategoryState
@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class AddCategoryViewModel(
-    private val addCategoryUseCase: AddCategoryUseCase,
+    private val saveCategoryUseCase: SaveCategoryUseCase,
     private val firebaseAuth: FirebaseAuth
 ) : BaseMviViewModel<AddCategoryState, AddCategoryEvent, AddCategoryIntent>() {
     override fun initialState(): AddCategoryState = AddCategoryState()
@@ -54,7 +54,7 @@ class AddCategoryViewModel(
                 type = currentState.type,
                 isDefault = false,
             )
-            val result = addCategoryUseCase(category)
+            val result = saveCategoryUseCase(category)
             if (result.isSuccess) {
                 sendEvent(AddCategoryEvent.NavigateToCategories)
             }

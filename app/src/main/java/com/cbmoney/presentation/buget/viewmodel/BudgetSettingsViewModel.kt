@@ -5,10 +5,10 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.viewModelScope
 import com.cbmoney.base.BaseMviViewModel
 import com.cbmoney.domain.model.Budget
+import com.cbmoney.domain.model.BudgetCategory
 import com.cbmoney.domain.model.CategoryType
-import com.cbmoney.domain.usecase.budget.GetBudgetsMonthUseCase
-import com.cbmoney.domain.usecase.budget.UpsertBudgetsUseCase
-import com.cbmoney.domain.usecase.category.GetCategoryByTypeUseCase
+import com.cbmoney.domain.usecase.budget.GetBudgetsSettingUseCase
+import com.cbmoney.domain.usecase.budget.SaveBudgetsUseCase
 import com.cbmoney.presentation.buget.contract.BudgetSettingsEvent
 import com.cbmoney.presentation.buget.contract.BudgetSettingsIntent
 import com.cbmoney.presentation.buget.contract.BudgetSettingsState
@@ -18,29 +18,31 @@ import java.time.YearMonth
 
 @RequiresApi(Build.VERSION_CODES.O)
 class BudgetSettingsViewModel(
-    private val upsertBudgetsUseCase: UpsertBudgetsUseCase,
-    private val getCategoryByTypeUseCase: GetCategoryByTypeUseCase,
-    private val getBudgetsMonthUseCase: GetBudgetsMonthUseCase
+    private val saveBudgetsUseCase: SaveBudgetsUseCase,
+    private val getBudgetsSettingUseCase: GetBudgetsSettingUseCase
 ) : BaseMviViewModel<BudgetSettingsState, BudgetSettingsEvent, BudgetSettingsIntent>() {
-    private var budgetTotalId: String = ""
     override fun initialState(): BudgetSettingsState = BudgetSettingsState()
     override fun processIntent(intent: BudgetSettingsIntent) {
         when (intent) {
             is BudgetSettingsIntent.OnChangeBudget -> updateState {
                 copy(
-                    budgetsAmount = budgetsAmount.toMutableMap().apply {
-                        val budgetId = get(intent.categoryId)?.get("budgetId")?:""
-                        put(intent.categoryId, mapOf(
-                            "budgetId" to budgetId,
-                            "amount" to intent.budget
-                        ))
+                    budgetsCategory = budgetsCategory.toMutableMap().apply {
+                        var budget = get(intent.categoryId)
+                        budget?.let {
+                            budget = it.copy(
+                                budget = it.budget.copy(
+                                    amount = intent.budget
+                                )
+                            )
+                            put(intent.categoryId, budget)
+                        }
                     }
                 )
 
             }
 
             is BudgetSettingsIntent.OnChangeTotalBudget -> updateState {
-                copy(totalBudget = intent.totalBudget)
+                copy(totalBudget = totalBudget?.copy(amount = intent.totalBudget))
             }
 
             is BudgetSettingsIntent.OnSaveBudget -> saveBudgets()
@@ -62,32 +64,12 @@ class BudgetSettingsViewModel(
     private fun saveBudgets() {
         viewModelScope.launch {
             val saveBudget: MutableList<Budget> = mutableListOf()
-            val budgetMonth = getYearMonthFormat(currentState.currentMonth, isStartAndEndDate = false)
-            saveBudget.add(
-                Budget(
-                    id = budgetTotalId,
-                    amount = currentState.totalBudget,
-                    categoryId = null,
-                    userId = "",
-                    month = budgetMonth,
-                    period = "monthly",
-                )
-            )
-            val filtered = currentState.budgetsAmount.filter { it.value["amount"] as Long > 0L }
-
-            for (item in filtered) {
-                saveBudget.add(
-                    Budget(
-                        id = item.value["budgetId"] as String,
-                        amount = item.value["amount"] as Long,
-                        categoryId = item.key,
-                        userId = "",
-                        month = budgetMonth,
-                        period = "monthly",
-                    )
-                )
+            currentState.totalBudget?.let {
+                saveBudget.add(it)
             }
-            upsertBudgetsUseCase(saveBudget).onSuccess {
+
+            saveBudget.addAll(currentState.budgetsCategory.values.map { it.budget }.filter { it.amount > 0 })
+            saveBudgetsUseCase(saveBudget).onSuccess {
                 sendEvent(BudgetSettingsEvent.Close)
             }.onFailure {
                 sendEvent(BudgetSettingsEvent.SaveError(it.message ?: ""))
@@ -98,32 +80,35 @@ class BudgetSettingsViewModel(
     private fun load(yearMonth: YearMonth) {
         val month = getYearMonthFormat(yearMonth, isStartAndEndDate = false)
         viewModelScope.launch {
-            getCategoryByTypeUseCase(CategoryType.EXPENSE.name.lowercase()).collect { categories ->
-                updateState {
-                    copy(
-                        categories = categories,
+            getBudgetsSettingUseCase(month,CategoryType.EXPENSE).collect {budgetSettings ->
+                val (totalBudget, budgets) = budgetSettings.budgets.partition {
+                    it.categoryId == null
+                }
+                val sv = mutableMapOf<String, BudgetCategory>()
+                budgetSettings.categories.forEach {
+                    sv[it.id] = BudgetCategory(
+                        budget = budgets.findLast { budget -> budget.categoryId == it.id } ?: Budget(
+                            categoryId = it.id,
+                            userId = "",
+                            period = "monthly",
+                            month = month
+                        ),
+                        categoryName = it.name,
+                        categoryIcon = it.icon,
+                        iconColor = it.iconColor,
                     )
                 }
-            }
-        }
-        viewModelScope.launch {
-            getBudgetsMonthUseCase(month).collect { budgets ->
-                val (filtered, totalBudget) =
-                    budgets.partition { it.categoryId != null }
-
-                budgetTotalId = totalBudget.firstOrNull()?.id ?: ""
                 updateState {
                     copy(
-                        totalBudget = totalBudget.firstOrNull()?.amount ?: 0,
-                        budgetsAmount = filtered.associate { budget ->
-                            budget.categoryId!! to mapOf(
-                                "budgetId" to budget.id,
-                                "amount" to budget.amount
-                            )
-                        }
+                        totalBudget = totalBudget.firstOrNull()?:Budget(
+                            categoryId = null,
+                            userId = "",
+                            period = "monthly",
+                            month = month
+                        ),
+                        budgetsCategory = sv
                     )
                 }
-
             }
         }
     }

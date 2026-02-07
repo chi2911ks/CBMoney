@@ -2,11 +2,11 @@ package com.cbmoney.presentation.transaction
 
 import androidx.lifecycle.viewModelScope
 import com.cbmoney.base.BaseMviViewModel
-import com.cbmoney.domain.usecase.category.GetCategoriesUseCase
+import com.cbmoney.domain.usecase.category.GetAllCategoriesUseCase
 import kotlinx.coroutines.launch
 
 class TransactionsViewModel(
-    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
 ) : BaseMviViewModel<TransactionsState, TransactionsEvent, TransactionsIntent>() {
     init {
         loadData()
@@ -38,7 +38,7 @@ class TransactionsViewModel(
 
     private fun loadData() {
         viewModelScope.launch {
-            val result = getCategoriesUseCase()
+            val result = getAllCategoriesUseCase()
             result.collect {
                 updateState {
                     copy(categories = it)

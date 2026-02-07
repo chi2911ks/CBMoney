@@ -28,14 +28,12 @@ import com.cbmoney.domain.repository.CategoryRepository
 import com.cbmoney.domain.repository.UserRepository
 import com.cbmoney.domain.usecase.budget.CountBudgetMonthUseCase
 import com.cbmoney.domain.usecase.budget.GetBudgetsCategoryUseCase
-import com.cbmoney.domain.usecase.budget.GetBudgetsMonthUseCase
-import com.cbmoney.domain.usecase.budget.UpsertBudgetsUseCase
-import com.cbmoney.domain.usecase.category.AddCategoryUseCase
+import com.cbmoney.domain.usecase.budget.GetBudgetsSettingUseCase
+import com.cbmoney.domain.usecase.budget.SaveBudgetsUseCase
 import com.cbmoney.domain.usecase.category.DeleteCategoryUseCase
-import com.cbmoney.domain.usecase.category.GetCategoriesUseCase
-import com.cbmoney.domain.usecase.category.GetCategoryByTypeUseCase
+import com.cbmoney.domain.usecase.category.GetAllCategoriesUseCase
 import com.cbmoney.domain.usecase.category.InitCategoriesDefaultUseCase
-import com.cbmoney.domain.usecase.category.UpdateCategoryUseCase
+import com.cbmoney.domain.usecase.category.SaveCategoryUseCase
 import com.cbmoney.domain.usecase.user.GetUserUseCase
 import com.cbmoney.domain.usecase.user.SaveUserToUseCase
 import com.cbmoney.presentation.app.AppSnackbarManager
@@ -84,18 +82,18 @@ val useCaseModule = module {
 
     //category
     factoryOf(::InitCategoriesDefaultUseCase)
-    factoryOf(::GetCategoriesUseCase)
+    factoryOf(::GetAllCategoriesUseCase)
     factoryOf(::DeleteCategoryUseCase)
-    factoryOf(::AddCategoryUseCase)
-    factoryOf(::UpdateCategoryUseCase)
-    factoryOf(::GetCategoryByTypeUseCase)
+    factoryOf(::SaveCategoryUseCase)
+
 
 
     //budget
-    factoryOf(::UpsertBudgetsUseCase)
+    factoryOf(::SaveBudgetsUseCase)
     factoryOf(::CountBudgetMonthUseCase)
     factoryOf(::GetBudgetsCategoryUseCase)
-    factoryOf(::GetBudgetsMonthUseCase)
+    factoryOf(::GetBudgetsSettingUseCase)
+
 
 }
 val dataSourceModule = module {

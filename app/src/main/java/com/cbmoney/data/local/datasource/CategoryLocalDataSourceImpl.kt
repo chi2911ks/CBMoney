@@ -30,6 +30,11 @@ class CategoryLocalDataSourceImpl(
     override suspend fun updateCategory(category: CategoryEntity) {
         categoryDao.update(category)
     }
+
+    override suspend fun upsertCategory(category: CategoryEntity) {
+        categoryDao.upsert(category)
+    }
+
     override suspend fun getLastOrder(type: String): Int {
         return categoryDao.getLastOrder(type)
     }

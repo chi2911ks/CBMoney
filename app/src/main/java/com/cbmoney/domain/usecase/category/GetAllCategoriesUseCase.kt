@@ -2,11 +2,13 @@ package com.cbmoney.domain.usecase.category
 
 import com.cbmoney.domain.model.Category
 import com.cbmoney.domain.repository.CategoryRepository
+import kotlinx.coroutines.flow.Flow
 
-class AddCategoryUseCase (
+class GetAllCategoriesUseCase(
     private val categoryRepository: CategoryRepository
-){
-    suspend operator fun invoke(category: Category): Result<Boolean>{
-        return categoryRepository.addCategory(category)
+) {
+    operator fun invoke(): Flow<List<Category>> {
+        return categoryRepository.getAllCategories()
     }
+
 }

@@ -5,14 +5,19 @@ import androidx.annotation.RequiresApi
 import com.cbmoney.base.MviEvent
 import com.cbmoney.base.MviIntent
 import com.cbmoney.base.MviState
-import com.cbmoney.domain.model.Category
+import com.cbmoney.domain.model.Budget
+import com.cbmoney.domain.model.BudgetCategory
 import java.time.YearMonth
+
 @RequiresApi(Build.VERSION_CODES.O)
 data class BudgetSettingsState(
-    val totalBudget: Long = 0,
+
     val currentMonth: YearMonth = YearMonth.now(),
-    val budgetsAmount: Map<String, Map<String, Any>> = emptyMap(),
-    val categories: List<Category> = emptyList(),
+//    val budgetsAmount: Map<String, Map<String, Any>> = emptyMap(),
+//    val categories: List<Category> = emptyList(),
+
+    val totalBudget: Budget? = null,
+    val budgetsCategory: Map<String, BudgetCategory> = emptyMap(),
 ) : MviState
 
 //sealed class State: MviState{

@@ -1,5 +1,6 @@
 package com.cbmoney.presentation.buget
 
+import android.R.attr.category
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
@@ -158,7 +159,8 @@ fun BudgetSettingsContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 BasicTextField(
-                    value = if (uiState.totalBudget == 0L) "" else uiState.totalBudget.formatMoney(),
+                    value = if (uiState.totalBudget?.amount == 0L) "" else uiState.totalBudget?.amount?.formatMoney()
+                        ?: "",
                     onValueChange = {
                         processIntent(
                             BudgetSettingsIntent.OnChangeTotalBudget(
@@ -173,7 +175,7 @@ fun BudgetSettingsContent(
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     decorationBox = { innerTextField ->
-                        if (uiState.totalBudget == 0L) {
+                        if (uiState.totalBudget?.amount == 0L) {
                             Text(
                                 text = stringResource(R.string.not_set),
                                 style = CBMoneyTypography.Title.Large.Regular.copy(
@@ -187,7 +189,7 @@ fun BudgetSettingsContent(
                     },
                     modifier = Modifier.weight(1f)
                 )
-                if (uiState.totalBudget != 0L) {
+                if (uiState.totalBudget?.amount != 0L) {
                     Text(
                         text = "đ",
                         style = CBMoneyTypography.Title.Large.Bold.copy(
@@ -213,7 +215,8 @@ fun BudgetSettingsContent(
                     text = "${stringResource(R.string.total_budget_category)}: ",
                     style = CBMoneyTypography.Body.Small.Regular,
                 )
-                val totalBudget = uiState.budgetsAmount.values.sumOf { it["amount"] as Long }
+//                val totalBudget = uiState.budgetsAmount.values.sumOf { it["amount"] as Long }
+                val totalBudget = 0L
                 Text(
                     text = totalBudget.formatMoney(),
                     style = CBMoneyTypography.Body.Small.Bold,
@@ -255,14 +258,14 @@ fun ExpenditureCategory(
             verticalArrangement = Arrangement.spacedBy(Spacing.sm),
         ){
             items(
-                items = uiState.categories,
-                key = { it.id }
+                items = uiState.budgetsCategory.toList(),
+                key = { it.first }
             ) { category ->
-                val categoryId = category.id
-                val budget = uiState.budgetsAmount.getOrDefault(categoryId, mapOf("amount" to 0L))
-                    .getOrDefault("amount", 0L)
+                val categoryId = category.first
+                val budget = uiState.budgetsCategory[categoryId]?.budget?.amount
+//                val budget = uiState.budgetsAmount.getOrDefault(categoryId, mapOf("amount" to 0L))
+//                    .getOrDefault("amount", 0L)
                 ExpenditureCategoryItem(
-                    category = category,
                     budget = if (budget == 0L) "" else budget.toString(),
                     onBudgetChange = {
                         processIntent(
@@ -271,7 +274,10 @@ fun ExpenditureCategory(
                                 budget = if (it.isEmpty()) 0L else it.toLong()
                             )
                         )
-                    }
+                    },
+                    iconColor = category.second.iconColor?:"",
+                    name = category.second.categoryName?:"",
+                    icon = category.second.categoryIcon?:""
                 )
             }
             item {

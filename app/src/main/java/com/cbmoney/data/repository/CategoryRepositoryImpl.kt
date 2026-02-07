@@ -7,6 +7,7 @@ import com.cbmoney.data.mapper.toEntity
 import com.cbmoney.data.remote.datasource.CategoryRemoteDataSource
 import com.cbmoney.domain.constants.DefaultCategories
 import com.cbmoney.domain.model.Category
+import com.cbmoney.domain.model.CategoryType
 import com.cbmoney.domain.repository.CategoryRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
@@ -62,9 +63,9 @@ class CategoryRepositoryImpl(
         }
     }
 //    KsiFLX54gEV9CqT4LZIsaBW2t3u1
-    override fun getCategoriesByType(type: String): Flow<List<Category>> {
+    override fun getCategoriesByType(type: CategoryType): Flow<List<Category>> {
         return try {
-            categoryLocalDataSource.getCategoriesByType(userId, type).map { categories ->
+            categoryLocalDataSource.getCategoriesByType(userId, type.name.lowercase()).map { categories ->
                 categories.map { categoryEntity -> categoryEntity.toDomain() }
             }
         } catch (e: Exception) {
@@ -111,6 +112,16 @@ class CategoryRepositoryImpl(
         }
     }
 
+    override suspend fun upsertCategory(category: Category): Result<Boolean> {
+        return try {
+            categoryLocalDataSource.upsertCategory(category.toEntity())
+            Result.success(true)
+        } catch (e: Exception) {
+            Log.w(TAG, "upsertCategory: ${e}")
+            Result.failure(e)
+        }
+
+    }
 
 
     companion object {

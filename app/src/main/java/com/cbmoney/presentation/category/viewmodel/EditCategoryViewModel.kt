@@ -3,14 +3,14 @@ package com.cbmoney.presentation.category.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.cbmoney.base.BaseMviViewModel
 import com.cbmoney.domain.usecase.category.DeleteCategoryUseCase
-import com.cbmoney.domain.usecase.category.UpdateCategoryUseCase
+import com.cbmoney.domain.usecase.category.SaveCategoryUseCase
 import com.cbmoney.presentation.category.contract.EditCategoryEvent
 import com.cbmoney.presentation.category.contract.EditCategoryIntent
 import com.cbmoney.presentation.category.contract.EditCategoryState
 import kotlinx.coroutines.launch
 
 class EditCategoryViewModel(
-    private val updateCategoryUseCase: UpdateCategoryUseCase,
+    private val saveCategoryUseCase: SaveCategoryUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase
 ):
     BaseMviViewModel<EditCategoryState, EditCategoryEvent, EditCategoryIntent>() {
@@ -36,7 +36,7 @@ class EditCategoryViewModel(
 
     private fun handleSaveCategory(){
         viewModelScope.launch {
-            val result = updateCategoryUseCase(currentState.category)
+            val result = saveCategoryUseCase(currentState.category)
             if (result.isSuccess){
                 sendEvent(EditCategoryEvent.NavigateToBack)
             }

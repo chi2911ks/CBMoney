@@ -193,7 +193,6 @@ fun BudgetScreenContent(
                 items(
                     items = uiState.budgetsByCategory,
                     key = { it.budget.id }
-
                 ) {
                     BudgetCategoryItem(
                         name = it.categoryName ?: "",

@@ -28,8 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import com.cbmoney.R
-import com.cbmoney.domain.constants.DefaultCategories
-import com.cbmoney.domain.model.Category
 import com.cbmoney.presentation.components.IconResolver
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
@@ -41,14 +39,14 @@ import com.cbmoney.utils.exts.formatMoney
 @Composable
 fun ExpenditureCategoryItem(
     modifier: Modifier = Modifier,
-    category: Category,
+//    category: Category,
     budget: String,
-//    iconColor: String,
-//    name: String,
-//    icon: String,
+    iconColor: String,
+    name: String,
+    icon: String,
     onBudgetChange: (String) -> Unit,
 ) {
-    val colorCategory = Color(category.iconColor.toColorInt())
+    val colorCategory = Color(iconColor.toColorInt())
     Row(
         modifier = modifier
             .clip(CBMoneyShapes.extraLarge)
@@ -64,14 +62,14 @@ fun ExpenditureCategoryItem(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = IconResolver.getImageVector(category.icon),
+                imageVector = IconResolver.getImageVector(icon),
                 contentDescription = null,
                 tint = colorCategory
             )
         }
         Spacer(modifier = Modifier.width(Spacing.sm))
         Text(
-            text = category.name,
+            text = name,
             overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
             maxLines = 1,
             style = CBMoneyTypography.Body.Medium.Bold
@@ -122,11 +120,11 @@ private fun ExpenditureCategoryItemPreview() {
     var budget by remember {
         mutableStateOf("")
     }
-    ExpenditureCategoryItem(
-        category = DefaultCategories.EXPENSE_CATEGORIES[0],
-        budget = budget,
-        onBudgetChange = {
-            budget = it
-        }
-    )
+//    ExpenditureCategoryItem(
+//        category = DefaultCategories.EXPENSE_CATEGORIES[0],
+//        budget = budget,
+//        onBudgetChange = {
+//            budget = it
+//        }
+//    )
 }

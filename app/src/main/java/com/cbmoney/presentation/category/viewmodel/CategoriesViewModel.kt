@@ -3,14 +3,14 @@ package com.cbmoney.presentation.category.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.cbmoney.base.BaseMviViewModel
 import com.cbmoney.domain.usecase.category.DeleteCategoryUseCase
-import com.cbmoney.domain.usecase.category.GetCategoriesUseCase
+import com.cbmoney.domain.usecase.category.GetAllCategoriesUseCase
 import com.cbmoney.presentation.category.contract.CategoriesEvent
 import com.cbmoney.presentation.category.contract.CategoriesIntent
 import com.cbmoney.presentation.category.contract.CategoriesState
 import kotlinx.coroutines.launch
 
 class CategoriesViewModel(
-    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase
 ): BaseMviViewModel<CategoriesState, CategoriesEvent, CategoriesIntent>() {
     init {
@@ -32,7 +32,7 @@ class CategoriesViewModel(
 
     private fun loadCategories() {
         viewModelScope.launch {
-            val categories = getCategoriesUseCase()
+            val categories = getAllCategoriesUseCase()
             categories.collect {
                 updateState {
                     copy(categories = it)
