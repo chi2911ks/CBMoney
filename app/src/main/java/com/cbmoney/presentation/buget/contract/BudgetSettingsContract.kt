@@ -36,7 +36,7 @@ sealed class BudgetSettingsIntent: MviIntent {
     data class OnChangeBudget(val categoryId: String, val budget: Long): BudgetSettingsIntent()
     data class OnChangeTotalBudget(val totalBudget: Long): BudgetSettingsIntent()
     data class OnChangeCurrentMonth(val yearMonth: YearMonth): BudgetSettingsIntent()
-    data object LoadBudget: BudgetSettingsIntent()
+
 
     data object OnSaveBudget: BudgetSettingsIntent()
 

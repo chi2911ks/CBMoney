@@ -36,11 +36,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cbmoney.R
-import com.cbmoney.presentation.home.components.model.MonthlyData
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.utils.exts.shadowCustom
 
+data class MonthlyData(
+    val label: String,
+    val income: Long,
+    val expense: Long
+)
 @Composable
 fun MonthlySpendingCard(
     selectedIndex: Int,

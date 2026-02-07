@@ -11,11 +11,13 @@ data class Budget(
     val createdAt: Long = 0,
     val updatedAt: Long = 0,
 ){
+    val isOverall: Boolean
+        get() = categoryId == null
     val remaining: Long
         get() = amount - spent
 
     val percentage: Float
-        get() = if (amount > 0) (spent / amount * 100).toFloat() else 0f
+        get() = if (amount > 0) spent.toFloat() / amount.toFloat() else 0f
 
     val isOverBudget: Boolean
         get() = spent > amount

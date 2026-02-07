@@ -1,6 +1,7 @@
 package com.cbmoney.presentation.buget
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -118,10 +119,13 @@ fun BudgetScreenContent(
                     style = CBMoneyTypography.Title.Large.Bold
                 )
                 Spacer(modifier = Modifier.height(Spacing.md))
+
                 CircularProgressBar(
                     size = 140.dp,
                     progress = uiState.totalBudget?.percentage ?: 0f,
-                    description = stringResource(R.string.spent)
+                    description = stringResource(R.string.spent),
+                    indicatorColor = if (uiState.totalBudget?.isOverBudget == true) CBMoneyColors.Red2 else CBMoneyColors.Primary.Primary,
+                    backgroundIndicatorColor = if (uiState.totalBudget?.isOverBudget == true) CBMoneyColors.Red2.copy(0.25f) else CBMoneyColors.Primary.Primary.copy(0.25f)
                 )
                 HorizontalDivider(
                     modifier = Modifier.padding(Spacing.md),
@@ -199,7 +203,10 @@ fun BudgetScreenContent(
                         iconColor = it.iconColor ?: "",
                         icon = it.categoryIcon ?: "",
                         budgetAmount = it.budget.amount,
-                        spentAmount = it.budget.spent
+                        spentAmount = it.budget.spent,
+                        onClick = {
+                            Log.d("HAHAHA", "BudgetScreenContent: ${it.budget.categoryId}")
+                        }
                     )
                 }
             }

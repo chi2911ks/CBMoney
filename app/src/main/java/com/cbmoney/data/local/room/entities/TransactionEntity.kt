@@ -1,5 +1,7 @@
 package com.cbmoney.data.local.room.entities
 
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
@@ -21,11 +23,21 @@ data class TransactionEntity(
     @PrimaryKey
     val id: String,
     val userId: String,
-    val amount: Double,
+    val amount: Long,
     val type: String,  // "expense" or "income"
     val categoryId: String? = null,
     val description: String,
     val date: Long,
     val createdAt: Long,
     val updatedAt: Long
+)
+data class TransactionCategoryEntity(
+    @Embedded
+    val transaction: TransactionEntity,
+    @ColumnInfo(name = "categoryName")
+    val categoryName: String?,
+    @ColumnInfo(name = "categoryIcon")
+    val categoryIcon: String?,
+    @ColumnInfo(name = "iconColor")
+    val iconColor: String?,
 )

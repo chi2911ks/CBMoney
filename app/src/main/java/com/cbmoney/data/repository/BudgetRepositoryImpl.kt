@@ -61,14 +61,43 @@ class BudgetRepositoryImpl(
         }
     }
 
-    override suspend fun countBudgetsByMonth(month: String): Int {
+    override suspend fun checkBudgetByCategoryExists(
+        month: String,
+        categoryId: String
+    ): Result<Boolean> {
         return try {
-            budgetLocalDataSource.countBudgetsByMonth(userId, month)
+            budgetLocalDataSource.getBudgetByCategory(userId, month, categoryId)?.let {
+                Result.success(true)
+            } ?: Result.success(false)
         }catch (e: Exception){
-            Log.w(TAG, "countBudgetsByMonth: $e")
-            0
+            Log.w(TAG, "checkBudgetByCategoryExists: $e")
+            Result.failure(e)
         }
 
+    }
+
+    override suspend fun checkBudgetTotalExists(month: String): Result<Boolean> {
+        return try {
+            budgetLocalDataSource.getTotalBudgetByMonth(userId, month)?.let {
+                Result.success(true)
+            } ?: Result.success(false)
+        }
+        catch (e: Exception){
+            Log.w(TAG, "checkBudgetTotalExists: $e")
+            Result.failure(e)
+        }
+    }
+
+
+    override suspend fun updateSpent(categoryId: String, month: String, spent: Long): Result<Boolean> {
+        return try {
+            budgetLocalDataSource.updateSpentTotal(userId, spent, month)
+            budgetLocalDataSource.updateSpent(userId, categoryId, spent, month)
+            Result.success(true)
+        }catch (e: Exception){
+            Log.w(TAG, "updateBudget: $e")
+            Result.failure(e)
+        }
     }
 
 

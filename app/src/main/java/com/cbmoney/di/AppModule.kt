@@ -11,6 +11,8 @@ import com.cbmoney.data.local.datasource.BudgetLocalDataSource
 import com.cbmoney.data.local.datasource.BudgetLocalDataSourceImpl
 import com.cbmoney.data.local.datasource.CategoryLocalDataSource
 import com.cbmoney.data.local.datasource.CategoryLocalDataSourceImpl
+import com.cbmoney.data.local.datasource.TransactionLocalDataSource
+import com.cbmoney.data.local.datasource.TransactionLocalDataSourceImpl
 import com.cbmoney.data.local.datastore.DataStoreManager
 import com.cbmoney.data.local.datastore.DataStoreManagerImpl
 import com.cbmoney.data.local.room.CBMoneyDB
@@ -25,8 +27,8 @@ import com.cbmoney.data.repository.CategoryRepositoryImpl
 import com.cbmoney.data.repository.UserRepositoryImpl
 import com.cbmoney.domain.repository.BudgetRepository
 import com.cbmoney.domain.repository.CategoryRepository
+import com.cbmoney.domain.repository.TransactionRepository
 import com.cbmoney.domain.repository.UserRepository
-import com.cbmoney.domain.usecase.budget.CountBudgetMonthUseCase
 import com.cbmoney.domain.usecase.budget.GetBudgetsCategoryUseCase
 import com.cbmoney.domain.usecase.budget.GetBudgetsSettingUseCase
 import com.cbmoney.domain.usecase.budget.SaveBudgetsUseCase
@@ -34,6 +36,8 @@ import com.cbmoney.domain.usecase.category.DeleteCategoryUseCase
 import com.cbmoney.domain.usecase.category.GetAllCategoriesUseCase
 import com.cbmoney.domain.usecase.category.InitCategoriesDefaultUseCase
 import com.cbmoney.domain.usecase.category.SaveCategoryUseCase
+import com.cbmoney.domain.usecase.transaction.GetRecentTransactionsUseCase
+import com.cbmoney.domain.usecase.transaction.SaveTransactionUseCase
 import com.cbmoney.domain.usecase.user.GetUserUseCase
 import com.cbmoney.domain.usecase.user.SaveUserToUseCase
 import com.cbmoney.presentation.app.AppSnackbarManager
@@ -90,10 +94,12 @@ val useCaseModule = module {
 
     //budget
     factoryOf(::SaveBudgetsUseCase)
-    factoryOf(::CountBudgetMonthUseCase)
     factoryOf(::GetBudgetsCategoryUseCase)
     factoryOf(::GetBudgetsSettingUseCase)
 
+    //transaction
+    factoryOf(::SaveTransactionUseCase)
+    factoryOf(::GetRecentTransactionsUseCase)
 
 }
 val dataSourceModule = module {
@@ -104,13 +110,13 @@ val dataSourceModule = module {
     //Local
     single<CategoryLocalDataSource> { CategoryLocalDataSourceImpl(get()) }
     single<BudgetLocalDataSource> { BudgetLocalDataSourceImpl(get()) }
-
-
+    single<TransactionLocalDataSource> { TransactionLocalDataSourceImpl(get()) }
 }
 val repositoryModule = module {
     single<UserRepository> { UserRepositoryImpl(get()) }
     single<CategoryRepository> { CategoryRepositoryImpl(get(), get(), get()) }
     single<BudgetRepository> { BudgetRepositoryImpl(get(), get(), get()) }
+    single<TransactionRepository> { com.cbmoney.data.repository.TransactionRepositoryImpl(get(), get()) }
 }
 @RequiresApi(Build.VERSION_CODES.O)
 val viewModelModule = module {

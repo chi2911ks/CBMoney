@@ -8,8 +8,13 @@ import com.cbmoney.domain.usecase.budget.GetBudgetsCategoryUseCase
 import com.cbmoney.presentation.buget.contract.BudgetEvent
 import com.cbmoney.presentation.buget.contract.BudgetIntent
 import com.cbmoney.presentation.buget.contract.BudgetState
-import com.cbmoney.utils.getYearMonthFormat
-import kotlinx.coroutines.launch
+import com.cbmoney.utils.DateUtils
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
 @RequiresApi(Build.VERSION_CODES.O)
 class BudgetViewModel(
@@ -26,10 +31,7 @@ class BudgetViewModel(
                     copy(currentMonth = intent.newYearMonth)
 
                 }
-                load()
             }
-
-            is BudgetIntent.LoadBudgets -> load()
         }
     }
 
@@ -37,19 +39,25 @@ class BudgetViewModel(
         load()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun load() {
-        val monthFormat = getYearMonthFormat(currentState.currentMonth, false)
-        viewModelScope.launch {
-            getBudgetsCategoryUseCase(monthFormat).collect { listBudgets ->
-                val (overallBudget, budgetCategory) =
-                    listBudgets.partition { it.budget.categoryId == null }
-                updateState {
-                    copy(
-                        totalBudget = overallBudget.firstOrNull()?.budget,
-                        budgetsByCategory = budgetCategory
-                    )
-                }
+        //distinctUntilChanged dùng để tránh lặp lại nhiều lần
+        //flatMapLatest dùng để cancel flow cũ khi chạy flow mới
+        viewState.map {
+            it.currentMonth
+        }.distinctUntilChanged().map {
+            DateUtils.getYearMonthFormat(it, false)
+        }.flatMapLatest { monthFormat ->
+            getBudgetsCategoryUseCase(monthFormat)
+        }.onEach { listBudgets ->
+            val (overallBudget, budgetCategory) =
+                listBudgets.partition { it.budget.isOverall }
+            updateState {
+                copy(
+                    totalBudget = overallBudget.firstOrNull()?.budget,
+                    budgetsByCategory = budgetCategory.filter { it.budget.amount > 0 }
+                )
             }
-        }
+        }.launchIn(viewModelScope)
     }
 }

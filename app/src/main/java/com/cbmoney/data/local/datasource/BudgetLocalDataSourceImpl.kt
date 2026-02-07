@@ -12,14 +12,21 @@ class BudgetLocalDataSourceImpl(
         return budgetDao.getAllBudgets(userId)
     }
 
-    override suspend fun getBudgetById(id: String): BudgetEntity {
-        return budgetDao.getBudgetById(id)
+    override suspend fun getBudgetByCategory(
+        userId: String,
+        month: String,
+        categoryId: String
+    ): BudgetEntity? {
+        return budgetDao.getBudgetByCategory(userId, month, categoryId)
     }
 
-
-    override suspend fun countBudgetsByMonth(userId: String, month: String): Int {
-        return budgetDao.countBudgetsByMonth(userId, month)
+    override suspend fun getTotalBudgetByMonth(
+        userId: String,
+        month: String
+    ): BudgetEntity? {
+        return budgetDao.getTotalBudgetByMonth(userId, month)
     }
+
 
     override fun getBudgetsCategoryByMonth(
         userId: String,
@@ -54,4 +61,22 @@ class BudgetLocalDataSourceImpl(
     override suspend fun upsertBudgets(budgets: List<BudgetEntity>) {
         return budgetDao.upsert(budgets)
     }
+
+    override suspend fun updateSpent(
+        userId: String,
+        categoryId: String,
+        spent: Long,
+        month: String
+    ) {
+        return budgetDao.updateSpent(userId, categoryId, spent, month)
+    }
+
+    override suspend fun updateSpentTotal(
+        userId: String,
+        spent: Long,
+        month: String
+    ) {
+        return budgetDao.updateSpentTotal(userId, spent, month)
+    }
+
 }

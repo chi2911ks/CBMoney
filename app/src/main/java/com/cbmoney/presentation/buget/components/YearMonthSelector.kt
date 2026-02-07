@@ -19,9 +19,9 @@ import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
+import com.cbmoney.utils.DateUtils
 import com.cbmoney.utils.exts.rawClickable
 import com.cbmoney.utils.exts.shadowCustom
-import com.cbmoney.utils.getYearMonthFormat
 import java.time.YearMonth
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -49,7 +49,7 @@ fun YearMonthSelector(
 
         )
         Text(
-            text = getYearMonthFormat(yearMonth = yearMonth),
+            text = DateUtils.getYearMonthFormat(yearMonth = yearMonth),
             modifier = Modifier.weight(1f),
             style = CBMoneyTypography.Body.Medium.Bold.copy(
                 textAlign = TextAlign.Center

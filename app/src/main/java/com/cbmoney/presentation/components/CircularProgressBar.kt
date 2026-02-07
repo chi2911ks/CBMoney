@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyTypography
+import java.math.RoundingMode
 
 
 @Composable
@@ -39,10 +40,9 @@ fun CircularProgressBar(
         fontSize = 16.sp
     )
 ) {
-    val safeProgress = progress
-        .takeIf { it.isFinite() }
-        ?.coerceIn(0f, 1f)
-        ?: 0f
+    val percentage = progress.takeIf { it.isFinite() }?:0f
+    val safeProgress = percentage.coerceIn(0f, 1f)
+
     val animatedProgress by animateFloatAsState(
         targetValue = safeProgress,
         animationSpec = tween(600, easing = FastOutSlowInEasing),
@@ -88,7 +88,11 @@ fun CircularProgressBar(
             horizontalAlignment = Alignment.CenterHorizontally,
         ){
             Text(
-                text = "${(safeProgress * 100).toInt()}%",
+                text = "${
+                    (percentage * 100)
+                    .toBigDecimal()
+                    .setScale(1, RoundingMode.DOWN)
+                    .toDouble()}%",
                 style = style
             )
             if(description != null){

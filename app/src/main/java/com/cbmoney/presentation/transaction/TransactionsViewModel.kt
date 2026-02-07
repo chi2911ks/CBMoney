@@ -2,11 +2,14 @@ package com.cbmoney.presentation.transaction
 
 import androidx.lifecycle.viewModelScope
 import com.cbmoney.base.BaseMviViewModel
+import com.cbmoney.domain.model.Transaction
 import com.cbmoney.domain.usecase.category.GetAllCategoriesUseCase
+import com.cbmoney.domain.usecase.transaction.SaveTransactionUseCase
 import kotlinx.coroutines.launch
 
 class TransactionsViewModel(
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
+    private val saveTransactionUseCase: SaveTransactionUseCase
 ) : BaseMviViewModel<TransactionsState, TransactionsEvent, TransactionsIntent>() {
     init {
         loadData()
@@ -33,6 +36,7 @@ class TransactionsViewModel(
                 copy(note = intent.note)
             }
 
+            TransactionsIntent.SaveTransaction -> saveTransaction()
         }
     }
 
@@ -47,5 +51,30 @@ class TransactionsViewModel(
 
         }
 
+    }
+    private fun saveTransaction(){
+        viewModelScope.launch {
+            currentState.selectedCategory?.let {
+                val transaction = Transaction(
+                    amount = currentState.amount,
+                    type = currentState.selectedType.name.lowercase(),
+                    categoryId = it.id,
+                    description = currentState.note,
+                    date = currentState.date,
+                    createdAt = System.currentTimeMillis(),
+                    updatedAt = System.currentTimeMillis(),
+                )
+                saveTransactionUseCase(transaction).fold(
+                    onSuccess = {
+                        sendEvent(TransactionsEvent.SaveTransactionSuccess)
+                    },
+                    onFailure = {
+                        sendEvent(TransactionsEvent.SaveTransactionError(it.message.toString()))
+                    }
+                )
+            }
+
+
+        }
     }
 }

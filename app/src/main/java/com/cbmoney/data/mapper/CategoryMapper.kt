@@ -3,14 +3,16 @@ package com.cbmoney.data.mapper
 import com.cbmoney.data.local.room.entities.CategoryEntity
 import com.cbmoney.data.remote.model.CategoryFirestore
 import com.cbmoney.domain.model.Category
-import com.cbmoney.utils.exts.toCategoryType
+import com.cbmoney.utils.fromPeriod
+import com.cbmoney.utils.toPeriod
+
 // Entity -> Domain
 fun CategoryEntity.toDomain(): Category {
     return Category(
         id = id,
         userId = userId,
         name = name,
-        type = type.toCategoryType(),
+        type = toPeriod(type.uppercase()),
         icon = icon,
         iconColor = color,
         order = order,
@@ -24,7 +26,7 @@ fun Category.toEntity(): CategoryEntity{
         id = id,
         userId = userId,
         name = name,
-        type = type.name.lowercase(),
+        type = fromPeriod(type),
         icon = icon,
         color = iconColor,
         order = order,

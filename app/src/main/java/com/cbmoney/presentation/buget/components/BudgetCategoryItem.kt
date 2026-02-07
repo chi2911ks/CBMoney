@@ -1,6 +1,7 @@
 package com.cbmoney.presentation.buget.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import com.cbmoney.R
 import com.cbmoney.presentation.components.IconResolver
+import com.cbmoney.presentation.components.ProcessBar
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
@@ -43,6 +45,7 @@ fun BudgetCategoryItem(
     icon: String,
     budgetAmount: Long? = null,
     spentAmount: Long? = null,
+    onClick: () -> Unit
 ) {
     val remaining = budgetAmount?.minus(spentAmount ?: 0)
     val (colorProcess, colorText) =
@@ -55,11 +58,15 @@ fun BudgetCategoryItem(
 
     val colorCategory = Color(iconColor.toColorInt())
     val percentage = (spentAmount?.toFloat() ?: 0f) / (budgetAmount?.toFloat() ?: 1f)
+    val safeProcess = percentage.takeIf { it.isFinite() } ?: 0f
     Column(
         modifier = modifier
             .fillMaxWidth()
             .clip(CBMoneyShapes.large)
             .background(CBMoneyColors.White)
+            .clickable{
+                onClick()
+            }
             .padding(Spacing.sm)
     ) {
         Row(
@@ -134,7 +141,9 @@ fun BudgetCategoryItem(
                     }
                     Text(
                         text = "${
-                            (percentage * 100).toBigDecimal().setScale(1, RoundingMode.DOWN)
+                            (safeProcess * 100)
+                                .toBigDecimal()
+                                .setScale(1, RoundingMode.DOWN)
                                 .toDouble()
                         }%",
                         color = CBMoneyColors.Text.TextPrimary,
@@ -145,22 +154,7 @@ fun BudgetCategoryItem(
             }
         }
         Spacer(modifier = Modifier.height(Spacing.sm))
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(10.dp)
-                .clip(CBMoneyShapes.extraLarge)
-                .background(CBMoneyColors.Gray.Gray.copy(0.5f))
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(percentage)
-                    .height(10.dp)
-                    .clip(CBMoneyShapes.extraLarge)
-                    .background(colorCategory)
-            )
-        }
+        ProcessBar(progress = safeProcess, colorCategory = colorProcess)
 
 
     }

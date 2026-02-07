@@ -11,8 +11,14 @@ import kotlinx.coroutines.flow.Flow
 interface BudgetDao: BaseDao<BudgetEntity> {
     @Query("SELECT * FROM budgets WHERE userId = :userId")
     fun getAllBudgets(userId: String): Flow<List<BudgetEntity>>
-    @Query("SELECT * FROM budgets WHERE id = :id")
-    suspend fun getBudgetById(id: String): BudgetEntity
+    @Query("""
+        SELECT * 
+        FROM budgets 
+        WHERE userId = :userId AND 
+        (month = :month)
+        AND categoryId = :categoryId
+    """)
+    suspend fun getBudgetByCategory(userId: String, month: String, categoryId: String): BudgetEntity?
 
     @Query("""
         SELECT * 
@@ -21,7 +27,7 @@ interface BudgetDao: BaseDao<BudgetEntity> {
         (month = :month) AND 
         categoryId IS NULL
     """)
-    suspend fun getTotalBudgetByMonth(userId: String, month: String): BudgetEntity
+    suspend fun getTotalBudgetByMonth(userId: String, month: String): BudgetEntity?
 
 
     @Query("""
@@ -35,9 +41,25 @@ interface BudgetDao: BaseDao<BudgetEntity> {
         WHERE b.userId = :userId AND b.month = :month
     """)
     fun getBudgetsCategoryByMonth(userId: String, month: String): Flow<List<BudgetCategoryEntity>>
-    @Query("SELECT COUNT(*) FROM budgets WHERE userId = :userId AND month = :month")
-    suspend fun countBudgetsByMonth(userId: String, month: String): Int
+
     @Query("SELECT * FROM budgets WHERE userId = :userId AND month = :month")
     fun getBudgetsByMonth(userId: String, month: String): Flow<List<BudgetEntity>>
+
+    @Query("""
+        UPDATE budgets 
+        SET spent = spent + :spent 
+        WHERE userId = :userId AND
+        categoryId = :categoryId AND 
+        month = :month""")
+    suspend fun updateSpent(userId: String, categoryId: String, spent: Long, month: String)
+
+
+    @Query("""
+        UPDATE budgets 
+        SET spent = spent + :spent 
+        WHERE userId = :userId AND
+        categoryId IS NULL AND 
+        month = :month""")
+    suspend fun updateSpentTotal(userId: String, spent: Long, month: String)
 
 }

@@ -142,7 +142,7 @@ fun TransactionScreenContent(
                 value = uiState.amount.formatMoney(),
                 onValueChange = {
                     val input = it.formatDigit()
-                    processIntent(TransactionsIntent.ChangeAmount(input?.toString() ?: ""))
+                    processIntent(TransactionsIntent.ChangeAmount(input?:0))
 
                 },
                 modifier = Modifier
@@ -178,7 +178,9 @@ fun TransactionScreenContent(
         ButtonPrimary(
             text = stringResource(R.string.save_transaction),
             modifier = Modifier.fillMaxWidth(),
-            onClick = {},
+            onClick = {
+                processIntent(TransactionsIntent.SaveTransaction)
+            },
         )
     }
 }

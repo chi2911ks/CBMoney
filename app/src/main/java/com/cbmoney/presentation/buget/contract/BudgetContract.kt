@@ -19,7 +19,6 @@ sealed class BudgetEvent: MviEvent {
 
 }
 sealed class BudgetIntent: MviIntent {
-    object LoadBudgets: BudgetIntent()
     data class OnChangeCurrentMonth(val newYearMonth: YearMonth): BudgetIntent()
 }
 

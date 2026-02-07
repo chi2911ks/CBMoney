@@ -1,6 +1,9 @@
 package com.cbmoney.presentation.components
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Help
+import androidx.compose.material.icons.automirrored.filled.LibraryBooks
+import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.AttachMoney
@@ -21,7 +24,6 @@ import androidx.compose.material.icons.filled.Fastfood
 import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Flight
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.LibraryBooks
 import androidx.compose.material.icons.filled.LocalBar
 import androidx.compose.material.icons.filled.LocalCafe
 import androidx.compose.material.icons.filled.LocalGasStation
@@ -32,7 +34,6 @@ import androidx.compose.material.icons.filled.LocalPizza
 import androidx.compose.material.icons.filled.LocalTaxi
 import androidx.compose.material.icons.filled.LunchDining
 import androidx.compose.material.icons.filled.Medication
-import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.MonitorHeart
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.Movie
@@ -40,7 +41,6 @@ import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Payments
 import androidx.compose.material.icons.filled.PedalBike
 import androidx.compose.material.icons.filled.PhoneAndroid
-import androidx.compose.material.icons.filled.ReceiptLong
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Science
@@ -101,7 +101,7 @@ object IconResolver {
         "theater_comedy" to Icons.Filled.TheaterComedy,
 
         // Bills
-        "receipt_long" to Icons.Filled.ReceiptLong,
+        "receipt_long" to Icons.AutoMirrored.Filled.ReceiptLong,
         "bolt" to Icons.Filled.Bolt,
         "water_drop" to Icons.Filled.WaterDrop,
         "wifi" to Icons.Filled.Wifi,
@@ -115,8 +115,8 @@ object IconResolver {
 
         // Education
         "school" to Icons.Filled.School,
-        "menu_book" to Icons.Filled.MenuBook,
-        "library_books" to Icons.Filled.LibraryBooks,
+        "menu_book" to Icons.AutoMirrored.Filled.MenuBook,
+        "library_books" to Icons.AutoMirrored.Filled.LibraryBooks,
         "science" to Icons.Filled.Science,
 
         // Home

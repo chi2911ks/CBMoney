@@ -1,17 +1,25 @@
 package com.cbmoney.presentation.home
 
+import android.R.attr.name
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -46,8 +54,10 @@ import com.cbmoney.domain.model.CategoryType
 import com.cbmoney.domain.model.User
 import com.cbmoney.presentation.components.ButtonWithIcon
 import com.cbmoney.presentation.home.components.FinanceCard
+import com.cbmoney.presentation.home.components.MonthlyData
 import com.cbmoney.presentation.home.components.MonthlySpendingCard
-import com.cbmoney.presentation.home.components.model.MonthlyData
+import com.cbmoney.presentation.home.components.RecentTransactionItem
+
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
@@ -100,7 +110,7 @@ fun HomeScreenContent(
             .statusBarsPadding()
             .padding(horizontal = Spacing.md)
 //            .padding(bottom = 70.dp)
-            .verticalScroll(rememberScrollState())
+
         ,
 
     ) {
@@ -174,6 +184,10 @@ fun HomeScreenContent(
             )
 
         }
+        Spacer(Modifier.height(Spacing.sm))
+        RecentTransactions(
+            uiState = uiState
+        )
     }
 
 }
@@ -215,7 +229,7 @@ fun HeaderSection(
                         .size(40.dp)
                         .clip(CircleShape)
 //                        .border(1.dp, Color.Gray, CircleShape)
-                        .clickable {  }
+                        .clickable { }
                 )
 
             }
@@ -264,6 +278,50 @@ fun HeaderSection(
     }
 }
 
+
+@Composable
+fun RecentTransactions(
+    modifier: Modifier = Modifier,
+    uiState: HomeState = HomeState()
+)
+ {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = stringResource(R.string.recent_transactions),
+            style = CBMoneyTypography.Body.Large.Bold,
+        )
+
+        Text(
+            text = stringResource(R.string.see_all),
+            color = CBMoneyColors.Primary.Primary,
+            style = CBMoneyTypography.Body.Medium.Regular
+        )
+    }
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth(),
+        contentPadding = PaddingValues(vertical = Spacing.sm),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(Spacing.sm)
+    ) {
+       items(
+           items = uiState.transactions,
+           key = { it.transaction.id }
+       ){
+           RecentTransactionItem(
+               name = it.categoryName?:"",
+               iconColor = it.iconColor?:"",
+               icon = it.categoryIcon?:"",
+               spent = it.transaction.amount,
+               date = it.transaction.date
+           )
+       }
+    }
+}
 @Preview
 @Composable
 private fun HomeScreenPreview() {

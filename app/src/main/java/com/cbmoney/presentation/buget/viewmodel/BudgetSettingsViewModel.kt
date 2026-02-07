@@ -12,9 +12,14 @@ import com.cbmoney.domain.usecase.budget.SaveBudgetsUseCase
 import com.cbmoney.presentation.buget.contract.BudgetSettingsEvent
 import com.cbmoney.presentation.buget.contract.BudgetSettingsIntent
 import com.cbmoney.presentation.buget.contract.BudgetSettingsState
-import com.cbmoney.utils.getYearMonthFormat
+import com.cbmoney.utils.DateUtils
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.time.YearMonth
 
 @RequiresApi(Build.VERSION_CODES.O)
 class BudgetSettingsViewModel(
@@ -50,25 +55,23 @@ class BudgetSettingsViewModel(
                 updateState {
                     copy(currentMonth = intent.yearMonth)
                 }
-                load(currentState.currentMonth)
             }
 
-            is BudgetSettingsIntent.LoadBudget -> load(currentState.currentMonth)
+
         }
     }
 
     init {
-        load(currentState.currentMonth)
+        load()
     }
 
     private fun saveBudgets() {
         viewModelScope.launch {
-            val saveBudget: MutableList<Budget> = mutableListOf()
+            val saveBudget = currentState.budgetsCategory.values.map { it.budget }.filter { it.amount > 0 }.toMutableList()
             currentState.totalBudget?.let {
-                saveBudget.add(it)
+                 saveBudget.add(it)
             }
 
-            saveBudget.addAll(currentState.budgetsCategory.values.map { it.budget }.filter { it.amount > 0 })
             saveBudgetsUseCase(saveBudget).onSuccess {
                 sendEvent(BudgetSettingsEvent.Close)
             }.onFailure {
@@ -77,39 +80,46 @@ class BudgetSettingsViewModel(
         }
     }
 
-    private fun load(yearMonth: YearMonth) {
-        val month = getYearMonthFormat(yearMonth, isStartAndEndDate = false)
-        viewModelScope.launch {
-            getBudgetsSettingUseCase(month,CategoryType.EXPENSE).collect {budgetSettings ->
-                val (totalBudget, budgets) = budgetSettings.budgets.partition {
-                    it.categoryId == null
-                }
-                val sv = mutableMapOf<String, BudgetCategory>()
-                budgetSettings.categories.forEach {
-                    sv[it.id] = BudgetCategory(
-                        budget = budgets.findLast { budget -> budget.categoryId == it.id } ?: Budget(
-                            categoryId = it.id,
-                            userId = "",
-                            period = "monthly",
-                            month = month
-                        ),
-                        categoryName = it.name,
-                        categoryIcon = it.icon,
-                        iconColor = it.iconColor,
-                    )
-                }
-                updateState {
-                    copy(
-                        totalBudget = totalBudget.firstOrNull()?:Budget(
-                            categoryId = null,
-                            userId = "",
-                            period = "monthly",
-                            month = month
-                        ),
-                        budgetsCategory = sv
-                    )
-                }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun load() {
+        viewState.map{
+            it.currentMonth
+        }.distinctUntilChanged().map {
+            DateUtils.getYearMonthFormat(it, isStartAndEndDate = false)
+        }.flatMapLatest {
+            getBudgetsSettingUseCase(it,CategoryType.EXPENSE)
+        }.onEach {budgetSettings->
+            val (totalBudget, budgets) = budgetSettings.budgets.partition {
+                it.isOverall
             }
-        }
+            val monthFormat = DateUtils.getYearMonthFormat(currentState.currentMonth, isStartAndEndDate = false)
+
+
+            updateState {
+                copy(
+                    totalBudget = totalBudget.firstOrNull()?:Budget(
+                        categoryId = null,
+                        userId = "",
+                        period = "monthly",
+                        month = monthFormat
+                    ),
+                    budgetsCategory = budgetSettings.categories.associate {
+                        it.id to BudgetCategory(
+                            budget = budgets.findLast { budget -> budget.categoryId == it.id } ?: Budget(
+                                categoryId = it.id,
+                                userId = "",
+                                period = "monthly",
+                                month = monthFormat
+                            ),
+                            categoryName = it.name,
+                            categoryIcon = it.icon,
+                            iconColor = it.iconColor,
+                        )
+                    }
+                )
+            }
+        }.launchIn(viewModelScope)
+
+
     }
 }

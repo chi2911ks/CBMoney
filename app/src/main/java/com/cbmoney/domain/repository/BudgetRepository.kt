@@ -9,8 +9,11 @@ interface BudgetRepository {
 
     fun getBudgetsCategoryByMonth(month: String): Flow<List<BudgetCategory>>
     fun getBudgetsByMonth(month: String): Flow<List<Budget>>
+    suspend fun checkBudgetByCategoryExists(month: String, categoryId: String): Result<Boolean>
+    suspend fun checkBudgetTotalExists(month: String): Result<Boolean>
+
+    suspend fun updateSpent(categoryId: String, month: String, spent: Long): Result<Boolean>
 
 
 
-    suspend fun countBudgetsByMonth(month: String): Int
 }
