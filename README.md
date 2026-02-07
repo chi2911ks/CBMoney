@@ -2,6 +2,11 @@
 
 **CBMoney** is a modern Android application designed to help users track their personal finances effectively. Built with the latest Android technologies, it provides a comprehensive suite of tools for managing income, expenses, and budgets with a focus on a clean user experience.
 
+## 🎨 UI Design
+
+You can view the project's UI design and prototype here:
+[CBMoney UI Design - Stitch](https://stitch.withgoogle.com/projects/2559526361504818985)
+
 ## 🚀 Key Features
 
 * **Financial Overview (Home):** A central dashboard to monitor current balances and view transaction summaries.
@@ -28,7 +33,6 @@ The application leverages a high-performance, modern stack:
 | **Navigation** | Navigation3 (Experimental) & Compose Navigation |
 | **Image Loading** | Coil |
 | **Animations** | Lottie |
-| **UI Components** | Skydoves ColorPicker |
 
 ## 📂 Project Structure
 
