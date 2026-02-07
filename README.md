@@ -39,7 +39,7 @@ The application leverages a high-performance, modern stack:
 CBMoney is organized following **Clean Architecture** principles to ensure modularity and testability:
 
 * **`data/`**: Handles all data operations, including Repository implementations, Local DataSources (Room, DataStore), and Remote DataSources (Firebase).
-* **`domain/`**: Contains core business logic, including Domain Models and UseCases (e.g., `AddCategoryUseCase`, `UpsertBudgetsUseCase`).
+* **`domain/`**: Contains core business logic, including Domain Models and UseCases (e.g., `AddCategoryUseCase`, `SaveBudgetsUseCase`).
 * **`presentation/`**: Manages the UI layer using ViewModels (MVI-based) and Jetpack Compose screens.
 * **`di/`**: Centralized Dependency Injection modules using Koin.
 * **`utils/`**: Shared utility classes and extension functions.
