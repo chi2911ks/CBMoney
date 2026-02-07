@@ -46,7 +46,7 @@ To run this project locally:
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [https://github.com/chi2911ks/cbmoney.git](https://github.com/chi2911ks/cbmoney.git)
+    git clone https://github.com/chi2911ks/cbmoney.git
     ```
 2.  **Firebase Setup:**
     * Create a project in the [Firebase Console](https://console.firebase.google.com/).
