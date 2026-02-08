@@ -42,7 +42,7 @@ import com.cbmoney.presentation.category.contract.EditCategoryIntent
 import com.cbmoney.presentation.category.contract.EditCategoryState
 import com.cbmoney.presentation.category.viewmodel.EditCategoryViewModel
 import com.cbmoney.presentation.components.button.ButtonPrimary
-import com.cbmoney.presentation.common.IconResolver
+import com.cbmoney.presentation.common.CategoryIconResolver
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
@@ -150,7 +150,7 @@ fun EditCategoryScreenContent(
                 PreviewCategoryCard(
                     name = uiState.category.name,
                     color = uiState.category.iconColor.hexToColor(),
-                    icon = IconResolver.CategoryIconMap[uiState.category.icon] ?: Icons.Default.ShoppingBasket,
+                    icon = CategoryIconResolver.CategoryIconMap[uiState.category.icon] ?: Icons.Default.ShoppingBasket,
                     modifier = Modifier
                         .fillMaxWidth()
                 )

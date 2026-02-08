@@ -51,6 +51,7 @@ import com.cbmoney.presentation.login.LoginViewModel
 import com.cbmoney.presentation.main.MainViewModel
 import com.cbmoney.presentation.profile.ProfileViewModel
 import com.cbmoney.presentation.register.RegisterViewModel
+import com.cbmoney.presentation.reports.ReportViewModel
 import com.cbmoney.presentation.splash.SplashViewModel
 import com.cbmoney.presentation.transaction.TransactionsViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -132,6 +133,7 @@ val viewModelModule = module {
     viewModelOf(::EditCategoryViewModel)
     viewModelOf(::BudgetSettingsViewModel)
     viewModelOf(::BudgetViewModel)
+    viewModelOf(::ReportViewModel)
 
 }
 val roomModule = module {

@@ -9,7 +9,11 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "transactions",
-    indices = [Index(value = ["userId"])],
+    indices = [
+        Index(value = ["userId"]),
+        Index(value = ["categoryId"])
+              ],
+
     foreignKeys = [
         ForeignKey(
             entity = CategoryEntity::class,

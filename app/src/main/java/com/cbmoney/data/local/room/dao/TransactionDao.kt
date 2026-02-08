@@ -37,4 +37,5 @@ interface TransactionDao: BaseDao<TransactionEntity> {
         LIMIT :limit
         """)
     fun getRecentTransactions(userId: String, limit: Int): Flow<List<TransactionCategoryEntity>>
+
 }

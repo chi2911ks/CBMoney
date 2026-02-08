@@ -11,7 +11,8 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "budgets",
     indices = [
-        Index(value = ["userId"])
+        Index(value = ["userId"]),
+        Index(value = ["categoryId"])
     ],
     foreignKeys = [
         ForeignKey(

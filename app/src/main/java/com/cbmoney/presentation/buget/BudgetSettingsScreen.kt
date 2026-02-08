@@ -212,8 +212,7 @@ fun BudgetSettingsContent(
                     text = "${stringResource(R.string.total_budget_category)}: ",
                     style = CBMoneyTypography.Body.Small.Regular,
                 )
-//                val totalBudget = uiState.budgetsAmount.values.sumOf { it["amount"] as Long }
-                val totalBudget = 0L
+                val totalBudget = uiState.budgetsCategory.values.sumOf { it.budget.amount }
                 Text(
                     text = totalBudget.formatMoney(),
                     style = CBMoneyTypography.Body.Small.Bold,

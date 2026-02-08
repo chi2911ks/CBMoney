@@ -1,12 +1,15 @@
 package com.cbmoney.data.local.room.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "categories",
-    indices = [Index(value = ["userId"])]
+    indices = [
+        Index(value = ["userId"])
+    ]
 )
 data class CategoryEntity(
     @PrimaryKey
@@ -19,4 +22,19 @@ data class CategoryEntity(
     val order: Int,
     val isDefault: Boolean = true,
     val createdAt: Long
+)
+data class CategorySpendingEntity(
+    @ColumnInfo(name = "categoryId")
+    val categoryId: String,
+    @ColumnInfo(name = "name")
+    val categoryName: String,
+    @ColumnInfo(name = "icon")
+    val categoryIcon: String,
+    @ColumnInfo(name = "iconColor")
+    val iconColor: String,
+
+    @ColumnInfo(name = "countTransaction")
+    val countTransaction: Long,
+    @ColumnInfo(name = "amount")
+    val amount: Long
 )

@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
-import com.cbmoney.presentation.common.IconResolver
+import com.cbmoney.presentation.common.CategoryIconResolver
 import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
@@ -55,7 +55,7 @@ fun RecentTransactionItem(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = IconResolver.getImageVector(icon),
+                imageVector = CategoryIconResolver.iconOf(icon),
                 contentDescription = null,
                 tint = colorCategory,
                 modifier = Modifier

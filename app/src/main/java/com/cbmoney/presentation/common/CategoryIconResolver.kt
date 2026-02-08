@@ -61,7 +61,7 @@ import androidx.compose.material.icons.filled.Weekend
 import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.ui.graphics.vector.ImageVector
 
-object IconResolver {
+object CategoryIconResolver {
     val CategoryIconMap: Map<String, ImageVector> = hashMapOf(
 
         // Food & Drink
@@ -145,7 +145,7 @@ object IconResolver {
         "help" to Icons.AutoMirrored.Filled.Help
     )
 
-    fun getImageVector(iconName: String): ImageVector {
-        return CategoryIconMap[iconName] ?: Icons.Filled.Category
+    fun iconOf(key: String): ImageVector {
+        return CategoryIconMap[key] ?: Icons.Filled.Category
     }
 }

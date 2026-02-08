@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import com.cbmoney.R
 import com.cbmoney.domain.model.Category
-import com.cbmoney.presentation.common.IconResolver
+import com.cbmoney.presentation.common.CategoryIconResolver
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
@@ -117,7 +117,7 @@ fun CategoryCard(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = IconResolver.getImageVector(category.icon),
+                    imageVector = CategoryIconResolver.iconOf(category.icon),
                     contentDescription = null,
                     tint = color
                 )

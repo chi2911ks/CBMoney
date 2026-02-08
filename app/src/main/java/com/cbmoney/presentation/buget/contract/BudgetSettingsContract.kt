@@ -9,13 +9,9 @@ import com.cbmoney.domain.model.Budget
 import com.cbmoney.domain.model.BudgetCategory
 import java.time.YearMonth
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 data class BudgetSettingsState(
-
     val currentMonth: YearMonth = YearMonth.now(),
-//    val budgetsAmount: Map<String, Map<String, Any>> = emptyMap(),
-//    val categories: List<Category> = emptyList(),
-
     val totalBudget: Budget? = null,
     val budgetsCategory: Map<String, BudgetCategory> = emptyMap(),
 ) : MviState
