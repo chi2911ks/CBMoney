@@ -1,4 +1,4 @@
-package com.cbmoney.presentation.components
+package com.cbmoney.presentation.components.view
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

@@ -31,8 +31,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
-import com.cbmoney.presentation.components.ButtonPrimary
-import com.cbmoney.presentation.components.LottieView
+import com.cbmoney.presentation.components.button.ButtonPrimary
+import com.cbmoney.presentation.components.view.LottieView
 import com.cbmoney.presentation.profile.components.EditableAvatar
 import com.cbmoney.presentation.profile.components.SettingItem
 import com.cbmoney.presentation.theme.CBMoneyColors

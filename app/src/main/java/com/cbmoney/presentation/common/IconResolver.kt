@@ -1,4 +1,5 @@
-package com.cbmoney.presentation.components
+package com.cbmoney.presentation.common
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.automirrored.filled.LibraryBooks

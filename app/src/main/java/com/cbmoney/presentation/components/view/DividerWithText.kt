@@ -1,4 +1,4 @@
-package com.cbmoney.presentation.components
+package com.cbmoney.presentation.components.view
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

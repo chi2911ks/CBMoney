@@ -1,4 +1,4 @@
-package com.cbmoney.presentation.components
+package com.cbmoney.presentation.components.button
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

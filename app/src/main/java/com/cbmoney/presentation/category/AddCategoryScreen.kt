@@ -44,8 +44,8 @@ import com.cbmoney.presentation.category.contract.AddCategoryEvent
 import com.cbmoney.presentation.category.contract.AddCategoryIntent
 import com.cbmoney.presentation.category.contract.AddCategoryState
 import com.cbmoney.presentation.category.viewmodel.AddCategoryViewModel
-import com.cbmoney.presentation.components.ButtonPrimary
-import com.cbmoney.presentation.components.IconResolver
+import com.cbmoney.presentation.components.button.ButtonPrimary
+import com.cbmoney.presentation.common.IconResolver
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography

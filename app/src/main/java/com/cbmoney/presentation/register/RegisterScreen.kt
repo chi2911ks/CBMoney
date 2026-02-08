@@ -42,13 +42,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
-import com.cbmoney.data.mapper.toMessage
 import com.cbmoney.presentation.app.AppSnackbarManager
 import com.cbmoney.presentation.app.UiMessage
-import com.cbmoney.presentation.components.ButtonPrimary
-import com.cbmoney.presentation.components.LanguageToggle
-import com.cbmoney.presentation.components.LottieView
-import com.cbmoney.presentation.components.OutlinedText
+import com.cbmoney.presentation.common.mapper.toMessage
+import com.cbmoney.presentation.components.button.ButtonPrimary
+import com.cbmoney.presentation.components.button.LanguageToggle
+import com.cbmoney.presentation.components.view.LottieView
+import com.cbmoney.presentation.components.field.OutlinedText
 import com.cbmoney.presentation.login.AuthProviders
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyColors.Neutral.NeutralGray
@@ -209,7 +209,7 @@ fun SignUpForm(
                 Icon(
                     Icons.Default.Email,
                     "icon email",
-                    tint = CBMoneyColors.Neutral.NeutralGray
+                    tint = NeutralGray
                 )
             }
 

@@ -34,7 +34,7 @@ import com.cbmoney.presentation.category.components.TabCategory
 import com.cbmoney.presentation.category.contract.CategoriesIntent
 import com.cbmoney.presentation.category.contract.CategoriesState
 import com.cbmoney.presentation.category.viewmodel.CategoriesViewModel
-import com.cbmoney.presentation.components.ButtonPrimary
+import com.cbmoney.presentation.components.button.ButtonPrimary
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyColors.Neutral.NeutralGray
 import com.cbmoney.presentation.theme.CBMoneyTypography

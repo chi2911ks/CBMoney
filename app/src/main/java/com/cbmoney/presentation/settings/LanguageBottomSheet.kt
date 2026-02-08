@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,10 +41,10 @@ import com.cbmoney.presentation.settings.model.Languages
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
-
 import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.utils.exts.getLanguageCode
 import com.cbmoney.utils.exts.handleOnSaveLanguage
+import com.cbmoney.utils.exts.rawClickable
 
 
 @Composable
@@ -54,11 +53,12 @@ fun LanguageBottomSheet() {
 //    var currentCode by remember { mutableStateOf("vi") }
     var currentCode by remember { mutableStateOf(context.getLanguageCode()) }
 
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxWidth()
+            .background(CBMoneyColors.BackGround.BackgroundPrimary)
             .padding(Spacing.md),
-    ){
+    ) {
         Text(
             text = stringResource(R.string.select_language),
             style = CBMoneyTypography.Title.Large.Medium
@@ -71,7 +71,7 @@ fun LanguageBottomSheet() {
         Spacer(Modifier.height(Spacing.sm))
         Languages.entries.forEach { language ->
             LanguageItem(
-                onChangeLanguage = {currentCode = it.code},
+                onChangeLanguage = { currentCode = it.code },
                 isSelected = currentCode == language.code,
                 language = language,
                 title = language.title,
@@ -91,7 +91,7 @@ fun LanguageBottomSheet() {
                 )
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = CBMoneyColors.Primary.Primary ,
+                containerColor = CBMoneyColors.Primary.Primary,
                 contentColor = Color.Black
             ),
             modifier = Modifier
@@ -109,18 +109,27 @@ fun LanguageItem(
     subtitle: String,
     @DrawableRes icon: Int,
 ) {
+    val color = CBMoneyColors.Primary.Primary
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(CBMoneyShapes.large)
-            .clickable {
+            .rawClickable {
                 onChangeLanguage(language)
             }
-            .border(
-                2.dp,
-                CBMoneyColors.Primary.Primary.copy(alpha = 0.3f),
-                CBMoneyShapes.large)
-            .background(Color.White)
+            .then(
+                Modifier
+                    .border(
+                        1.dp,
+                        if (isSelected) color.copy(alpha = 0.3f)
+                        else Color.Gray.copy(0.5f),
+                        CBMoneyShapes.large,
+                    )
+                    .background(
+                        if (isSelected) color.copy(alpha = 0.05f)
+                        else Color.Transparent,
+                        CBMoneyShapes.large
+                    )
+            )
             .padding(Spacing.md),
     ) {
         Row(
@@ -132,7 +141,7 @@ fun LanguageItem(
                 painter = painterResource(icon),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(35.dp)
                     .clip(CircleShape),
                 contentScale = ContentScale.Crop
             )

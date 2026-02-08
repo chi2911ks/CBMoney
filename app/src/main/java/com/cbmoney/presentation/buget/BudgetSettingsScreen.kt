@@ -1,6 +1,5 @@
 package com.cbmoney.presentation.buget
 
-import android.R.attr.category
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
@@ -22,8 +21,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -45,7 +42,7 @@ import com.cbmoney.presentation.buget.contract.BudgetSettingsEvent
 import com.cbmoney.presentation.buget.contract.BudgetSettingsIntent
 import com.cbmoney.presentation.buget.contract.BudgetSettingsState
 import com.cbmoney.presentation.buget.viewmodel.BudgetSettingsViewModel
-import com.cbmoney.presentation.components.ButtonPrimary
+import com.cbmoney.presentation.components.button.ButtonPrimary
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography

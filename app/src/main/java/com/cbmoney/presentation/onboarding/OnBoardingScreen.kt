@@ -33,7 +33,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cbmoney.R
-import com.cbmoney.presentation.components.LanguageToggle
+import com.cbmoney.presentation.components.button.LanguageToggle
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.utils.exts.getLanguageCode

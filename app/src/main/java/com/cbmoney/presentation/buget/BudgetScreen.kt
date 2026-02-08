@@ -3,7 +3,6 @@ package com.cbmoney.presentation.buget
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,9 +20,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -41,10 +37,9 @@ import com.cbmoney.R
 import com.cbmoney.presentation.buget.components.BudgetCategoryItem
 import com.cbmoney.presentation.buget.components.YearMonthSelector
 import com.cbmoney.presentation.buget.contract.BudgetIntent
-import com.cbmoney.presentation.buget.contract.BudgetSettingsIntent
 import com.cbmoney.presentation.buget.contract.BudgetState
 import com.cbmoney.presentation.buget.viewmodel.BudgetViewModel
-import com.cbmoney.presentation.components.CircularProgressBar
+import com.cbmoney.presentation.components.view.CircularProgressBar
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography

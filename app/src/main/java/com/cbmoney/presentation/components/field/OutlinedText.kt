@@ -1,4 +1,4 @@
-package com.cbmoney.presentation.components
+package com.cbmoney.presentation.components.field
 
 
 import androidx.compose.foundation.layout.Spacer

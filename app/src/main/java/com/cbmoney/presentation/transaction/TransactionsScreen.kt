@@ -39,7 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
 import com.cbmoney.domain.model.Category
 import com.cbmoney.domain.model.CategoryType
-import com.cbmoney.presentation.components.ButtonPrimary
+import com.cbmoney.presentation.components.button.ButtonPrimary
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing

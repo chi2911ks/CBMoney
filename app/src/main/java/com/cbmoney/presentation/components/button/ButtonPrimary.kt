@@ -1,4 +1,4 @@
-package com.cbmoney.presentation.components
+package com.cbmoney.presentation.components.button
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
