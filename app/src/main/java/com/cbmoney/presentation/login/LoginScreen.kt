@@ -146,8 +146,9 @@ fun LoginScreenContent(
             )
             Spacer(Modifier.height(32.dp))
             AuthForm(
-                onLogin = {
-                    processIntent(LoginIntent.EmailLogin(it.first(), it.last()))
+                onLogin = { username, pwd->
+
+                    processIntent(LoginIntent.EmailLogin(username, pwd))
                 },
                 onRegister = onRegister
             )
@@ -181,7 +182,7 @@ fun LoginScreenContent(
 @Composable
 fun AuthForm(
     modifier: Modifier = Modifier,
-    onLogin: (Set<String>) -> Unit,
+    onLogin: (String, String) -> Unit,
     onRegister: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
@@ -231,10 +232,10 @@ fun AuthForm(
                 .height(56.dp),
             onClick = {
                 onLogin(
-                    setOf(
+
                         email,
                         password
-                    )
+
                 )
             },
             text = stringResource(R.string.login),

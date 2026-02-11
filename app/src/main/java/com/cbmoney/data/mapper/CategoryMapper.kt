@@ -48,3 +48,6 @@ fun CategoryFirestore.toEntity(): CategoryEntity {
         createdAt = createdAt?.toDate()?.time!!,
     )
 }
+
+
+

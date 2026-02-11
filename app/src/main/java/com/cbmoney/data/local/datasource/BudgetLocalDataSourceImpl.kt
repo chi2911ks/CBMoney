@@ -1,8 +1,8 @@
 package com.cbmoney.data.local.datasource
 
 import com.cbmoney.data.local.room.dao.BudgetDao
-import com.cbmoney.data.local.room.entities.BudgetCategoryEntity
 import com.cbmoney.data.local.room.entities.BudgetEntity
+import com.cbmoney.data.local.room.relation.BudgetWithCategory
 import kotlinx.coroutines.flow.Flow
 
 class BudgetLocalDataSourceImpl(
@@ -31,7 +31,7 @@ class BudgetLocalDataSourceImpl(
     override fun getBudgetsCategoryByMonth(
         userId: String,
         month: String
-    ): Flow<List<BudgetCategoryEntity>> {
+    ): Flow<List<BudgetWithCategory>> {
         return budgetDao.getBudgetsCategoryByMonth(userId, month)
     }
 

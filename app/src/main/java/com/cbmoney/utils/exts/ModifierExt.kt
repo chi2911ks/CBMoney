@@ -13,9 +13,13 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -74,5 +78,25 @@ fun Modifier.shadowCustom(
         ambientColor = ambientColor,
         spotColor = spotColor
     )
+
+fun Modifier.dashedBorder(
+    color: Color,
+    strokeWidth: Dp,
+    cornerRadius: Dp,
+    dashLength: Float = 10f,
+    gapLength: Float = 10f
+) = drawBehind {
+    drawRoundRect(
+        color = color,
+        style = Stroke(
+            width = strokeWidth.toPx(),
+            pathEffect = PathEffect.dashPathEffect(
+                floatArrayOf(dashLength, gapLength),
+                0f
+            )
+        ),
+        cornerRadius = CornerRadius(cornerRadius.toPx())
+    )
+}
 
 

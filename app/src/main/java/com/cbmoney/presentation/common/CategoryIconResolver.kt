@@ -142,7 +142,10 @@ object CategoryIconResolver {
         // Others
         "category" to Icons.Filled.Category,
         "more_horiz" to Icons.Filled.MoreHoriz,
-        "help" to Icons.AutoMirrored.Filled.Help
+        "help" to Icons.AutoMirrored.Filled.Help,
+
+
+
     )
 
     fun iconOf(key: String): ImageVector {

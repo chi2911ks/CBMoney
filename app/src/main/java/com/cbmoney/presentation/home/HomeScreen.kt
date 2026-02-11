@@ -48,12 +48,13 @@ import com.cbmoney.R
 import com.cbmoney.domain.model.CategoryType
 import com.cbmoney.domain.model.User
 import com.cbmoney.presentation.components.button.ButtonWithIcon
-import com.cbmoney.presentation.home.components.FinanceCard
+import com.cbmoney.presentation.components.view.BalanceSummary
 import com.cbmoney.presentation.home.components.MonthlyData
 import com.cbmoney.presentation.home.components.MonthlySpendingCard
 import com.cbmoney.presentation.home.components.RecentTransactionItem
 
 import com.cbmoney.presentation.theme.CBMoneyColors
+import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.utils.exts.shadowCustom
@@ -127,13 +128,21 @@ fun HomeScreenContent(
                 .padding(top = Spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            FinanceCard(
-                modifier = Modifier.weight(1f),
+            BalanceSummary(
+                modifier = Modifier
+                    .shadowCustom()
+                    .background(CBMoneyColors.White, CBMoneyShapes.extraLarge)
+                    .padding(Spacing.md)
+                    .weight(1f),
                 money = income
             )
             Spacer(Modifier.width(Spacing.sm))
-            FinanceCard(
-                modifier = Modifier.weight(1f),
+            BalanceSummary(
+                modifier = Modifier
+                    .shadowCustom()
+                    .background(CBMoneyColors.White, CBMoneyShapes.extraLarge)
+                    .padding(Spacing.md)
+                    .weight(1f),
                 isIncome = false,
                 money = expense
             )
@@ -308,11 +317,7 @@ fun RecentTransactions(
            key = { it.transaction.id }
        ){
            RecentTransactionItem(
-               name = it.categoryName?:"",
-               iconColor = it.iconColor?:"",
-               icon = it.categoryIcon?:"",
-               spent = it.transaction.amount,
-               date = it.transaction.date
+               transactionDetails = it,
            )
        }
     }
@@ -321,6 +326,10 @@ fun RecentTransactions(
 @Composable
 private fun HomeScreenPreview() {
 
-        HomeScreen({}, {})
-
+    HomeScreenContent(
+        HomeState(),
+        {},
+        {}
+    )
 }
+

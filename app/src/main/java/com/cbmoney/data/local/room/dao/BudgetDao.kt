@@ -3,8 +3,8 @@ package com.cbmoney.data.local.room.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.cbmoney.base.BaseDao
-import com.cbmoney.data.local.room.entities.BudgetCategoryEntity
 import com.cbmoney.data.local.room.entities.BudgetEntity
+import com.cbmoney.data.local.room.relation.BudgetWithCategory
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -40,7 +40,7 @@ interface BudgetDao: BaseDao<BudgetEntity> {
         LEFT JOIN categories as c ON b.categoryId = c.id
         WHERE b.userId = :userId AND b.month = :month
     """)
-    fun getBudgetsCategoryByMonth(userId: String, month: String): Flow<List<BudgetCategoryEntity>>
+    fun getBudgetsCategoryByMonth(userId: String, month: String): Flow<List<BudgetWithCategory>>
 
     @Query("SELECT * FROM budgets WHERE userId = :userId AND month = :month")
     fun getBudgetsByMonth(userId: String, month: String): Flow<List<BudgetEntity>>

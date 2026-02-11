@@ -3,7 +3,11 @@ package com.cbmoney.utils
 import android.icu.util.Calendar
 import android.os.Build
 import androidx.annotation.RequiresApi
+import java.time.Instant
+import java.time.LocalDate
 import java.time.YearMonth
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 object DateUtils {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -39,5 +43,22 @@ object DateUtils {
 
         return start to end
     }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun formatTransactionDate(timeMillis: Long): String {
+        val zoneId = ZoneId.systemDefault()
+        val dateTime = Instant.ofEpochMilli(timeMillis).atZone(zoneId)
+        val today = LocalDate.now(zoneId)
 
+        return when {
+            dateTime.toLocalDate() == today -> {
+                "Hôm nay,  ${dateTime.format(DateTimeFormatter.ofPattern("HH:mm"))}"
+            }
+            dateTime.toLocalDate() == today.minusDays(1) -> {
+                "Hôm qua"
+            }
+            else -> {
+                dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+            }
+        }
+    }
 }

@@ -1,8 +1,10 @@
 package com.cbmoney.data.local.datasource
 
 import com.cbmoney.data.local.room.dao.TransactionDao
-import com.cbmoney.data.local.room.entities.TransactionCategoryEntity
 import com.cbmoney.data.local.room.entities.TransactionEntity
+import com.cbmoney.data.local.room.relation.CategoryWithSpending
+import com.cbmoney.data.local.room.relation.TotalExpenseAndIncome
+import com.cbmoney.data.local.room.relation.TransactionWithCategory
 import kotlinx.coroutines.flow.Flow
 
 class TransactionLocalDataSourceImpl(
@@ -32,8 +34,24 @@ class TransactionLocalDataSourceImpl(
     override fun getRecentTransactions(
         userId: String,
         limit: Int
-    ): Flow<List<TransactionCategoryEntity>> {
+    ): Flow<List<TransactionWithCategory>> {
         return transactionDao.getRecentTransactions(userId, limit)
+    }
+
+    override fun getCategorySpending(
+        userId: String,
+        startDate: Long,
+        endDate: Long
+    ): Flow<List<CategoryWithSpending>> {
+        return transactionDao.getCategorySpending(userId, startDate, endDate)
+    }
+
+    override fun getTotalExpenseAndIncome(
+        userId: String,
+        startDate: Long,
+        endDate: Long
+    ): Flow<TotalExpenseAndIncome> {
+        return transactionDao.getTotalExpenseAndIncome(userId, startDate, endDate)
     }
 
 }

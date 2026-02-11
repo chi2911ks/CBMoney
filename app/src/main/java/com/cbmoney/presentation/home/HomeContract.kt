@@ -3,12 +3,12 @@ package com.cbmoney.presentation.home
 import com.cbmoney.base.MviEvent
 import com.cbmoney.base.MviIntent
 import com.cbmoney.base.MviState
-import com.cbmoney.domain.model.TransactionCategory
+import com.cbmoney.domain.model.TransactionDetails
 import com.cbmoney.domain.model.User
 
 data class HomeState(
     val user: User? = null,
-    val transactions: List<TransactionCategory> = emptyList()
+    val transactions: List<TransactionDetails> = emptyList()
 ): MviState
 
 sealed class HomeIntent(): MviIntent{

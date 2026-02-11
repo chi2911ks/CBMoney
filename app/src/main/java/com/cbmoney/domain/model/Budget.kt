@@ -27,10 +27,3 @@ data class Budget(
 }
 
 
-data class BudgetCategory(
-    val budget: Budget,
-
-    val categoryName: String?,
-    val categoryIcon: String?,
-    val iconColor: String?,
-)

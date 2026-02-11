@@ -14,4 +14,5 @@ interface CategoryRepository {
     suspend fun addCategory(category: Category): Result<Boolean>
     suspend fun updateCategory(category: Category): Result<Boolean>
     suspend fun upsertCategory(category: Category): Result<Boolean>
+
 }

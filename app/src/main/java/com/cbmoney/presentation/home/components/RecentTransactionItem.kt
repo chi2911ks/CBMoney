@@ -19,27 +19,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
+import com.cbmoney.R
+import com.cbmoney.domain.model.CategoryType
+import com.cbmoney.domain.model.TransactionDetails
 import com.cbmoney.presentation.common.CategoryIconResolver
+import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
+import com.cbmoney.utils.DateUtils
 import com.cbmoney.utils.exts.formatMoney
-import com.cbmoney.utils.exts.toFormatDate
+import com.cbmoney.utils.exts.toHex
+import com.cbmoney.utils.fromPeriod
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RecentTransactionItem(
     modifier: Modifier = Modifier,
-    name: String,
-    iconColor: String,
-    icon: String,
-    spent: Long,
-    date: Long
+    transactionDetails: TransactionDetails,
 ) {
-    val colorCategory = Color(iconColor.toColorInt())
+    val colorCategory = Color( transactionDetails.iconColor?.toColorInt() ?: Color.Gray.toHex().toColorInt())
     Row(
         modifier = modifier
             .background(Color.White, CBMoneyShapes.extraLarge)
@@ -55,7 +58,7 @@ fun RecentTransactionItem(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = CategoryIconResolver.iconOf(icon),
+                imageVector = CategoryIconResolver.iconOf(transactionDetails.categoryIcon?:""),
                 contentDescription = null,
                 tint = colorCategory,
                 modifier = Modifier
@@ -67,19 +70,21 @@ fun RecentTransactionItem(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = name,
+                text = transactionDetails.categoryName?: stringResource(R.string.unknown),
                 color = Color.Black,
                 style = CBMoneyTypography.Body.Medium.Bold
             )
             Text(
-                text = date.toFormatDate(),
+                text = DateUtils.formatTransactionDate(transactionDetails.transaction.date),
                 color = Color.Gray,
                 style = CBMoneyTypography.Body.Small.Regular
             )
         }
+        val lol = transactionDetails.transaction.type == fromPeriod(CategoryType.EXPENSE)
+        val prefix =  if (lol) "-" else "+"
         Text(
-            text = "-${spent.formatMoney()} đ",
-            color = Color.Red,
+            text = "$prefix${transactionDetails.transaction.amount.formatMoney()} đ",
+            color = if (lol) CBMoneyColors.Red2 else CBMoneyColors.Green2,
             style = CBMoneyTypography.Body.Medium.Bold.copy(
                 textAlign = TextAlign.End
             ),

@@ -1,19 +1,17 @@
 package com.cbmoney.presentation.buget.contract
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.cbmoney.base.MviEvent
 import com.cbmoney.base.MviIntent
 import com.cbmoney.base.MviState
 import com.cbmoney.domain.model.Budget
-import com.cbmoney.domain.model.BudgetCategory
+import com.cbmoney.domain.model.BudgetDetails
 import java.time.YearMonth
 
 
 data class BudgetSettingsState(
     val currentMonth: YearMonth = YearMonth.now(),
     val totalBudget: Budget? = null,
-    val budgetsCategory: Map<String, BudgetCategory> = emptyMap(),
+    val budgetsCategory: Map<String, BudgetDetails> = emptyMap(),
 ) : MviState
 
 //sealed class State: MviState{

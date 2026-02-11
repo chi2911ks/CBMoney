@@ -1,10 +1,22 @@
 package com.cbmoney.data.local.room.entities
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
+/**
+ * Represents a transaction category stored in the local Room database.
+ *
+ * @property id The unique identifier for the category.
+ * @property userId The ID of the user who owns this category, or null if it is a system-wide category.
+ * @property name The display name of the category (e.g., "Food", "Transport").
+ * @property type The type of category, typically distinguishing between income and expense.
+ * @property icon A string identifier or resource name for the category's visual icon.
+ * @property color A hex code or color identifier used for UI representation.
+ * @property order The sorting priority used when displaying categories in a list.
+ * @property isDefault Indicates whether the category is a pre-defined system default.
+ * @property createdAt The timestamp representing when the category was created.
+ */
 @Entity(
     tableName = "categories",
     indices = [
@@ -22,19 +34,4 @@ data class CategoryEntity(
     val order: Int,
     val isDefault: Boolean = true,
     val createdAt: Long
-)
-data class CategorySpendingEntity(
-    @ColumnInfo(name = "categoryId")
-    val categoryId: String,
-    @ColumnInfo(name = "name")
-    val categoryName: String,
-    @ColumnInfo(name = "icon")
-    val categoryIcon: String,
-    @ColumnInfo(name = "iconColor")
-    val iconColor: String,
-
-    @ColumnInfo(name = "countTransaction")
-    val countTransaction: Long,
-    @ColumnInfo(name = "amount")
-    val amount: Long
 )

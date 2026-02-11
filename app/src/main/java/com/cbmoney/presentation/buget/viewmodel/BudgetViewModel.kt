@@ -39,6 +39,16 @@ class BudgetViewModel(
         load()
     }
 
+    /**
+     * Loads budget data based on the current month selected in the state.
+     *
+     * This function observes changes to [BudgetState.currentMonth], formats the date,
+     * and fetches the corresponding budget categories using [GetBudgetsCategoryUseCase].
+     * It updates the state with the overall budget and a filtered list of budget categories.
+     *
+     * Uses [ExperimentalCoroutinesApi] for `flatMapLatest` to ensure only the latest
+     * data request is processed.
+     */
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun load() {
         //distinctUntilChanged dùng để tránh lặp lại nhiều lần

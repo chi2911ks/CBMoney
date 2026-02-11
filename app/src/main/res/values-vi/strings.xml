@@ -130,6 +130,13 @@
     <string name="budget_by_category">Ngân sách theo mục</string>
     <string name="spent">Đã chi</string>
     <string name="expense_statistics">Thống kê chi tiêu</string>
+    <string name="no_transactions">Chưa có giao dịch</string>
+    <string name="detailed_report">Báo cáo chi tiết</string>
+    <string name="add_transaction_to_view_report">Hãy thêm giao dịch để xem báo cáo chi tiết tại đây</string>
 
-
+    <string name="transaction">Giao dịch</string>
+    <string name="transactions">Giao dịch</string>
+    <string name="spending_by_category">Chi tiêu theo danh mục</string>
+    <string name="month">Tháng</string>
+    <string name="unknown">Không xác định</string>
 </resources>

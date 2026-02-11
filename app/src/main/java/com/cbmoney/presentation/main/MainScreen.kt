@@ -42,7 +42,14 @@ fun MainScreen(
                     }
                 )
 
-                MainTab.REPORTS -> ReportScreen()
+                MainTab.REPORTS -> ReportScreen(
+                    onNavigateToDetail = {
+//                        navigator.toReportDetail(it)
+                    },
+                    onNavigateToTransaction = {
+                        navigator.toTransaction(CategoryType.INCOME)
+                    }
+                )
                 MainTab.BUDGET -> BudgetScreen(
                     openBudgetSettings = navigator.toBudgetSettings
                 )

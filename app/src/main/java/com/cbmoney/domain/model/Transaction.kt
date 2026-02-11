@@ -13,9 +13,3 @@ data class Transaction(
 )
 
 
-data class TransactionCategory(
-    val transaction: Transaction,
-    val categoryName: String?,
-    val categoryIcon: String?,
-    val iconColor: String?,
-)

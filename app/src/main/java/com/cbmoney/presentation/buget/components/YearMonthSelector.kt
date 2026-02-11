@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +21,6 @@ import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.utils.DateUtils
-import com.cbmoney.utils.exts.rawClickable
 import com.cbmoney.utils.exts.shadowCustom
 import java.time.YearMonth
 
@@ -36,18 +36,12 @@ fun YearMonthSelector(
             .fillMaxWidth()
             .shadowCustom()
             .background(CBMoneyColors.White, CBMoneyShapes.extraLarge)
-            .padding(horizontal = Spacing.md, vertical = Spacing.sm),
+            .padding(horizontal = Spacing.sm),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            imageVector = Icons.Default.ChevronLeft,
-            contentDescription = null,
-            tint = CBMoneyColors.Neutral.NeutralGray,
-            modifier = Modifier.rawClickable {
-                onYearMonthChange(yearMonth.minusMonths(1))
-            }
-
-        )
+        IconButton(onClick = { onYearMonthChange(yearMonth.minusMonths(1)) }) {
+            Icon(Icons.Default.ChevronLeft, null)
+        }
         Text(
             text = DateUtils.getYearMonthFormat(yearMonth = yearMonth),
             modifier = Modifier.weight(1f),
@@ -55,13 +49,8 @@ fun YearMonthSelector(
                 textAlign = TextAlign.Center
             ),
         )
-        Icon(
-            imageVector = Icons.Default.ChevronRight,
-            contentDescription = null,
-            tint = CBMoneyColors.Neutral.NeutralGray,
-            modifier = Modifier.rawClickable {
-                onYearMonthChange(yearMonth.plusMonths(1))
-            }
-        )
+        IconButton(onClick = { onYearMonthChange(yearMonth.plusMonths(1)) }) {
+            Icon(Icons.Default.ChevronRight, null)
+        }
     }
 }

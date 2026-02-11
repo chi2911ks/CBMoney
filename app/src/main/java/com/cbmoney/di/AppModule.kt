@@ -36,7 +36,9 @@ import com.cbmoney.domain.usecase.category.DeleteCategoryUseCase
 import com.cbmoney.domain.usecase.category.GetAllCategoriesUseCase
 import com.cbmoney.domain.usecase.category.InitCategoriesDefaultUseCase
 import com.cbmoney.domain.usecase.category.SaveCategoryUseCase
+import com.cbmoney.domain.usecase.transaction.GetCategorySpendingUseCase
 import com.cbmoney.domain.usecase.transaction.GetRecentTransactionsUseCase
+import com.cbmoney.domain.usecase.transaction.GetTotalSummaryUseCase
 import com.cbmoney.domain.usecase.transaction.SaveTransactionUseCase
 import com.cbmoney.domain.usecase.user.GetUserUseCase
 import com.cbmoney.domain.usecase.user.SaveUserToUseCase
@@ -101,6 +103,9 @@ val useCaseModule = module {
     //transaction
     factoryOf(::SaveTransactionUseCase)
     factoryOf(::GetRecentTransactionsUseCase)
+    factoryOf(::GetCategorySpendingUseCase)
+    factoryOf(::GetTotalSummaryUseCase)
+
 
 }
 val dataSourceModule = module {

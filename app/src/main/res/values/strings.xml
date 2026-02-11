@@ -143,6 +143,13 @@
     <string name="budget_by_category">Budget by Category</string>
     <string name="spent">Spent</string>
     <string name="expense_statistics">Expense Statistics</string>
-
+    <string name="no_transactions">No transactions yet</string>
+    <string name="detailed_report">Detailed Report</string>
+    <string name="add_transaction_to_view_report">Add transactions to view the detailed report here</string>
+    <string name="transaction">Transaction</string>
+    <string name="transactions">Transactions</string>
+    <string name="spending_by_category">Spending by Category</string>
+    <string name="month">Month</string>
+    <string name="unknown">Unknown</string>
 
 </resources>

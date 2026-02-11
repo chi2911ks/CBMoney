@@ -1,7 +1,7 @@
 package com.cbmoney.data.local.datasource
 
-import com.cbmoney.data.local.room.entities.BudgetCategoryEntity
 import com.cbmoney.data.local.room.entities.BudgetEntity
+import com.cbmoney.data.local.room.relation.BudgetWithCategory
 import kotlinx.coroutines.flow.Flow
 
 interface BudgetLocalDataSource {
@@ -10,7 +10,7 @@ interface BudgetLocalDataSource {
     suspend fun getBudgetByCategory(userId: String, month: String, categoryId: String): BudgetEntity?
     suspend fun getTotalBudgetByMonth(userId: String, month: String): BudgetEntity?
 
-    fun getBudgetsCategoryByMonth(userId: String, month: String): Flow<List<BudgetCategoryEntity>>
+    fun getBudgetsCategoryByMonth(userId: String, month: String): Flow<List<BudgetWithCategory>>
 
     fun getBudgetsByMonth(userId: String, month: String): Flow<List<BudgetEntity>>
 

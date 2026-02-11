@@ -47,8 +47,8 @@ import com.cbmoney.presentation.app.UiMessage
 import com.cbmoney.presentation.common.mapper.toMessage
 import com.cbmoney.presentation.components.button.ButtonPrimary
 import com.cbmoney.presentation.components.button.LanguageToggle
-import com.cbmoney.presentation.components.view.LottieView
 import com.cbmoney.presentation.components.field.OutlinedText
+import com.cbmoney.presentation.components.view.LottieView
 import com.cbmoney.presentation.login.AuthProviders
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyColors.Neutral.NeutralGray
@@ -145,8 +145,8 @@ fun RegisterScreenContent(
             Spacer(Modifier.height(32.dp))
             SignUpForm(
                 onBackClick = onBackClick,
-                onRegister = {
-                    processIntent(RegisterIntent.RegisterEmail(it.first(), it.last()))
+                onRegister = { user, pwd ->
+                    processIntent(RegisterIntent.RegisterEmail(user, pwd))
                 }
             )
 
@@ -180,7 +180,7 @@ fun RegisterScreenContent(
 fun SignUpForm(
     onBackClick: () -> Unit,
     onRegister: (
-        Set<String>
+        String, String
     ) -> Unit
 ) {
 //    var fullName by remember { mutableStateOf("") }
@@ -238,10 +238,9 @@ fun SignUpForm(
             text = stringResource(R.string.register),
             onClick = {
                 onRegister(
-                    setOf(
-                        email,
-                        password
-                    )
+                    email,
+                    password
+
                 )
             },
             colors = ButtonDefaults.buttonColors(

@@ -1,9 +1,8 @@
 package com.cbmoney.data.mapper
 
-import com.cbmoney.data.local.room.entities.BudgetCategoryEntity
+
 import com.cbmoney.data.local.room.entities.BudgetEntity
 import com.cbmoney.domain.model.Budget
-import com.cbmoney.domain.model.BudgetCategory
 
 fun BudgetEntity.toDomain(): Budget = Budget(
     id = id,
@@ -33,9 +32,3 @@ fun Budget.toEntity(): BudgetEntity = BudgetEntity(
 
 
 
-fun BudgetCategoryEntity.toDomain(): BudgetCategory = BudgetCategory(
-    budget = budget.toDomain(),
-    categoryName = categoryName,
-    categoryIcon = categoryIcon,
-    iconColor = iconColor,
-)

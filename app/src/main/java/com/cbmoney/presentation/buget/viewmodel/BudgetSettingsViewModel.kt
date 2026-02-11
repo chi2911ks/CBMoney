@@ -5,7 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.viewModelScope
 import com.cbmoney.base.BaseMviViewModel
 import com.cbmoney.domain.model.Budget
-import com.cbmoney.domain.model.BudgetCategory
+import com.cbmoney.domain.model.BudgetDetails
 import com.cbmoney.domain.model.CategoryType
 import com.cbmoney.domain.usecase.budget.GetBudgetsSettingUseCase
 import com.cbmoney.domain.usecase.budget.SaveBudgetsUseCase
@@ -104,7 +104,7 @@ class BudgetSettingsViewModel(
                         month = monthFormat
                     ),
                     budgetsCategory = budgetSettings.categories.associate {
-                        it.id to BudgetCategory(
+                        it.id to BudgetDetails(
                             budget = budgets.findLast { budget -> budget.categoryId == it.id } ?: Budget(
                                 categoryId = it.id,
                                 userId = "",

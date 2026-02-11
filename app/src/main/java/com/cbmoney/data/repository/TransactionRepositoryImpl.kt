@@ -4,8 +4,10 @@ import android.util.Log
 import com.cbmoney.data.local.datasource.TransactionLocalDataSource
 import com.cbmoney.data.mapper.toDomain
 import com.cbmoney.data.mapper.toEntity
+import com.cbmoney.domain.model.CategorySpending
+import com.cbmoney.domain.model.FinancialSummary
 import com.cbmoney.domain.model.Transaction
-import com.cbmoney.domain.model.TransactionCategory
+import com.cbmoney.domain.model.TransactionDetails
 import com.cbmoney.domain.repository.TransactionRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
@@ -74,9 +76,13 @@ class TransactionRepositoryImpl(
         }
     }
 
-    override fun getRecentTransactions(limit: Int): Flow<List<TransactionCategory>> {
+    override fun getRecentTransactions(limit: Int): Flow<List<TransactionDetails>> {
         return try {
-            transactionLocalDataSource.getRecentTransactions(userId, limit).toDomain()
+            transactionLocalDataSource.getRecentTransactions(userId, limit).map {
+                it.map { transaction ->
+                    transaction.toDomain()
+                }
+            }
 
 
 
@@ -84,6 +90,36 @@ class TransactionRepositoryImpl(
             Log.d(TAG, "getRecentTransactions: $e")
             flow { emit(emptyList()) }
 
+        }
+    }
+    override fun getCategorySpending(
+        startDate: Long,
+        endDate: Long
+    ): Flow<List<CategorySpending>> {
+        return try {
+            transactionLocalDataSource.getCategorySpending(userId, startDate, endDate).map {
+                it.map { transaction ->
+                    transaction.toDomain()
+                }
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "getTransactionSpending: $e")
+            flow { emit(emptyList()) }
+
+        }
+    }
+
+    override fun getTotalExpenseAndIncome(
+        startDate: Long,
+        endDate: Long
+    ): Flow<FinancialSummary> {
+        return try {
+            transactionLocalDataSource.getTotalExpenseAndIncome(userId, startDate, endDate).map {
+                it.toDomain()
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "getTotalExpenseAndIncome: $e")
+            flow { emit(FinancialSummary(0, 0)) }
         }
     }
 }

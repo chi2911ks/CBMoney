@@ -5,7 +5,7 @@ import com.cbmoney.data.local.datasource.BudgetLocalDataSource
 import com.cbmoney.data.mapper.toDomain
 import com.cbmoney.data.mapper.toEntity
 import com.cbmoney.domain.model.Budget
-import com.cbmoney.domain.model.BudgetCategory
+import com.cbmoney.domain.model.BudgetDetails
 import com.cbmoney.domain.repository.BudgetRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -38,7 +38,7 @@ class BudgetRepositoryImpl(
         }
     }
 
-    override fun getBudgetsCategoryByMonth(month: String): Flow<List<BudgetCategory>> {
+    override fun getBudgetsCategoryByMonth(month: String): Flow<List<BudgetDetails>> {
         return try {
             budgetLocalDataSource.getBudgetsCategoryByMonth(userId, month).map {
                 it.map { entity -> entity.toDomain() }

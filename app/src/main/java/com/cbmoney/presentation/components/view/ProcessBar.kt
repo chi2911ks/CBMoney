@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
@@ -20,7 +21,8 @@ import com.cbmoney.presentation.theme.CBMoneyShapes
 fun ProcessBar(
     modifier: Modifier = Modifier,
     progress: Float,
-    colorCategory: Color
+    colorCategory: Color,
+    strokeWidth: Dp = 10.dp,
 ) {
     val safeProgress = progress
         .takeIf { it.isFinite() }
@@ -34,13 +36,13 @@ fun ProcessBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(10.dp)
+            .height(strokeWidth)
             .background(CBMoneyColors.Gray.Gray.copy(0.5f), CBMoneyShapes.extraLarge)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth(animatedProgress)
-                .height(10.dp)
+                .height(strokeWidth)
                 .background(colorCategory, CBMoneyShapes.extraLarge)
         )
     }
