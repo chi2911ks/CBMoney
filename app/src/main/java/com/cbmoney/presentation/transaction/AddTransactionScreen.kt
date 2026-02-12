@@ -22,6 +22,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
@@ -39,6 +40,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
 import com.cbmoney.domain.model.Category
 import com.cbmoney.domain.model.CategoryType
+import com.cbmoney.presentation.app.SnackbarManager
+import com.cbmoney.presentation.app.UiMessage
 import com.cbmoney.presentation.components.button.ButtonPrimary
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyTypography
@@ -48,27 +51,53 @@ import com.cbmoney.presentation.transaction.components.CategoryItem
 import com.cbmoney.presentation.transaction.components.DateInputDialog
 import com.cbmoney.presentation.transaction.components.NoteTextField
 import com.cbmoney.presentation.transaction.components.TabTransaction
+import com.cbmoney.presentation.transaction.contract.AddTransactionEvent
+import com.cbmoney.presentation.transaction.contract.AddTransactionIntent
+import com.cbmoney.presentation.transaction.contract.AddTransactionState
+import com.cbmoney.presentation.transaction.viewmodel.AddTransactionViewModel
 import com.cbmoney.utils.exts.formatDigit
 import com.cbmoney.utils.exts.formatMoney
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun TransactionScreen(
+fun AddTransactionScreen(
     currentType: CategoryType = CategoryType.EXPENSE,
     onBackNavigation: () -> Unit,
     navigateToCategory: (CategoryType) -> Unit,
-    viewModel: TransactionsViewModel = koinViewModel()
+    navigateToTransactionList: () -> Unit,
+    viewModel: AddTransactionViewModel = koinViewModel(),
+    snackbarManager: SnackbarManager = koinInject()
 ) {
     val uiState by viewModel.viewState.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
-        viewModel.processIntent(TransactionsIntent.ChangeTab(currentType))
+        viewModel.processIntent(AddTransactionIntent.ChangeTab(currentType))
+    }
+    LaunchedEffect(Unit) {
+        viewModel.singleEvent.collectLatest {
+            when(it){
+                AddTransactionEvent.SaveTransactionSuccess -> {
+                    snackbarManager.show(
+                        UiMessage.Res(R.string.save_success)
+                    )
+                }
+                is AddTransactionEvent.SaveTransactionError -> {
+                    snackbarManager.show(
+                        UiMessage.Text(it.message)
+                    )
+                }
+            }
+        }
+
     }
     TransactionScreenContent(
         uiState,
         onBackNavigation = onBackNavigation,
         navigateToCategory = navigateToCategory,
+        navigateToTransactionList = navigateToTransactionList,
         processIntent = viewModel::processIntent
     )
 }
@@ -76,10 +105,11 @@ fun TransactionScreen(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TransactionScreenContent(
-    uiState: TransactionsState,
+    uiState: AddTransactionState,
     onBackNavigation: () -> Unit,
     navigateToCategory: (CategoryType) -> Unit,
-    processIntent: (TransactionsIntent) -> Unit = {},
+    navigateToTransactionList: () -> Unit,
+    processIntent: (AddTransactionIntent) -> Unit = {},
 ) {
 //    var currentTab by remember { mutableStateOf(CategoryType.EXPENSE) }
     val categories = uiState.categories.filter { it.type == uiState.selectedType }
@@ -88,7 +118,7 @@ fun TransactionScreenContent(
 //    var selectedId by remember { mutableStateOf("") }
     LaunchedEffect(datePickerState.selectedDateMillis) {
         datePickerState.selectedDateMillis?.let {
-            processIntent(TransactionsIntent.ChangeDate(it))
+            processIntent(AddTransactionIntent.ChangeDate(it))
         }
     }
     Column(
@@ -117,12 +147,21 @@ fun TransactionScreenContent(
                 style = CBMoneyTypography.Body.Large.Bold,
                 modifier = Modifier.align(Alignment.Center)
             )
+            Icon(
+                imageVector = Icons.Default.History,
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .clickable {
+                        navigateToTransactionList()
+                    }
+            )
         }
         Spacer(modifier = Modifier.height(Spacing.xl))
         TabTransaction(
             tabSelected = uiState.selectedType,
             onTabSelected = {
-                processIntent(TransactionsIntent.ChangeTab(it))
+                processIntent(AddTransactionIntent.ChangeTab(it))
             }
         )
         Spacer(modifier = Modifier.height(Spacing.md))
@@ -142,7 +181,7 @@ fun TransactionScreenContent(
                 value = uiState.amount.formatMoney(),
                 onValueChange = {
                     val input = it.formatDigit()
-                    processIntent(TransactionsIntent.ChangeAmount(input?:0))
+                    processIntent(AddTransactionIntent.ChangeAmount(input?:0))
 
                 },
                 modifier = Modifier
@@ -156,7 +195,7 @@ fun TransactionScreenContent(
                 categories,
                 uiState.selectedCategory,
                 {
-                    processIntent(TransactionsIntent.SelectCategory(it))
+                    processIntent(AddTransactionIntent.SelectCategory(it))
                 },
                 {
                     navigateToCategory(uiState.selectedType)
@@ -170,7 +209,7 @@ fun TransactionScreenContent(
                 value = uiState.note,
                 placeholder = stringResource(R.string.add_trans_des),
                 onValueChange = {
-                    processIntent(TransactionsIntent.ChangeNote(it))
+                    processIntent(AddTransactionIntent.ChangeNote(it))
                 }
             )
         }
@@ -179,7 +218,7 @@ fun TransactionScreenContent(
             text = stringResource(R.string.save_transaction),
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                processIntent(TransactionsIntent.SaveTransaction)
+                processIntent(AddTransactionIntent.SaveTransaction)
             },
         )
     }

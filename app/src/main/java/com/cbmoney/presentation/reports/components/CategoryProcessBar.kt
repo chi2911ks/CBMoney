@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cbmoney.R
+import com.cbmoney.domain.model.CategoryType
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.utils.exts.arcLayout
@@ -24,8 +25,9 @@ import com.cbmoney.utils.formatShortNumber
 
 @Composable
 fun CategoryProcessBar(
-    modifier: Modifier = Modifier,
     listData: List<Pair<Long, Color>>,
+    modifier: Modifier = Modifier,
+    categoryType: CategoryType = CategoryType.EXPENSE,
     size: Dp = 180.dp,
     strokeWidth: Dp = 28.dp,
 ) {
@@ -64,7 +66,9 @@ fun CategoryProcessBar(
             horizontalAlignment = Alignment.CenterHorizontally,
         ){
             Text(
-                text = stringResource(R.string.total_expense),
+                text = if (categoryType == CategoryType.EXPENSE)
+                    stringResource(R.string.total_expense) else
+                    stringResource(R.string.total_income),
                 color = Color.Gray,
                 style = CBMoneyTypography.Body.Small.Bold
             )

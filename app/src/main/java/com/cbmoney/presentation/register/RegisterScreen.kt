@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
-import com.cbmoney.presentation.app.AppSnackbarManager
+import com.cbmoney.presentation.app.SnackbarManager
 import com.cbmoney.presentation.app.UiMessage
 import com.cbmoney.presentation.common.mapper.toMessage
 import com.cbmoney.presentation.components.button.ButtonPrimary
@@ -64,7 +64,7 @@ fun RegisterScreen(
     navigateToHome: () -> Unit,
     onBackClick: () -> Unit,
     registerViewModel: RegisterViewModel = koinViewModel(),
-    snackbarManager: AppSnackbarManager = koinInject()
+    snackbarManager: SnackbarManager = koinInject()
 ) {
     val context = LocalContext.current
     val uiState by registerViewModel.viewState.collectAsStateWithLifecycle()

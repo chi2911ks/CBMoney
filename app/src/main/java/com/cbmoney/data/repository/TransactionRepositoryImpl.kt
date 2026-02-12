@@ -122,4 +122,20 @@ class TransactionRepositoryImpl(
             flow { emit(FinancialSummary(0, 0)) }
         }
     }
+
+    override fun getMonthlySpending(
+        startDate: Long,
+        endDate: Long
+    ): Flow<List<FinancialSummary>> {
+        return try {
+            transactionLocalDataSource.getMonthlySpending(userId, startDate, endDate).map {
+                it.map { transaction ->
+                    transaction.toDomain()
+                }
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "getMonthlySpending: $e")
+            flow { emit(emptyList()) }
+        }
+    }
 }

@@ -11,22 +11,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.cbmoney.presentation.navigation.NavRoutes
 import com.cbmoney.presentation.theme.CBMoneyColors
+import com.cbmoney.utils.getStringRes
 import org.koin.compose.koinInject
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AppRoot(
-    snackbarManager: AppSnackbarManager = koinInject()
+    snackbarManager: SnackbarManager = koinInject()
 ) {
-
+    val context = LocalContext.current
     val snackBarHostState = remember { SnackbarHostState() }
     LaunchedEffect(Unit) {
         snackbarManager.messages.collect {
             when(it){
-                is UiMessage.Res -> snackBarHostState
+                is UiMessage.Res -> snackBarHostState.showSnackbar(getStringRes(context,it.resId))
                 is UiMessage.Text -> snackBarHostState.showSnackbar(it.text)
             }
 

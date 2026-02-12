@@ -27,7 +27,7 @@ import com.cbmoney.presentation.register.RegisterScreen
 import com.cbmoney.presentation.settings.LanguageBottomSheet
 import com.cbmoney.presentation.settings.SettingsScreen
 import com.cbmoney.presentation.splash.SplashScreen
-import com.cbmoney.presentation.transaction.TransactionScreen
+import com.cbmoney.presentation.transaction.AddTransactionScreen
 import com.cbmoney.utils.exts.clearAll
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -109,7 +109,7 @@ fun NavRoutes() {
                         },
                         toHelpCenter = {},
                         toTransaction = {
-                            backStack.add(Destination.Transactions(it))
+                            backStack.add(Destination.AddTransaction(it))
                         },
                         toLogout = {
                             backStack.clearAll()
@@ -129,14 +129,17 @@ fun NavRoutes() {
             ) {
                 LanguageBottomSheet()
             }
-            entry<Destination.Transactions> {
-                TransactionScreen(
+            entry<Destination.AddTransaction> {
+                AddTransactionScreen(
                     currentType = it.type,
                     onBackNavigation = {
                         backStack.removeLastOrNull()
                     },
-                    navigateToCategory = {
-                        backStack.add(Destination.Categories(it))
+                    navigateToCategory = {type->
+                        backStack.add(Destination.Categories(type))
+                    },
+                    navigateToTransactionList = {
+                        backStack.add(Destination.TransactionList)
                     }
                 )
             }

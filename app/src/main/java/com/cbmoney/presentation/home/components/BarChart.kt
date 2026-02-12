@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.cbmoney.R
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
+import com.cbmoney.utils.exts.rawClickable
 import com.cbmoney.utils.exts.shadowCustom
 
 data class MonthlyData(
@@ -53,7 +54,7 @@ fun MonthlySpendingCard(
     listData: List<MonthlyData>,
     modifier: Modifier = Modifier
 ) {
-    val labelMonthly = listData[selectedIndex].label
+    val labelMonthly = listData.getOrNull(selectedIndex)?.label ?: stringResource(R.string.month_1)
 
     Box(
         modifier = modifier
@@ -67,7 +68,12 @@ fun MonthlySpendingCard(
                 .padding(16.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .rawClickable {
+                        navigateToReport()
+                    }
+                ,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
@@ -82,16 +88,13 @@ fun MonthlySpendingCard(
                         color = Color.Gray
                     )
                 }
+
                 Icon(
                     imageVector = Icons.Default.ChevronRight,
                     contentDescription = null,
                     tint = Color.Gray,
                     modifier = Modifier
                         .size(24.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable {
-                            navigateToReport()
-                        }
 
                 )
             }
@@ -111,7 +114,7 @@ fun BarChart(
     onSelected: (Int) -> Unit,
     listData: List<MonthlyData>,
 ) {
-
+    if (listData.isEmpty()) return
     val scrollState = rememberScrollState()
     val maxValue = (listData.maxOfOrNull { maxOf(it.income, it.expense) } ?: 1) + 10
     Row(

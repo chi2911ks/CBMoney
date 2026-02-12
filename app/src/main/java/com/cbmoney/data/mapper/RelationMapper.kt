@@ -36,5 +36,7 @@ fun CategoryWithSpending.toDomain(): CategorySpending {
 }
 fun TotalExpenseAndIncome.toDomain(): FinancialSummary = FinancialSummary(
     totalExpense = totalExpense,
-    totalIncome = totalIncome
+    totalIncome = totalIncome,
+    year = year,
+    month = month
 )

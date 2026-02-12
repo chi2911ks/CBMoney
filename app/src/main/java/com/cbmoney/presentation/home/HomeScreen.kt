@@ -1,5 +1,7 @@
 package com.cbmoney.presentation.home
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -59,6 +61,9 @@ import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.utils.exts.shadowCustom
 import org.koin.androidx.compose.koinViewModel
+import java.time.Month
+import java.time.format.TextStyle
+import java.util.Locale
 
 
 @Composable
@@ -75,6 +80,7 @@ fun HomeScreen(
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreenContent(
     uiState: HomeState,
@@ -82,32 +88,28 @@ fun HomeScreenContent(
     navigateToTransaction: (CategoryType) -> Unit,
 ) {
     var selectedIndex by remember { mutableIntStateOf(0) }
-    val listData = listOf(
-        MonthlyData(stringResource(R.string.month_1), 10000000L, 20000000L),
-        MonthlyData(stringResource(R.string.month_2), 7000000L, 2000000L),
-        MonthlyData(stringResource(R.string.month_3), 2000000L, 1000000L),
-        MonthlyData(stringResource(R.string.month_4), 10000000L, 20000000L),
-        MonthlyData(stringResource(R.string.month_5), 3000000L, 200000L),
-        MonthlyData(stringResource(R.string.month_6), 2000000L, 1000000L),
-        MonthlyData(stringResource(R.string.month_7), 10000000L, 2000000L),
-        MonthlyData(stringResource(R.string.month_8), 1000000L, 200000L),
-        MonthlyData(stringResource(R.string.month_9), 7000000L, 10000000L),
-        MonthlyData(stringResource(R.string.month_10), 9000000L, 20000000L),
-        MonthlyData(stringResource(R.string.month_11), 6000000L, 2000000L),
-        MonthlyData(stringResource(R.string.month_12), 26000000L, 10000000L),
-    )
-    val income = listData[selectedIndex].income
-    val expense = listData[selectedIndex].expense
+    val listData = uiState.monthlySpending.map {
+        MonthlyData(
+            Month.of(it.month)
+                .getDisplayName(
+                    TextStyle.SHORT,
+                    Locale.getDefault()
+                ),
+            it.totalIncome,
+            it.totalExpense
+        )
+    }
+
+    val income = listData.getOrNull(selectedIndex)?.income ?: 0
+    val expense = listData.getOrNull(selectedIndex)?.expense ?: 0
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(CBMoneyColors.BackGround.BackgroundPrimary)
             .statusBarsPadding()
-            .padding(horizontal = Spacing.md)
+            .padding(horizontal = Spacing.md),
 //            .padding(bottom = 70.dp)
-
-        ,
 
     ) {
 
@@ -150,7 +152,7 @@ fun HomeScreenContent(
         MonthlySpendingCard(
             selectedIndex,
             { selectedIndex = it },
-            {navigateToReport()},
+            { navigateToReport() },
             listData,
             Modifier
                 .padding(top = Spacing.sm)
@@ -219,7 +221,7 @@ fun HeaderSection(
                         onClickProfile()
                     },
                 contentAlignment = Alignment.Center
-            ){
+            ) {
 
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
@@ -287,8 +289,7 @@ fun HeaderSection(
 fun RecentTransactions(
     modifier: Modifier = Modifier,
     uiState: HomeState = HomeState()
-)
- {
+) {
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -312,16 +313,17 @@ fun RecentTransactions(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(Spacing.sm)
     ) {
-       items(
-           items = uiState.transactions,
-           key = { it.transaction.id }
-       ){
-           RecentTransactionItem(
-               transactionDetails = it,
-           )
-       }
+        items(
+            items = uiState.transactions,
+            key = { it.transaction.id }
+        ) {
+            RecentTransactionItem(
+                transactionDetails = it,
+            )
+        }
     }
 }
+
 @Preview
 @Composable
 private fun HomeScreenPreview() {

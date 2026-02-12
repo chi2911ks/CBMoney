@@ -65,7 +65,9 @@ interface TransactionDao: BaseDao<TransactionEntity> {
     @Query("""
         SELECT 
             SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END) AS total_expense,
-            SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END) AS total_income
+            SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END) AS total_income,
+            strftime('%Y', date) AS year,
+            strftime('%m', date) AS month
         FROM transactions 
         WHERE userId = :userId AND
         date >= :startDate AND date < :endDate
@@ -75,6 +77,20 @@ interface TransactionDao: BaseDao<TransactionEntity> {
         startDate: Long,
         endDate: Long
     ): Flow<TotalExpenseAndIncome>
-
-
+    @Query("""
+        SELECT 
+            SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END) AS total_expense,
+            SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END) AS total_income,
+            strftime('%Y', date/1000, 'unixepoch') AS year,
+            strftime('%m', date/1000, 'unixepoch') AS month
+        FROM transactions 
+        WHERE userId = :userId AND 
+        date >= :startDate AND date < :endDate 
+        GROUP BY year, month
+    """)
+    fun getMonthlySpending(
+        userId: String,
+        startDate: Long,
+        endDate: Long
+    ): Flow<List<TotalExpenseAndIncome>>
 }

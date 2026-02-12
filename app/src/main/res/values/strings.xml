@@ -151,5 +151,6 @@
     <string name="spending_by_category">Spending by Category</string>
     <string name="month">Month</string>
     <string name="unknown">Unknown</string>
+    <string name="save_success">Saved successfully</string>
 
 </resources>

@@ -1,42 +1,45 @@
-package com.cbmoney.presentation.transaction
+package com.cbmoney.presentation.transaction.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.cbmoney.base.BaseMviViewModel
 import com.cbmoney.domain.model.Transaction
 import com.cbmoney.domain.usecase.category.GetAllCategoriesUseCase
 import com.cbmoney.domain.usecase.transaction.SaveTransactionUseCase
+import com.cbmoney.presentation.transaction.contract.AddTransactionEvent
+import com.cbmoney.presentation.transaction.contract.AddTransactionIntent
+import com.cbmoney.presentation.transaction.contract.AddTransactionState
 import kotlinx.coroutines.launch
 
-class TransactionsViewModel(
+class AddTransactionViewModel(
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val saveTransactionUseCase: SaveTransactionUseCase
-) : BaseMviViewModel<TransactionsState, TransactionsEvent, TransactionsIntent>() {
+) : BaseMviViewModel<AddTransactionState, AddTransactionEvent, AddTransactionIntent>() {
     init {
         loadData()
     }
 
-    override fun initialState(): TransactionsState = TransactionsState()
+    override fun initialState(): AddTransactionState = AddTransactionState()
 
-    override fun processIntent(intent: TransactionsIntent) {
+    override fun processIntent(intent: AddTransactionIntent) {
         when (intent) {
-            is TransactionsIntent.ChangeTab -> updateState {
+            is AddTransactionIntent.ChangeTab -> updateState {
                 copy(selectedType = intent.type)
             }
 
-            is TransactionsIntent.SelectCategory -> updateState {
+            is AddTransactionIntent.SelectCategory -> updateState {
                 copy(selectedCategory = intent.category)
             }
-            is TransactionsIntent.ChangeAmount -> updateState {
+            is AddTransactionIntent.ChangeAmount -> updateState {
                 copy(amount = intent.amount)
             }
-            is TransactionsIntent.ChangeDate -> updateState {
+            is AddTransactionIntent.ChangeDate -> updateState {
                 copy(date = intent.date)
             }
-            is TransactionsIntent.ChangeNote -> updateState {
+            is AddTransactionIntent.ChangeNote -> updateState {
                 copy(note = intent.note)
             }
 
-            TransactionsIntent.SaveTransaction -> saveTransaction()
+            AddTransactionIntent.SaveTransaction -> saveTransaction()
         }
     }
 
@@ -66,10 +69,16 @@ class TransactionsViewModel(
                 )
                 saveTransactionUseCase(transaction).fold(
                     onSuccess = {
-                        sendEvent(TransactionsEvent.SaveTransactionSuccess)
+                        updateState {
+                            copy(
+                                amount = 0,
+                                note = ""
+                            )
+                        }
+                        sendEvent(AddTransactionEvent.SaveTransactionSuccess)
                     },
                     onFailure = {
-                        sendEvent(TransactionsEvent.SaveTransactionError(it.message.toString()))
+                        sendEvent(AddTransactionEvent.SaveTransactionError(it.message.toString()))
                     }
                 )
             }

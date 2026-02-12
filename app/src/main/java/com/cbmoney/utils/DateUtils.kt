@@ -43,6 +43,22 @@ object DateUtils {
 
         return start to end
     }
+    fun getYearRange(year: Int): Pair<Long, Long> {
+        val calendar = Calendar.getInstance()
+
+        // start of year
+        calendar.set(year, 0, 1, 0, 0, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        val start = calendar.timeInMillis
+
+        // end of year
+        calendar.set(Calendar.MONTH, 11)
+        calendar.set(Calendar.DAY_OF_MONTH, 31)
+        val end = calendar.timeInMillis
+
+        return start to end
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun formatTransactionDate(timeMillis: Long): String {
         val zoneId = ZoneId.systemDefault()

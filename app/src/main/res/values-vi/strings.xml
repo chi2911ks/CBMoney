@@ -139,4 +139,6 @@
     <string name="spending_by_category">Chi tiêu theo danh mục</string>
     <string name="month">Tháng</string>
     <string name="unknown">Không xác định</string>
+    <string name="save_success">Lưu thành công</string>
+
 </resources>

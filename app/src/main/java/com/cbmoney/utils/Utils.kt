@@ -1,6 +1,8 @@
 package com.cbmoney.utils
 
 import android.annotation.SuppressLint
+import android.content.Context
+import androidx.annotation.StringRes
 import androidx.room.TypeConverter
 import com.cbmoney.domain.model.CategoryType
 
@@ -10,7 +12,9 @@ fun toPeriod(value: String) = CategoryType.valueOf(value)
 @TypeConverter
 fun fromPeriod(period: CategoryType) = period.name.lowercase()
 
-
+fun getStringRes(context: Context, @StringRes resId: Int): String {
+    return context.getString(resId)
+}
 
 @SuppressLint("DefaultLocale")
 fun formatShortNumber(value: Long): String {

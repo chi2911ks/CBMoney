@@ -6,5 +6,8 @@ data class TotalExpenseAndIncome(
     @ColumnInfo(name = "total_expense")
     val totalExpense: Long,
     @ColumnInfo(name = "total_income")
-    val totalIncome: Long
+    val totalIncome: Long,
+    val year: Int,
+    val month: Int
+
 )

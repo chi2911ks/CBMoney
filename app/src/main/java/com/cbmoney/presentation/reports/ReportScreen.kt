@@ -31,9 +31,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,11 +44,11 @@ import androidx.core.graphics.toColorInt
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
 import com.cbmoney.domain.model.CategorySpending
-import com.cbmoney.domain.model.CategoryType
 import com.cbmoney.presentation.components.button.ButtonPrimary
 import com.cbmoney.presentation.components.view.BalanceSummary
 import com.cbmoney.presentation.reports.components.CategoryProcessBar
 import com.cbmoney.presentation.reports.components.CategorySpentItem
+import com.cbmoney.presentation.reports.components.CategoryTabSelector
 import com.cbmoney.presentation.reports.components.YearMonthSelector
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
@@ -77,6 +74,7 @@ fun ReportScreen(
 
     ReportScreenContent(
         uiState,
+        processIntent = viewModel::processIntent,
         onNavigateToDetail = onNavigateToDetail,
         onNavigateToTransaction = onNavigateToTransaction
     )
@@ -86,11 +84,11 @@ fun ReportScreen(
 @Composable
 fun ReportScreenContent(
     uiState: ReportState,
+    processIntent: (ReportIntent) -> Unit,
     onNavigateToDetail: (String) -> Unit,
     onNavigateToTransaction: () -> Unit
 ) {
-    var year by remember { mutableStateOf(2026) }
-    var month by remember { mutableStateOf(2) }
+
     val verticalScroll = rememberScrollState()
     Column(
         modifier = Modifier
@@ -121,17 +119,18 @@ fun ReportScreenContent(
 
         }
         YearMonthSelector(
-            yearMonth = YearMonth.of(year, month),
+            yearMonth = uiState.yearMonth ?: YearMonth.now(),
             onYearMonthChange = {
-                year = it.year
-                month = it.monthValue
+                processIntent(ReportIntent.OnChangeCurrentMonth(it))
             }
         )
         CardExpenseIncome(uiState = uiState)
         Spacer(Modifier.height(Spacing.md))
+
         CardCategoryStats(
-            uiState
-            , onNavigateToDetail = onNavigateToDetail,
+            uiState,
+            processIntent,
+            onNavigateToDetail = onNavigateToDetail,
             onNavigateToTransaction = onNavigateToTransaction
         )
 
@@ -203,65 +202,57 @@ fun CardExpenseIncome(
 @Composable
 fun CardCategoryStats(
     uiState: ReportState,
+    processIntent: (ReportIntent) -> Unit,
     modifier: Modifier = Modifier,
     onNavigateToDetail: (String) -> Unit,
     onNavigateToTransaction: () -> Unit,
 ) {
     val filtered = uiState.spendingCategories.filter {
-        it.type == fromPeriod(CategoryType.EXPENSE)
+        it.type == fromPeriod(uiState.categoryType)
     }
     val listData = filtered.map {
         it.totalSpending to
                 Color( it.iconColor?.toColorInt()
                     ?: Color.Gray.toHex().toColorInt())
     }
-    val sumSpent = listData.sumOf { it.first }
+//    val month = uiState.yearMonth?.monthValue ?: 0
+//
+//    val sumSpent = listData.sumOf { it.first }
 
     Column(
         modifier = modifier
             .fillMaxWidth()
             .shadowCustom()
-            .background(CBMoneyColors.White, CBMoneyShapes.extraLarge)
-            .padding(Spacing.md),
+            .background(CBMoneyColors.White, CBMoneyShapes.extraLarge),
         verticalArrangement = Arrangement.Center,
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = stringResource(R.string.spending_by_category),
-                style = CBMoneyTypography.Title.Medium.Bold,
-            )
-            Box(
-                modifier = Modifier
-                    .background(
-                        CBMoneyColors.Gray.Gray.copy(0.25f),
-                        CBMoneyShapes.small
-                    )
-                    .padding(Spacing.xs)
-            ) {
-                Text(
-                    text = "THÁNG 10",
-                    color = Color.Gray,
-                    fontSize = 10.sp,
-                    style = CBMoneyTypography.Body.Small.Bold,
-                )
+        CategoryTabSelector(
+            selected = uiState.categoryType,
+            onSelectedChange = {
+                processIntent(ReportIntent.OnChangeCategoryType(it))
             }
+        )
+        Spacer(Modifier.height(Spacing.md))
+        Column (
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(Spacing.md),
+            verticalArrangement = Arrangement.Center,
+        ){
 
+            CategoryProcessBar(
+                modifier = Modifier.fillMaxWidth(),
+                listData = listData,
+                categoryType = uiState.categoryType
+            )
+            Spacer(Modifier.height(Spacing.md))
+            DetailReport(
+                filtered,
+                onNavigateToDetail = onNavigateToDetail,
+                onNavigateToTransaction = onNavigateToTransaction
+            )
         }
-        Spacer(Modifier.height(Spacing.md))
-        CategoryProcessBar(
-            modifier = Modifier.fillMaxWidth(),
-            listData = listData
-        )
-        Spacer(Modifier.height(Spacing.md))
-        DetailReport(
-            filtered,
-            onNavigateToDetail = onNavigateToDetail,
-            onNavigateToTransaction = onNavigateToTransaction
-        )
+
     }
 }
 
@@ -367,6 +358,9 @@ fun DetailReport(
 @Preview
 @Composable
 private fun ReportScreenPreview() {
-    ReportScreenContent(ReportState(), {}, {})
+    ReportScreenContent(
+        ReportState(), {}, {},
+        onNavigateToTransaction = {}
+    )
 
 }

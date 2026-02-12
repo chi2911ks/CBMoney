@@ -37,12 +37,13 @@ import com.cbmoney.domain.usecase.category.GetAllCategoriesUseCase
 import com.cbmoney.domain.usecase.category.InitCategoriesDefaultUseCase
 import com.cbmoney.domain.usecase.category.SaveCategoryUseCase
 import com.cbmoney.domain.usecase.transaction.GetCategorySpendingUseCase
+import com.cbmoney.domain.usecase.transaction.GetMonthlySpendingUseCase
 import com.cbmoney.domain.usecase.transaction.GetRecentTransactionsUseCase
 import com.cbmoney.domain.usecase.transaction.GetTotalSummaryUseCase
 import com.cbmoney.domain.usecase.transaction.SaveTransactionUseCase
 import com.cbmoney.domain.usecase.user.GetUserUseCase
 import com.cbmoney.domain.usecase.user.SaveUserToUseCase
-import com.cbmoney.presentation.app.AppSnackbarManager
+import com.cbmoney.presentation.app.SnackbarManager
 import com.cbmoney.presentation.buget.viewmodel.BudgetSettingsViewModel
 import com.cbmoney.presentation.buget.viewmodel.BudgetViewModel
 import com.cbmoney.presentation.category.viewmodel.AddCategoryViewModel
@@ -55,7 +56,7 @@ import com.cbmoney.presentation.profile.ProfileViewModel
 import com.cbmoney.presentation.register.RegisterViewModel
 import com.cbmoney.presentation.reports.ReportViewModel
 import com.cbmoney.presentation.splash.SplashViewModel
-import com.cbmoney.presentation.transaction.TransactionsViewModel
+import com.cbmoney.presentation.transaction.viewmodel.AddTransactionViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.koin.core.module.dsl.factoryOf
@@ -80,7 +81,7 @@ val appModule = module {
     single { GoogleAuthClient(get()) }
 
     //AppSnackbarManager
-    single { AppSnackbarManager() }
+    single { SnackbarManager() }
 }
 val useCaseModule = module {
     //user
@@ -105,6 +106,7 @@ val useCaseModule = module {
     factoryOf(::GetRecentTransactionsUseCase)
     factoryOf(::GetCategorySpendingUseCase)
     factoryOf(::GetTotalSummaryUseCase)
+    factoryOf(::GetMonthlySpendingUseCase)
 
 
 }
@@ -132,7 +134,7 @@ val viewModelModule = module {
     viewModelOf(::MainViewModel)
     viewModelOf(::HomeViewModel)
     viewModelOf(::ProfileViewModel)
-    viewModelOf(::TransactionsViewModel)
+    viewModelOf(::AddTransactionViewModel)
     viewModelOf(::CategoriesViewModel)
     viewModelOf(::AddCategoryViewModel)
     viewModelOf(::EditCategoryViewModel)

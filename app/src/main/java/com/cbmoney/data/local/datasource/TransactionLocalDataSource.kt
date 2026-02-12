@@ -32,4 +32,10 @@ interface TransactionLocalDataSource {
         startDate: Long,
         endDate: Long
     ): Flow<TotalExpenseAndIncome>
+
+    fun getMonthlySpending(
+        userId: String,
+        startDate: Long,
+        endDate: Long
+    ): Flow<List<TotalExpenseAndIncome>>
 }

@@ -54,4 +54,12 @@ class TransactionLocalDataSourceImpl(
         return transactionDao.getTotalExpenseAndIncome(userId, startDate, endDate)
     }
 
+    override fun getMonthlySpending(
+        userId: String,
+        startDate: Long,
+        endDate: Long
+    ): Flow<List<TotalExpenseAndIncome>> {
+        return transactionDao.getMonthlySpending(userId, startDate, endDate)
+    }
+
 }

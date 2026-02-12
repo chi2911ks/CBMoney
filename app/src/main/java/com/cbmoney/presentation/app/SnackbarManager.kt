@@ -3,7 +3,7 @@ package com.cbmoney.presentation.app
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
-class AppSnackbarManager {
+class SnackbarManager {
     private val _messages = MutableSharedFlow<UiMessage>(
         extraBufferCapacity = 1
     )
