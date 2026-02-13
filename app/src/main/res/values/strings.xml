@@ -152,5 +152,6 @@
     <string name="month">Month</string>
     <string name="unknown">Unknown</string>
     <string name="save_success">Saved successfully</string>
+    <string name="transaction_list">Transaction List</string>
 
 </resources>

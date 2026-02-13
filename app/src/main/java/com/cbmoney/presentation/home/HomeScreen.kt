@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -60,6 +61,7 @@ import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.utils.exts.shadowCustom
+import com.cbmoney.utils.exts.textClickable
 import org.koin.androidx.compose.koinViewModel
 import java.time.Month
 import java.time.format.TextStyle
@@ -70,13 +72,16 @@ import java.util.Locale
 fun HomeScreen(
     navigateToReport: () -> Unit,
     navigateToTransaction: (CategoryType) -> Unit,
+    navigateToTransactionList: () -> Unit,
     homeViewModel: HomeViewModel = koinViewModel()
 ) {
     val uiState by homeViewModel.viewState.collectAsStateWithLifecycle()
     HomeScreenContent(
         uiState,
         navigateToReport = navigateToReport,
-        navigateToTransaction = navigateToTransaction
+        navigateToTransaction = navigateToTransaction,
+        navigateToTransactionList = navigateToTransactionList
+
     )
 }
 
@@ -86,6 +91,7 @@ fun HomeScreenContent(
     uiState: HomeState,
     navigateToReport: () -> Unit,
     navigateToTransaction: (CategoryType) -> Unit,
+    navigateToTransactionList: () -> Unit
 ) {
     var selectedIndex by remember { mutableIntStateOf(0) }
     val listData = uiState.monthlySpending.map {
@@ -192,7 +198,8 @@ fun HomeScreenContent(
         }
         Spacer(Modifier.height(Spacing.sm))
         RecentTransactions(
-            uiState = uiState
+            uiState = uiState,
+            navigateToTransactionList = navigateToTransactionList
         )
     }
 
@@ -288,7 +295,8 @@ fun HeaderSection(
 @Composable
 fun RecentTransactions(
     modifier: Modifier = Modifier,
-    uiState: HomeState = HomeState()
+    uiState: HomeState = HomeState(),
+    navigateToTransactionList: () -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -303,7 +311,12 @@ fun RecentTransactions(
         Text(
             text = stringResource(R.string.see_all),
             color = CBMoneyColors.Primary.Primary,
-            style = CBMoneyTypography.Body.Medium.Regular
+            style = CBMoneyTypography.Body.Medium.Regular.copy(
+                textDecoration = TextDecoration.Underline
+            ),
+            modifier = Modifier.textClickable {
+                navigateToTransactionList()
+            }
         )
     }
     LazyColumn(
@@ -331,7 +344,7 @@ private fun HomeScreenPreview() {
     HomeScreenContent(
         HomeState(),
         {},
-        {}
+        {}, {}
     )
 }
 

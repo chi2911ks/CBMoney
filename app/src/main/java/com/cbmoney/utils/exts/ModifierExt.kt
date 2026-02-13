@@ -5,6 +5,7 @@ import android.os.SystemClock
 import androidx.compose.foundation.Indication
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
@@ -33,7 +34,17 @@ fun Modifier.rawClickable(onClick: () -> Unit): Modifier =
     ) {
         onClick()
     }
+@Composable
+fun Modifier.textClickable(onClick: () -> Unit): Modifier
+= composed {
+    val interactionSource = remember { MutableInteractionSource() }
 
+    this.clickable(
+        indication = ripple(),
+        interactionSource = interactionSource,
+        onClick = onClick,
+    )
+}
 @Composable
 fun Modifier.safeClickable(
     debounceTime: Long = 800L,

@@ -7,6 +7,7 @@ data class MainNavigator(
     val toSettings: () -> Unit,
     val toHelpCenter: () -> Unit,
     val toTransaction: (CategoryType) -> Unit,
+    val toTransactionList: () -> Unit,
     val toLogout: () -> Unit,
     val toBack: () -> Unit,
     val toBudgetSettings: () -> Unit

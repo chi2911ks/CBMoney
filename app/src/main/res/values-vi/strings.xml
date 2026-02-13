@@ -140,5 +140,6 @@
     <string name="month">Tháng</string>
     <string name="unknown">Không xác định</string>
     <string name="save_success">Lưu thành công</string>
+    <string name="transaction_list">Danh sách giao dịch</string>
 
 </resources>

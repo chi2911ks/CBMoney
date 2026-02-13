@@ -1,13 +1,11 @@
 package com.cbmoney.presentation.main
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.domain.model.CategoryType
 import com.cbmoney.presentation.buget.BudgetScreen
@@ -39,6 +37,9 @@ fun MainScreen(
                     navigateToReport = { viewModel.handleNavigateToTab(MainTab.REPORTS) },
                     navigateToTransaction = {
                         navigator.toTransaction(it)
+                    },
+                    navigateToTransactionList = {
+                        navigator.toTransactionList()
                     }
                 )
 
@@ -74,22 +75,4 @@ fun MainScreen(
     }
 
 
-}
-
-@SuppressLint("ViewModelConstructorInComposable")
-@Preview(showBackground = true)
-@Composable
-fun MainScreenPreview() {
-    MainScreen(
-        navigator = MainNavigator(
-            toPersonInfo = {},
-            toSettings = {},
-            toHelpCenter = {},
-            toTransaction = {},
-            toLogout = {},
-            toBack = {},
-            toBudgetSettings = {}
-        ),
-        MainViewModel()
-    )
 }
