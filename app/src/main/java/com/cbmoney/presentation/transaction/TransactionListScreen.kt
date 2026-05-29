@@ -2,6 +2,7 @@ package com.cbmoney.presentation.transaction
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,17 +10,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,10 +28,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.toColorInt
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
 import com.cbmoney.domain.model.Category
@@ -46,6 +42,7 @@ import com.cbmoney.presentation.transaction.contract.TransactionListIntent
 import com.cbmoney.presentation.transaction.contract.TransactionListState
 import com.cbmoney.presentation.transaction.viewmodel.TransactionListViewModel
 import com.cbmoney.utils.exts.formatMoney
+import com.cbmoney.utils.exts.hexToColor
 import org.koin.androidx.compose.koinViewModel
 import java.time.Instant
 import java.time.ZoneId
@@ -66,13 +63,13 @@ fun TransactionListScreen(
     TransactionListScreenContent(
         state = uiState,
         onBack = onBack,
-        onTransactionClick = onTransactionClick,
         onSearch = { query ->
             viewModel.processIntent(TransactionListIntent.SearchQueryChanged(query))
         },
         onCategorySelected = { category ->
             viewModel.processIntent(TransactionListIntent.SelectCategory(category))
         },
+        onTransactionClick = onTransactionClick,
         onDelete = { transactionId ->
             viewModel.processIntent(TransactionListIntent.DeleteTransaction(transactionId))
         }
@@ -83,22 +80,23 @@ fun TransactionListScreen(
 fun TransactionListScreenContent(
     state: TransactionListState,
     onBack: () -> Unit,
-    onTransactionClick: (String) -> Unit,
     onSearch: (String) -> Unit,
     onCategorySelected: (Category?) -> Unit,
+    onTransactionClick: (String) -> Unit,
     onDelete: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(CBMoneyColors.BackGround.BackgroundPrimary)
+            .statusBarsPadding()
+            .padding(horizontal = Spacing.md)
     ) {
         // Top bar
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = Spacing.md)
-                .padding(top = Spacing.md, bottom = Spacing.sm)
+                .padding(vertical = Spacing.md)
         ) {
             Icon(
                 imageVector = Icons.Default.ArrowBackIosNew,
@@ -106,11 +104,10 @@ fun TransactionListScreenContent(
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .clickable { onBack() }
-                    .padding(Spacing.sm)
             )
             Text(
                 text = stringResource(R.string.transaction_list),
-                style = CBMoneyTypography.Title.Large.Bold,
+                style = CBMoneyTypography.Body.Large.Bold,
                 modifier = Modifier.align(Alignment.Center)
             )
             Icon(
@@ -119,7 +116,6 @@ fun TransactionListScreenContent(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .clickable { /* TODO: implement search */ }
-                    .padding(Spacing.sm)
             )
         }
 
@@ -127,8 +123,7 @@ fun TransactionListScreenContent(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = Spacing.md)
-                .padding(top = Spacing.sm, bottom = Spacing.md)
+                .padding(bottom = Spacing.md)
         ) {
             val categoryNames = listOf("Tất cả") + state.categories.map { it.name }
             var selected by remember { mutableStateOf(state.selectedCategory?.name ?: "Tất cả") }
@@ -160,18 +155,14 @@ fun TransactionListScreenContent(
             }
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(Spacing.sm)
             ) {
                 items(state.transactions) { details ->
                     TransactionItemRow(
                         details = details,
-                        onClick = { onTransactionClick(details.transaction.id) },
+                        onTransactionClick = { onTransactionClick(details.transaction.id) },
                         onDelete = { onDelete(details.transaction.id) }
-                    )
-                    Divider(
-                        color = CBMoneyColors.Border.BorderLight,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = Spacing.md)
                     )
                 }
             }
@@ -182,91 +173,86 @@ fun TransactionListScreenContent(
 @Composable
 fun TransactionItemRow(
     details: TransactionDetails,
-    onClick: () -> Unit,
+    onTransactionClick: () -> Unit,
     onDelete: () -> Unit
 ) {
     val isExpense = details.transaction.type == "expense"
     val amountColor = if (isExpense) CBMoneyColors.Red else CBMoneyColors.Green
     val prefix = if (isExpense) "- " else "+ "
 
-    val backgroundColor = try {
-        details.iconColor?.let { Color(it.toColorInt()) } ?: CBMoneyColors.Gray.Gray
-    } catch (e: Exception) {
-        CBMoneyColors.Gray.Gray
+    val dateFormatted = remember(details.transaction.date) {
+        Instant.ofEpochMilli(details.transaction.date)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+            .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     }
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(horizontal = Spacing.md, vertical = Spacing.md),
-        verticalAlignment = Alignment.CenterVertically
+            .clickable { onTransactionClick() }
+            .padding(vertical = Spacing.sm, horizontal = Spacing.sm)
+            .background(
+                color = CBMoneyColors.BackGround.BackgroundSecondary,
+                shape = RoundedCornerShape(12.dp)
+            )
+            .padding(Spacing.md),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.md)
     ) {
         // Category icon with background
         Box(
             modifier = Modifier
                 .size(48.dp)
-                .clip(CircleShape)
-                .background(backgroundColor),
+                .clip(RoundedCornerShape(12.dp))
+                .background(
+                    color = try {
+                        details.iconColor?.hexToColor() ?: CBMoneyColors.Primary.Primary
+                    } catch (e: Exception) {
+                        CBMoneyColors.Primary.Primary
+                    }
+                ),
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = details.categoryIcon ?: "?",
-                style = CBMoneyTypography.Body.Large.Bold,
-                color = CBMoneyColors.White
+                text = details.categoryIcon?.take(1) ?: "📦",
+                style = CBMoneyTypography.Body.Large.Bold
             )
         }
 
         // Category name and description
         Column(
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = Spacing.md)
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
                 text = details.categoryName ?: stringResource(R.string.unknown),
-                style = CBMoneyTypography.Body.Large.Medium
+                style = CBMoneyTypography.Body.Medium.Bold,
+                color = CBMoneyColors.Text.TextPrimary
             )
             Text(
                 text = details.transaction.description.ifEmpty { "-" },
                 style = CBMoneyTypography.Body.Small.Regular,
-                color = CBMoneyColors.Text.TextTertiary
+                color = CBMoneyColors.Text.TextTertiary,
+                maxLines = 1
             )
         }
 
-        // Amount
+        // Amount and date (right side)
         Column(
+            modifier = Modifier,
             horizontalAlignment = Alignment.End,
-            modifier = Modifier.padding(end = Spacing.sm)
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
                 text = "$prefix${details.transaction.amount.formatMoney()}",
-                style = CBMoneyTypography.Body.Large.Bold,
+                style = CBMoneyTypography.Body.Medium.Bold,
                 color = amountColor
             )
-            val dateFormatted = remember(details.transaction.date) {
-                Instant.ofEpochMilli(details.transaction.date)
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate()
-                    .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-            }
             Text(
                 text = dateFormatted,
                 style = CBMoneyTypography.Body.Small.Regular,
                 color = CBMoneyColors.Text.TextTertiary
-            )
-        }
-
-        // Delete button
-        IconButton(
-            onClick = onDelete,
-            modifier = Modifier.size(32.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Delete,
-                contentDescription = stringResource(R.string.delete),
-                tint = CBMoneyColors.Red,
-                modifier = Modifier.size(20.dp)
             )
         }
     }
