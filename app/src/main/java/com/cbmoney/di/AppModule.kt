@@ -105,6 +105,7 @@ val useCaseModule = module {
 
     //transaction
     factoryOf(::SaveTransactionUseCase)
+    factoryOf(::GetAllTransactionsUseCase)
     factoryOf(::GetRecentTransactionsUseCase)
     factoryOf(::GetCategorySpendingUseCase)
     factoryOf(::GetTotalSummaryUseCase)
@@ -137,6 +138,7 @@ val viewModelModule = module {
     viewModelOf(::HomeViewModel)
     viewModelOf(::ProfileViewModel)
     viewModelOf(::AddTransactionViewModel)
+    viewModelOf(::TransactionListViewModel)
     viewModelOf(::CategoriesViewModel)
     viewModelOf(::AddCategoryViewModel)
     viewModelOf(::EditCategoryViewModel)
