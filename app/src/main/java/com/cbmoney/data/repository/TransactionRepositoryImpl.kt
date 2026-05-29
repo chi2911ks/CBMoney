@@ -76,6 +76,19 @@ class TransactionRepositoryImpl(
         }
     }
 
+    override fun getAllTransactionDetails(): Flow<List<TransactionDetails>> {
+        return try {
+            transactionLocalDataSource.getAllTransactionDetails(userId).map {
+                it.map { transaction ->
+                    transaction.toDomain()
+                }
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "getAllTransactionDetails: $e")
+            flow { emit(emptyList()) }
+        }
+    }
+
     override fun getRecentTransactions(limit: Int): Flow<List<TransactionDetails>> {
         return try {
             transactionLocalDataSource.getRecentTransactions(userId, limit).map {

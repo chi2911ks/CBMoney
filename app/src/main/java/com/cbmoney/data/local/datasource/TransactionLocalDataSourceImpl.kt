@@ -31,6 +31,10 @@ class TransactionLocalDataSourceImpl(
         return transactionDao.getAllTransactions(userId)
     }
 
+    override fun getAllTransactionDetails(userId: String): Flow<List<TransactionWithCategory>> {
+        return transactionDao.getAllTransactionDetails(userId)
+    }
+
     override fun getRecentTransactions(
         userId: String,
         limit: Int

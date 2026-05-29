@@ -36,6 +36,7 @@ import com.cbmoney.domain.usecase.category.DeleteCategoryUseCase
 import com.cbmoney.domain.usecase.category.GetAllCategoriesUseCase
 import com.cbmoney.domain.usecase.category.InitCategoriesDefaultUseCase
 import com.cbmoney.domain.usecase.category.SaveCategoryUseCase
+import com.cbmoney.domain.usecase.transaction.GetAllTransactionsUseCase
 import com.cbmoney.domain.usecase.transaction.GetCategorySpendingUseCase
 import com.cbmoney.domain.usecase.transaction.GetMonthlySpendingUseCase
 import com.cbmoney.domain.usecase.transaction.GetRecentTransactionsUseCase
@@ -57,6 +58,7 @@ import com.cbmoney.presentation.register.RegisterViewModel
 import com.cbmoney.presentation.reports.ReportViewModel
 import com.cbmoney.presentation.splash.SplashViewModel
 import com.cbmoney.presentation.transaction.viewmodel.AddTransactionViewModel
+import com.cbmoney.presentation.transaction.viewmodel.TransactionListViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.koin.core.module.dsl.factoryOf

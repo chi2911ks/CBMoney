@@ -15,6 +15,7 @@ interface TransactionRepository {
     suspend fun upsertTransaction(transaction: Transaction): Result<Boolean>
     suspend fun deleteTransaction(transaction: Transaction): Result<Boolean>
     fun getAllTransactions(): Flow<List<Transaction>>
+    fun getAllTransactionDetails(): Flow<List<TransactionDetails>>
     fun getRecentTransactions(limit: Int): Flow<List<TransactionDetails>>
     fun getCategorySpending(
         startDate: Long,

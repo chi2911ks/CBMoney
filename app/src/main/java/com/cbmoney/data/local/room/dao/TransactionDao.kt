@@ -34,6 +34,18 @@ interface TransactionDao: BaseDao<TransactionEntity> {
             c.color AS iconColor
         FROM transactions as t
         LEFT JOIN categories as c ON t.categoryId = c.id
+        WHERE t.userId = :userId
+        ORDER BY `date` DESC
+        """)
+    fun getAllTransactionDetails(userId: String): Flow<List<TransactionWithCategory>>
+
+    @Query("""
+        SELECT t.*,
+            c.name AS categoryName,
+            c.icon AS categoryIcon,
+            c.color AS iconColor
+        FROM transactions as t
+        LEFT JOIN categories as c ON t.categoryId = c.id
         WHERE t.userId = :userId 
         ORDER BY `date` DESC 
         LIMIT :limit

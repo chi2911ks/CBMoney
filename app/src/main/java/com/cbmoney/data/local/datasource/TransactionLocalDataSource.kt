@@ -19,6 +19,7 @@ interface TransactionLocalDataSource {
     suspend fun deleteTransaction(transaction: TransactionEntity)
 
     fun getAllTransactions(userId: String): Flow<List<TransactionEntity>>
+    fun getAllTransactionDetails(userId: String): Flow<List<TransactionWithCategory>>
     fun getRecentTransactions(userId: String, limit: Int): Flow<List<TransactionWithCategory>>
 
     fun getCategorySpending(
