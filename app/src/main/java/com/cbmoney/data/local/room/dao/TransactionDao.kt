@@ -34,6 +34,17 @@ interface TransactionDao: BaseDao<TransactionEntity> {
             c.color AS iconColor
         FROM transactions as t
         LEFT JOIN categories as c ON t.categoryId = c.id
+        WHERE t.id = :transactionId
+        """)
+    suspend fun getTransactionById(transactionId: String): TransactionWithCategory?
+
+    @Query("""
+        SELECT t.*,
+            c.name AS categoryName,
+            c.icon AS categoryIcon,
+            c.color AS iconColor
+        FROM transactions as t
+        LEFT JOIN categories as c ON t.categoryId = c.id
         WHERE t.userId = :userId
         ORDER BY `date` DESC
         """)

@@ -35,6 +35,10 @@ class TransactionLocalDataSourceImpl(
         return transactionDao.getAllTransactionDetails(userId)
     }
 
+    override suspend fun getTransactionById(transactionId: String): TransactionWithCategory? {
+        return transactionDao.getTransactionById(transactionId)
+    }
+
     override fun getRecentTransactions(
         userId: String,
         limit: Int

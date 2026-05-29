@@ -89,6 +89,15 @@ class TransactionRepositoryImpl(
         }
     }
 
+    override suspend fun getTransactionById(transactionId: String): TransactionDetails? {
+        return try {
+            transactionLocalDataSource.getTransactionById(transactionId)?.toDomain()
+        } catch (e: Exception) {
+            Log.d(TAG, "getTransactionById: $e")
+            null
+        }
+    }
+
     override fun getRecentTransactions(limit: Int): Flow<List<TransactionDetails>> {
         return try {
             transactionLocalDataSource.getRecentTransactions(userId, limit).map {

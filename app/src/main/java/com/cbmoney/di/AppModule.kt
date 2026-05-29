@@ -40,6 +40,8 @@ import com.cbmoney.domain.usecase.transaction.GetAllTransactionsUseCase
 import com.cbmoney.domain.usecase.transaction.GetCategorySpendingUseCase
 import com.cbmoney.domain.usecase.transaction.GetMonthlySpendingUseCase
 import com.cbmoney.domain.usecase.transaction.GetRecentTransactionsUseCase
+import com.cbmoney.domain.usecase.transaction.GetTransactionByIdUseCase
+import com.cbmoney.domain.usecase.transaction.DeleteTransactionUseCase
 import com.cbmoney.domain.usecase.transaction.GetTotalSummaryUseCase
 import com.cbmoney.domain.usecase.transaction.SaveTransactionUseCase
 import com.cbmoney.domain.usecase.user.GetUserUseCase
@@ -58,6 +60,7 @@ import com.cbmoney.presentation.register.RegisterViewModel
 import com.cbmoney.presentation.reports.ReportViewModel
 import com.cbmoney.presentation.splash.SplashViewModel
 import com.cbmoney.presentation.transaction.viewmodel.AddTransactionViewModel
+import com.cbmoney.presentation.transaction.viewmodel.TransactionDetailsViewModel
 import com.cbmoney.presentation.transaction.viewmodel.TransactionListViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -106,6 +109,8 @@ val useCaseModule = module {
     //transaction
     factoryOf(::SaveTransactionUseCase)
     factoryOf(::GetAllTransactionsUseCase)
+    factoryOf(::GetTransactionByIdUseCase)
+    factoryOf(::DeleteTransactionUseCase)
     factoryOf(::GetRecentTransactionsUseCase)
     factoryOf(::GetCategorySpendingUseCase)
     factoryOf(::GetTotalSummaryUseCase)
@@ -139,6 +144,7 @@ val viewModelModule = module {
     viewModelOf(::ProfileViewModel)
     viewModelOf(::AddTransactionViewModel)
     viewModelOf(::TransactionListViewModel)
+    viewModelOf(::TransactionDetailsViewModel)
     viewModelOf(::CategoriesViewModel)
     viewModelOf(::AddCategoryViewModel)
     viewModelOf(::EditCategoryViewModel)

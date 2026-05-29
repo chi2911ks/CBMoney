@@ -16,6 +16,7 @@ interface TransactionRepository {
     suspend fun deleteTransaction(transaction: Transaction): Result<Boolean>
     fun getAllTransactions(): Flow<List<Transaction>>
     fun getAllTransactionDetails(): Flow<List<TransactionDetails>>
+    suspend fun getTransactionById(transactionId: String): TransactionDetails?
     fun getRecentTransactions(limit: Int): Flow<List<TransactionDetails>>
     fun getCategorySpending(
         startDate: Long,

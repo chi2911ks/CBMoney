@@ -20,6 +20,7 @@ interface TransactionLocalDataSource {
 
     fun getAllTransactions(userId: String): Flow<List<TransactionEntity>>
     fun getAllTransactionDetails(userId: String): Flow<List<TransactionWithCategory>>
+    suspend fun getTransactionById(transactionId: String): TransactionWithCategory?
     fun getRecentTransactions(userId: String, limit: Int): Flow<List<TransactionWithCategory>>
 
     fun getCategorySpending(

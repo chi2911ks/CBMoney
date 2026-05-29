@@ -45,7 +45,8 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun TransactionListScreen(
-    onBack: () -> Unit = {}
+    onBack: () -> Unit = {},
+    onTransactionClick: (String) -> Unit = {}
 ) {
     val viewModel: TransactionListViewModel = koinViewModel()
     val uiState by viewModel.viewState.collectAsStateWithLifecycle()
@@ -57,6 +58,7 @@ fun TransactionListScreen(
     TransactionListScreenContent(
         state = uiState,
         onBack = onBack,
+        onTransactionClick = onTransactionClick,
         onSearch = { query ->
             viewModel.processIntent(TransactionListIntent.SearchQueryChanged(query))
         },
@@ -73,6 +75,7 @@ fun TransactionListScreen(
 fun TransactionListScreenContent(
     state: TransactionListState,
     onBack: () -> Unit,
+    onTransactionClick: (String) -> Unit,
     onSearch: (String) -> Unit,
     onCategorySelected: (Category?) -> Unit,
     onDelete: (String) -> Unit
@@ -94,6 +97,7 @@ fun TransactionListScreenContent(
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .clickable { onBack() }
+                    .padding(Spacing.sm)
             )
             Text(
                 text = stringResource(R.string.transaction_list),
@@ -106,6 +110,7 @@ fun TransactionListScreenContent(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .clickable { /* TODO: implement search */ }
+                    .padding(Spacing.sm)
             )
         }
 
@@ -152,6 +157,7 @@ fun TransactionListScreenContent(
                 items(state.transactions) { details ->
                     TransactionItemRow(
                         details = details,
+                        onClick = { onTransactionClick(details.transaction.id) },
                         onDelete = { onDelete(details.transaction.id) }
                     )
                 }
@@ -163,6 +169,7 @@ fun TransactionListScreenContent(
 @Composable
 fun TransactionItemRow(
     details: TransactionDetails,
+    onClick: () -> Unit,
     onDelete: () -> Unit
 ) {
     val isExpense = details.transaction.type == "expense"
@@ -172,7 +179,7 @@ fun TransactionItemRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { /* TODO: navigate to details */ }
+            .clickable { onClick() }
             .padding(vertical = Spacing.sm),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -206,13 +213,16 @@ fun TransactionItemRow(
             color = CBMoneyColors.Text.TextTertiary,
             modifier = Modifier.weight(1.5f)
         )
-        Text(
-            text = stringResource(R.string.delete),
-            style = CBMoneyTypography.Body.Small.Medium,
-            color = CBMoneyColors.Red,
-            modifier = Modifier
-                .weight(1f)
-                .clickable { onDelete() }
-        )
+        IconButton(
+            onClick = onDelete,
+            modifier = Modifier.weight(1f)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(R.string.delete),
+                tint = CBMoneyColors.Red,
+                modifier = Modifier.size(20.dp)
+            )
+        }
     }
 }
