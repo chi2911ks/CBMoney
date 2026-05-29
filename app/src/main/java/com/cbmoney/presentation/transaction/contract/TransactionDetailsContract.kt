@@ -4,14 +4,14 @@ import com.cbmoney.base.MviContract
 import com.cbmoney.domain.model.TransactionDetails
 
 data class TransactionDetailsState(
-    val transactionDetails: TransactionDetails? = null,
-    val isLoading: Boolean = false
+    val transaction: TransactionDetails? = null,
+    val isLoading: Boolean = false,
+    val error: String? = null
 ) : MviContract.State
 
 sealed interface TransactionDetailsIntent : MviContract.Intent {
-    data object LoadTransaction : TransactionDetailsIntent
+    data class LoadTransaction(val transactionId: String) : TransactionDetailsIntent
     data object DeleteTransaction : TransactionDetailsIntent
-    data object EditTransaction : TransactionDetailsIntent
 }
 
 sealed interface TransactionDetailsEvent : MviContract.Event {

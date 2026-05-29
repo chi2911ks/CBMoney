@@ -41,6 +41,7 @@ import com.cbmoney.domain.usecase.transaction.GetCategorySpendingUseCase
 import com.cbmoney.domain.usecase.transaction.GetMonthlySpendingUseCase
 import com.cbmoney.domain.usecase.transaction.GetRecentTransactionsUseCase
 import com.cbmoney.domain.usecase.transaction.GetTransactionByIdUseCase
+import com.cbmoney.domain.usecase.transaction.GetTransactionByIdUseCase
 import com.cbmoney.domain.usecase.transaction.DeleteTransactionUseCase
 import com.cbmoney.domain.usecase.transaction.GetTotalSummaryUseCase
 import com.cbmoney.domain.usecase.transaction.SaveTransactionUseCase

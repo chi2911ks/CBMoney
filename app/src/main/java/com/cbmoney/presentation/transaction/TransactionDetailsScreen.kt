@@ -54,14 +54,13 @@ fun TransactionDetailsScreen(
     val uiState by viewModel.viewState.collectAsStateWithLifecycle()
 
     LaunchedEffect(transactionId) {
-        viewModel.loadTransactionById(transactionId)
+        viewModel.processIntent(TransactionDetailsIntent.LoadTransaction(transactionId))
     }
 
     TransactionDetailsScreenContent(
         state = uiState,
         onBack = onBack,
-        onDelete = { viewModel.processIntent(TransactionDetailsIntent.DeleteTransaction) },
-        onEdit = { /* TODO: navigate to edit */ }
+        onDelete = { viewModel.processIntent(TransactionDetailsIntent.DeleteTransaction) }
     )
 }
 
@@ -69,13 +68,12 @@ fun TransactionDetailsScreen(
 fun TransactionDetailsScreenContent(
     state: TransactionDetailsState,
     onBack: () -> Unit,
-    onDelete: () -> Unit,
-    onEdit: () -> Unit
+    onDelete: () -> Unit
 ) {
-    val transaction = state.transactionDetails?.transaction
-    val categoryName = state.transactionDetails?.categoryName
-    val categoryIcon = state.transactionDetails?.categoryIcon
-    val iconColor = state.transactionDetails?.iconColor
+    val transaction = state.transaction?.transaction
+    val categoryName = state.transaction?.categoryName
+    val categoryIcon = state.transaction?.categoryIcon
+    val iconColor = state.transaction?.iconColor
 
     Column(
         modifier = Modifier
