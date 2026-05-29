@@ -28,6 +28,7 @@ import com.cbmoney.presentation.settings.LanguageBottomSheet
 import com.cbmoney.presentation.settings.SettingsScreen
 import com.cbmoney.presentation.splash.SplashScreen
 import com.cbmoney.presentation.transaction.AddTransactionScreen
+import com.cbmoney.presentation.transaction.TransactionDetailsScreen
 import com.cbmoney.presentation.transaction.TransactionListScreen
 import com.cbmoney.utils.exts.clearAll
 
@@ -148,7 +149,18 @@ fun NavRoutes() {
                 )
             }
             entry<Destination.TransactionList> {
-                TransactionListScreen()
+                TransactionListScreen(
+                    onBack = { backStack.removeLastOrNull() },
+                    onTransactionClick = { transactionId ->
+                        backStack.add(Destination.TransactionDetails(transactionId))
+                    }
+                )
+            }
+            entry<Destination.TransactionDetails> {
+                TransactionDetailsScreen(
+                    transactionId = it.transactionId,
+                    onBack = { backStack.removeLastOrNull() }
+                )
             }
             entry<Destination.Categories> {
                 CategoriesScreen(

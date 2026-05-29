@@ -31,6 +31,8 @@ sealed interface Destination : NavKey {
 
     @Serializable
     data object TransactionList : Destination
+    @Serializable
+    data class TransactionDetails(val transactionId: String) : Destination
 
     @Serializable
     data object LanguageBottomSheet : Destination
