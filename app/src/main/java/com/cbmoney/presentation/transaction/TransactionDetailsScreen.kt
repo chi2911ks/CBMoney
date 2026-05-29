@@ -4,19 +4,23 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +33,6 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cbmoney.R
-import com.cbmoney.domain.model.CategoryType
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
@@ -50,8 +53,7 @@ fun TransactionDetailsScreen(
     val viewModel: TransactionDetailsViewModel = koinViewModel()
     val uiState by viewModel.viewState.collectAsStateWithLifecycle()
 
-    // Load transaction data
-    androidx.compose.runtime.LaunchedEffect(transactionId) {
+    LaunchedEffect(transactionId) {
         viewModel.loadTransactionById(transactionId)
     }
 
@@ -79,12 +81,14 @@ fun TransactionDetailsScreenContent(
         modifier = Modifier
             .fillMaxSize()
             .background(CBMoneyColors.BackGround.BackgroundPrimary)
-            .statusBarsPadding()
-            .padding(horizontal = Spacing.md)
+            .verticalScroll(rememberScrollState())
     ) {
         // Top bar
         Box(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = Spacing.md)
+                .padding(top = Spacing.md, bottom = Spacing.md)
         ) {
             Icon(
                 imageVector = Icons.Default.ArrowBackIosNew,
@@ -97,7 +101,7 @@ fun TransactionDetailsScreenContent(
 
             Text(
                 text = stringResource(R.string.transaction_details),
-                style = CBMoneyTypography.Body.Large.Bold,
+                style = CBMoneyTypography.Title.Large.Bold,
                 modifier = Modifier.align(Alignment.Center)
             )
 
@@ -128,7 +132,6 @@ fun TransactionDetailsScreenContent(
                 )
             }
         } else {
-            // Category Icon
             val isExpense = transaction.type == "expense"
             val amountColor = if (isExpense) CBMoneyColors.Red else CBMoneyColors.Green
             val prefix = if (isExpense) "- " else "+ "
@@ -139,23 +142,25 @@ fun TransactionDetailsScreenContent(
                 CBMoneyColors.Gray.Gray
             }
 
+            // Main content
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = Spacing.xl),
+                    .padding(horizontal = Spacing.md),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Category icon
                 Box(
                     modifier = Modifier
-                        .size(80.dp)
+                        .size(100.dp)
                         .clip(CircleShape)
                         .background(backgroundColor),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = categoryIcon ?: "?",
-                        fontSize = 32.sp
+                        fontSize = 48.sp,
+                        color = CBMoneyColors.White
                     )
                 }
 
@@ -163,14 +168,14 @@ fun TransactionDetailsScreenContent(
                 Text(
                     text = categoryName ?: stringResource(R.string.unknown),
                     style = CBMoneyTypography.Title.Large.Medium,
-                    modifier = Modifier.padding(top = Spacing.md)
+                    modifier = Modifier.padding(top = Spacing.lg)
                 )
 
                 // Amount
                 Text(
                     text = "$prefix${transaction.amount.formatMoney()}",
                     style = CBMoneyTypography.Headline.Large.Bold.copy(
-                        fontSize = 40.sp
+                        fontSize = 44.sp
                     ),
                     color = amountColor,
                     modifier = Modifier.padding(top = Spacing.md)
@@ -184,18 +189,63 @@ fun TransactionDetailsScreenContent(
 
                 Text(
                     text = dateFormatted,
-                    style = CBMoneyTypography.Body.Medium.Regular,
+                    style = CBMoneyTypography.Body.Large.Regular,
                     color = CBMoneyColors.Text.TextTertiary,
                     modifier = Modifier.padding(top = Spacing.sm)
                 )
 
-                // Description
-                if (transaction.description.isNotEmpty()) {
+                // Divider
+                Divider(
+                    color = CBMoneyColors.Border.BorderLight,
+                    thickness = 1.dp,
+                    modifier = Modifier.padding(vertical = Spacing.lg)
+                )
+
+                // Details section
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    // Description
+                    if (transaction.description.isNotEmpty()) {
+                        Text(
+                            text = stringResource(R.string.note),
+                            style = CBMoneyTypography.Body.Large.Bold,
+                            modifier = Modifier.padding(bottom = Spacing.sm)
+                        )
+                        Text(
+                            text = transaction.description,
+                            style = CBMoneyTypography.Body.Large.Regular,
+                            color = CBMoneyColors.Text.TextSecondary,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = Spacing.lg)
+                        )
+                    }
+
+                    // Category info
                     Text(
-                        text = transaction.description,
+                        text = stringResource(R.string.categories),
+                        style = CBMoneyTypography.Body.Large.Bold,
+                        modifier = Modifier.padding(bottom = Spacing.sm)
+                    )
+                    Text(
+                        text = categoryName ?: stringResource(R.string.unknown),
                         style = CBMoneyTypography.Body.Large.Regular,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(top = Spacing.lg)
+                        color = CBMoneyColors.Text.TextSecondary,
+                        modifier = Modifier.padding(bottom = Spacing.lg)
+                    )
+
+                    // Transaction type
+                    Text(
+                        text = stringResource(R.string.transaction),
+                        style = CBMoneyTypography.Body.Large.Bold,
+                        modifier = Modifier.padding(bottom = Spacing.sm)
+                    )
+                    Text(
+                        text = if (isExpense) stringResource(R.string.expense) else stringResource(R.string.income),
+                        style = CBMoneyTypography.Body.Large.Regular,
+                        color = amountColor,
+                        modifier = Modifier.padding(bottom = Spacing.lg)
                     )
                 }
             }
