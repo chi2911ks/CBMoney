@@ -1,7 +1,5 @@
-package com.cbmoney.presentation.home.components
+package com.cbmoney.presentation.transaction.components
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,13 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
-import com.cbmoney.R
 import com.cbmoney.domain.model.CategoryType
-import com.cbmoney.domain.model.TransactionDetails
+import com.cbmoney.domain.model.Transaction
 import com.cbmoney.presentation.common.CategoryIconResolver
 import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
@@ -33,57 +30,59 @@ import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.utils.DateUtils
 import com.cbmoney.utils.exts.formatMoney
-import com.cbmoney.utils.exts.toHex
+import com.cbmoney.utils.exts.shadowCustom
 import com.cbmoney.utils.fromPeriod
 
-
 @Composable
-fun RecentTransactionItem(
-    modifier: Modifier = Modifier,
-    transactionDetails: TransactionDetails,
+fun TransactionItem(
+    transaction: Transaction,
+    categoryName: String?,
+    categoryIcon: String?,
+    iconColor: String?,
+    date: Long
 ) {
-    val colorCategory = Color( transactionDetails.iconColor?.toColorInt() ?: Color.Gray.toHex().toColorInt())
+    if (categoryIcon.isNullOrBlank() || categoryName.isNullOrBlank() || iconColor.isNullOrBlank()) return
+    val color = Color(iconColor.toColorInt())
     Row(
-        modifier = modifier
-            .background(Color.White, CBMoneyShapes.extraLarge)
-            .padding(Spacing.sm),
-        verticalAlignment = Alignment.CenterVertically,
-
+        modifier = Modifier
+            .background(shape = CBMoneyShapes.large, color = CBMoneyColors.White)
+            .padding(Spacing.sm)
+            .shadowCustom(4.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
-                .size(35.dp)
+                .size(48.dp)
                 .clip(CircleShape)
-                .background(colorCategory.copy(0.2f)),
+                .background(color.copy(0.2f)),
             contentAlignment = Alignment.Center
+
         ) {
             Icon(
-                imageVector = CategoryIconResolver.iconOf(transactionDetails.categoryIcon?:""),
+                modifier = Modifier.size(24.dp),
+                imageVector = CategoryIconResolver.iconOf(categoryIcon),
                 contentDescription = null,
-                tint = colorCategory,
-                modifier = Modifier
-                    .size(20.dp)
+                tint = color
             )
         }
-        Spacer(modifier = Modifier.width(Spacing.sm))
+        Spacer(Modifier.width(Spacing.sm))
         Column(
-            verticalArrangement = Arrangement.Center
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = transactionDetails.categoryName?: stringResource(R.string.str_unknown),
-                color = Color.Black,
-                style = CBMoneyTypography.Body.Medium.Bold
+                text = transaction.description.ifEmpty { categoryName },
+                style = CBMoneyTypography.Body.Medium.Medium
             )
             Text(
-                text = DateUtils.formatTransactionDate(transactionDetails.transaction.date),
-                color = Color.Gray,
-                style = CBMoneyTypography.Body.Small.Regular
-            )
+                text = "${DateUtils.formatDateToHour(date)} • $categoryName",
+                style  = CBMoneyTypography.Body.Small.Regular,
+                color = CBMoneyColors.Gray.Gray5)
         }
-        val lol = transactionDetails.transaction.type == fromPeriod(CategoryType.EXPENSE)
+        val lol = transaction.type == fromPeriod(CategoryType.EXPENSE)
         val prefix =  if (lol) "-" else "+"
         Text(
-            text = "$prefix${transactionDetails.transaction.amount.formatMoney()} đ",
+            text = "$prefix${transaction.amount.formatMoney()} đ",
             color = if (lol) CBMoneyColors.Red2 else CBMoneyColors.Green2,
             style = CBMoneyTypography.Body.Medium.Bold.copy(
                 textAlign = TextAlign.End
@@ -93,4 +92,10 @@ fun RecentTransactionItem(
                 .padding(end = Spacing.sm)
         )
     }
+}
+
+@Preview
+@Composable
+private fun TransactionItemPrev() {
+
 }

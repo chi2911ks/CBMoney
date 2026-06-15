@@ -89,12 +89,12 @@ fun CategorySpentItem(
             ) {
                 Column {
                     Text(
-                        text = categorySpending.categoryName?:stringResource(R.string.unknown),
+                        text = categorySpending.categoryName?:stringResource(R.string.str_unknown),
                         color = Color.Black,
                         style = CBMoneyTypography.Body.Medium.Bold
                     )
                     Text(
-                        text = "${categorySpending.countTransaction} ${stringResource(R.string.transactions)}".lowercase(),
+                        text = "${categorySpending.countTransaction} ${stringResource(R.string.str_transactions)}".lowercase(),
                         color = Color.Gray,
                         style = CBMoneyTypography.Body.Small.Regular
                     )

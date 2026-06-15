@@ -64,7 +64,7 @@ fun BudgetScreen(
 
 
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun BudgetScreenContent(
     uiState: BudgetState,
@@ -88,7 +88,7 @@ fun BudgetScreenContent(
                     .statusBarsPadding()
             ) {
                 Text(
-                    text = stringResource(R.string.budget_management),
+                    text = stringResource(R.string.str_budget_management),
                     style = CBMoneyTypography.Body.Large.Bold,
                     modifier = Modifier.align(Alignment.Center)
                 )
@@ -110,7 +110,7 @@ fun BudgetScreenContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = stringResource(R.string.expense_statistics),
+                    text = stringResource(R.string.str_expense_statistics),
                     style = CBMoneyTypography.Title.Large.Bold
                 )
                 Spacer(modifier = Modifier.height(Spacing.md))
@@ -118,7 +118,7 @@ fun BudgetScreenContent(
                 CircularProgressBar(
                     size = 140.dp,
                     progress = uiState.totalBudget?.percentage ?: 0f,
-                    description = stringResource(R.string.spent),
+                    description = stringResource(R.string.str_spent),
                     indicatorColor = if (uiState.totalBudget?.isOverBudget == true) CBMoneyColors.Red2 else CBMoneyColors.Primary.Primary,
                     backgroundIndicatorColor = if (uiState.totalBudget?.isOverBudget == true) CBMoneyColors.Red2.copy(0.25f) else CBMoneyColors.Primary.Primary.copy(0.25f)
                 )
@@ -135,7 +135,7 @@ fun BudgetScreenContent(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text(
-                            text = stringResource(R.string.budget),
+                            text = stringResource(R.string.str_budget),
                             style = CBMoneyTypography.Body.Medium.Regular
                         )
                         Text(
@@ -147,7 +147,7 @@ fun BudgetScreenContent(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text(
-                            text = stringResource(R.string.spent),
+                            text = stringResource(R.string.str_spent),
                             style = CBMoneyTypography.Body.Medium.Regular
                         )
                         Text(
@@ -159,7 +159,7 @@ fun BudgetScreenContent(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text(
-                            text = stringResource(R.string.remaining),
+                            text = stringResource(R.string.str_remaining),
                             style = CBMoneyTypography.Body.Medium.Regular
                         )
                         Text(
@@ -178,7 +178,7 @@ fun BudgetScreenContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(R.string.budget_by_category),
+                    text = stringResource(R.string.str_budget_by_category),
                     style = CBMoneyTypography.Body.Large.Bold,
                 )
 

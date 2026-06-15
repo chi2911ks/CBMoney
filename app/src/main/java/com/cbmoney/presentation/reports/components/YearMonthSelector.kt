@@ -20,7 +20,7 @@ import com.cbmoney.R
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import java.time.YearMonth
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun YearMonthSelector(
     modifier: Modifier = Modifier,
@@ -41,7 +41,7 @@ fun YearMonthSelector(
         }
 
         Text(
-            text = "${stringResource(R.string.month)} ${yearMonth.monthValue}, ${yearMonth.year}",
+            text = "${stringResource(R.string.str_month)} ${yearMonth.monthValue}, ${yearMonth.year}",
             modifier = Modifier.clickable { },
             style = CBMoneyTypography.Body.Medium.Bold
         )

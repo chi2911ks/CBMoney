@@ -68,7 +68,7 @@ fun CarMoney(onClick: () -> Unit,  modifier: Modifier = Modifier, money: Long = 
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    text = stringResource(R.string.total_balance),
+                    text = stringResource(R.string.str_total_balance),
                     color = Color.White,
                     lineHeight = 20.sp,
                     fontSize = 14.sp,
@@ -86,7 +86,7 @@ fun CarMoney(onClick: () -> Unit,  modifier: Modifier = Modifier, money: Long = 
             )
             Row (verticalAlignment = Alignment.CenterVertically){
                 Text(
-                    text = stringResource(R.string.cash_and_bank),
+                    text = stringResource(R.string.str_cash_and_bank),
                     color = Color(0xFF9CA3AF),
                     fontSize = 12.sp,
                     style = MaterialTheme.typography.labelLarge,

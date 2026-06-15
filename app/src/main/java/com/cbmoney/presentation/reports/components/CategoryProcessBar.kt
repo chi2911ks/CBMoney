@@ -67,8 +67,8 @@ fun CategoryProcessBar(
         ){
             Text(
                 text = if (categoryType == CategoryType.EXPENSE)
-                    stringResource(R.string.total_expense) else
-                    stringResource(R.string.total_income),
+                    stringResource(R.string.str_total_expense) else
+                    stringResource(R.string.str_total_income),
                 color = Color.Gray,
                 style = CBMoneyTypography.Body.Small.Bold
             )
@@ -119,7 +119,7 @@ fun CategoryProcessBarEmpty(
             )
         }
         Text(
-            text = stringResource(R.string.no_transactions),
+            text = stringResource(R.string.str_no_transactions),
             color = Color.Gray,
             style = CBMoneyTypography.Body.Small.Bold,
             modifier = Modifier.align(Alignment.Center)

@@ -35,7 +35,7 @@ fun CategoryTabSelector(
             .background(CBMoneyColors.White)
     ){
         TabItem(
-            text = stringResource(R.string.expense),
+            text = stringResource(R.string.str_expense),
             selected = selected == CategoryType.EXPENSE,
             onSelectedChange = {
                 onSelectedChange(CategoryType.EXPENSE)
@@ -44,7 +44,7 @@ fun CategoryTabSelector(
             isLeft = true
         )
         TabItem(
-            text = stringResource(R.string.income),
+            text = stringResource(R.string.str_income),
             selected = selected == CategoryType.INCOME,
             onSelectedChange = {
                 onSelectedChange(CategoryType.INCOME)

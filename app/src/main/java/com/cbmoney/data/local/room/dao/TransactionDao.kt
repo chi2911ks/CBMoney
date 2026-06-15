@@ -93,4 +93,22 @@ interface TransactionDao: BaseDao<TransactionEntity> {
         startDate: Long,
         endDate: Long
     ): Flow<List<TotalExpenseAndIncome>>
+    @Query("""
+        SELECT t.*,
+            c.name AS categoryName,
+            c.icon AS categoryIcon,
+            c.color AS iconColor,
+            strftime('%Y', date/1000, 'unixepoch') AS year,
+            strftime('%m', date/1000, 'unixepoch') AS month
+        FROM transactions as t
+        LEFT JOIN categories as c ON t.categoryId = c.id
+        WHERE t.userId = :userId AND
+        date >= :startDate AND date < :endDate
+        ORDER BY date DESC
+        """)
+    fun getTransactionsYear(
+        userId: String,
+        startDate: Long,
+        endDate: Long
+    ): Flow<List<TransactionWithCategory>>
 }

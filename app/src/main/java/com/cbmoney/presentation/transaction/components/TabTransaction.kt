@@ -41,7 +41,7 @@ fun TabTransaction(
             onSelected = {
                 onTabSelected(CategoryType.EXPENSE)
             },
-            label = stringResource(R.string.expense),
+            label = stringResource(R.string.str_expense),
             type = CategoryType.EXPENSE,
             modifier = Modifier.weight(1f)
         )
@@ -50,7 +50,7 @@ fun TabTransaction(
             onSelected = {
                 onTabSelected(CategoryType.INCOME)
             },
-            label = stringResource(R.string.income),
+            label = stringResource(R.string.str_income),
             type = CategoryType.INCOME,
             modifier = Modifier.weight(1f)
         )

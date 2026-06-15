@@ -121,7 +121,7 @@ fun EditCategoryScreenContent(
                         }
                 )
                 Text(
-                    text = stringResource(R.string.edit_category),
+                    text = stringResource(R.string.str_edit_category),
                     style = CBMoneyTypography.Body.Large.Bold,
                     modifier = Modifier.align(Alignment.Center)
 
@@ -156,7 +156,7 @@ fun EditCategoryScreenContent(
                 )
                 if (!uiState.category.isDefault){
                     Text(
-                        stringResource(R.string.name_category),
+                        stringResource(R.string.str_name_category),
                         style = CBMoneyTypography.Body.Large.Bold
                     )
                     Spacer(modifier = Modifier.height(Spacing.sm))
@@ -189,7 +189,7 @@ fun EditCategoryScreenContent(
                         modifier = Modifier.fillMaxWidth(),
                         placeholder = {
                             Text(
-                                stringResource(R.string.example_category),
+                                stringResource(R.string.str_example_category),
                                 style = CBMoneyTypography.Body.Medium.Regular
                             )
                         },
@@ -220,7 +220,7 @@ fun EditCategoryScreenContent(
                     .padding(Spacing.md)
             ){
                 ButtonPrimary(
-                    text = stringResource(R.string.save),
+                    text = stringResource(R.string.str_save),
                     modifier = Modifier
                         .fillMaxWidth()
                     ,

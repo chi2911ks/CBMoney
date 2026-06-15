@@ -62,8 +62,8 @@ fun BalanceSummary(
             }
             Spacer(Modifier.width(Spacing.sm))
             Text(
-                text = (if (isIncome) stringResource(R.string.total_income)
-                else stringResource(R.string.total_expense)).uppercase(),
+                text = (if (isIncome) stringResource(R.string.str_total_income)
+                else stringResource(R.string.str_total_expense)).uppercase(),
                 style = CBMoneyTypography.Body.Small.Bold,
                 color = Color.Black
             )

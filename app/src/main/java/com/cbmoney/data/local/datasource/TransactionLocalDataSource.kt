@@ -38,4 +38,10 @@ interface TransactionLocalDataSource {
         startDate: Long,
         endDate: Long
     ): Flow<List<TotalExpenseAndIncome>>
+
+    fun getTransactionsYear(
+        userId: String,
+        startDate: Long,
+        endDate: Long
+    ): Flow<List<TransactionWithCategory>>
 }

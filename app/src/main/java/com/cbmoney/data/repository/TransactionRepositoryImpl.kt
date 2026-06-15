@@ -138,4 +138,20 @@ class TransactionRepositoryImpl(
             flow { emit(emptyList()) }
         }
     }
+
+    override fun getTransactionsYear(
+        startDate: Long,
+        endDate: Long
+    ): Flow<List<TransactionDetails>> {
+        return try {
+            transactionLocalDataSource.getTransactionsYear(userId, startDate, endDate).map {
+                it.map { trans->
+                    trans.toDomain()
+                }
+            }
+        }catch (e: Exception){
+            Log.d(TAG, "getTransactionsYear: $e")
+            flow { emit(emptyList()) }
+        }
+    }
 }

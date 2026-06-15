@@ -1,8 +1,6 @@
 package com.cbmoney.di
 
 import android.content.Context
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
@@ -24,6 +22,7 @@ import com.cbmoney.data.remote.datasource.UserRemoteDataSource
 import com.cbmoney.data.remote.datasource.UserRemoteDataSourceImpl
 import com.cbmoney.data.repository.BudgetRepositoryImpl
 import com.cbmoney.data.repository.CategoryRepositoryImpl
+import com.cbmoney.data.repository.TransactionRepositoryImpl
 import com.cbmoney.data.repository.UserRepositoryImpl
 import com.cbmoney.domain.repository.BudgetRepository
 import com.cbmoney.domain.repository.CategoryRepository
@@ -40,6 +39,7 @@ import com.cbmoney.domain.usecase.transaction.GetCategorySpendingUseCase
 import com.cbmoney.domain.usecase.transaction.GetMonthlySpendingUseCase
 import com.cbmoney.domain.usecase.transaction.GetRecentTransactionsUseCase
 import com.cbmoney.domain.usecase.transaction.GetTotalSummaryUseCase
+import com.cbmoney.domain.usecase.transaction.GetTransactionListUseCase
 import com.cbmoney.domain.usecase.transaction.SaveTransactionUseCase
 import com.cbmoney.domain.usecase.user.GetUserUseCase
 import com.cbmoney.domain.usecase.user.SaveUserToUseCase
@@ -49,6 +49,7 @@ import com.cbmoney.presentation.buget.viewmodel.BudgetViewModel
 import com.cbmoney.presentation.category.viewmodel.AddCategoryViewModel
 import com.cbmoney.presentation.category.viewmodel.CategoriesViewModel
 import com.cbmoney.presentation.category.viewmodel.EditCategoryViewModel
+import com.cbmoney.presentation.forgotpassword.viewmodel.ForgotPasswordViewModel
 import com.cbmoney.presentation.home.HomeViewModel
 import com.cbmoney.presentation.login.LoginViewModel
 import com.cbmoney.presentation.main.MainViewModel
@@ -57,6 +58,7 @@ import com.cbmoney.presentation.register.RegisterViewModel
 import com.cbmoney.presentation.reports.ReportViewModel
 import com.cbmoney.presentation.splash.SplashViewModel
 import com.cbmoney.presentation.transaction.viewmodel.AddTransactionViewModel
+import com.cbmoney.presentation.transaction.viewmodel.TransactionListViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.koin.core.module.dsl.factoryOf
@@ -107,6 +109,7 @@ val useCaseModule = module {
     factoryOf(::GetCategorySpendingUseCase)
     factoryOf(::GetTotalSummaryUseCase)
     factoryOf(::GetMonthlySpendingUseCase)
+    factoryOf(::GetTransactionListUseCase)
 
 
 }
@@ -124,23 +127,26 @@ val repositoryModule = module {
     single<UserRepository> { UserRepositoryImpl(get()) }
     single<CategoryRepository> { CategoryRepositoryImpl(get(), get(), get()) }
     single<BudgetRepository> { BudgetRepositoryImpl(get(), get(), get()) }
-    single<TransactionRepository> { com.cbmoney.data.repository.TransactionRepositoryImpl(get(), get()) }
+    single<TransactionRepository> { TransactionRepositoryImpl(get(), get()) }
 }
-@RequiresApi(Build.VERSION_CODES.O)
+
 val viewModelModule = module {
     viewModelOf(::SplashViewModel)
     viewModelOf(::LoginViewModel)
     viewModelOf(::RegisterViewModel)
+    viewModelOf(::ForgotPasswordViewModel)
     viewModelOf(::MainViewModel)
     viewModelOf(::HomeViewModel)
     viewModelOf(::ProfileViewModel)
     viewModelOf(::AddTransactionViewModel)
+    viewModelOf(::TransactionListViewModel)
     viewModelOf(::CategoriesViewModel)
     viewModelOf(::AddCategoryViewModel)
     viewModelOf(::EditCategoryViewModel)
     viewModelOf(::BudgetSettingsViewModel)
     viewModelOf(::BudgetViewModel)
     viewModelOf(::ReportViewModel)
+
 
 }
 val roomModule = module {

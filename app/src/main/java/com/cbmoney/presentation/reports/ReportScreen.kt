@@ -80,7 +80,7 @@ fun ReportScreen(
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun ReportScreenContent(
     uiState: ReportState,
@@ -103,7 +103,7 @@ fun ReportScreenContent(
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
-                text = stringResource(R.string.reports),
+                text = stringResource(R.string.str_reports),
                 style = CBMoneyTypography.Body.Large.Bold,
                 modifier = Modifier.align(Alignment.Center)
             )
@@ -265,7 +265,7 @@ fun DetailReport(
 ) {
     val sumSpent = listData.sumOf { it.totalSpending }
     Text(
-        text = stringResource(R.string.detailed_report).uppercase(),
+        text = stringResource(R.string.str_detailed_report).uppercase(),
         color = Color.Gray,
         style = CBMoneyTypography.Body.Small.Bold,
     )
@@ -311,14 +311,14 @@ fun DetailReport(
                 }
                 Spacer(modifier = Modifier.height(Spacing.md))
                 Text(
-                    text = stringResource(R.string.add_transaction_to_view_report),
+                    text = stringResource(R.string.str_add_transaction_to_view_report),
                     color = Color(0xff828993),
                     style = CBMoneyTypography.Body.Small.Bold,
                 )
                 Spacer(modifier = Modifier.height(Spacing.md))
                 ButtonPrimary(
                     onClick = onNavigateToTransaction,
-                    text = stringResource(R.string.add_transaction),
+                    text = stringResource(R.string.str_add_transaction),
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Add,

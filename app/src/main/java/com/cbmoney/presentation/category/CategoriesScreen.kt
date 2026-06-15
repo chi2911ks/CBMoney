@@ -99,7 +99,7 @@ fun CategoriesContent(
                         }
                 )
                 Text(
-                    text = stringResource(R.string.category_management),
+                    text = stringResource(R.string.str_category_management),
                     style = CBMoneyTypography.Body.Large.Bold,
                     modifier = Modifier.align(Alignment.Center)
                 )
@@ -113,7 +113,7 @@ fun CategoriesContent(
             )
             Spacer(modifier = Modifier.height(Spacing.sm))
             Text(
-                text = stringResource(R.string.category_list).uppercase(),
+                text = stringResource(R.string.str_category_list).uppercase(),
                 color = NeutralGray,
                 style = CBMoneyTypography.Title.Small.Medium
             )
@@ -139,7 +139,7 @@ fun CategoriesContent(
             }
         }
         ButtonPrimary(
-            text = stringResource(R.string.add_category),
+            text = stringResource(R.string.str_add_category),
             onClick = {
                 navigateToAddCategory(currentTab)
             },

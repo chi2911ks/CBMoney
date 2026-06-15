@@ -10,7 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.cbmoney.presentation.app.AppRoot
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 class MainActivity : ComponentActivity() {
 
 

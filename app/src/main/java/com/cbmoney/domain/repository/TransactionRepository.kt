@@ -29,5 +29,8 @@ interface TransactionRepository {
         startDate: Long,
         endDate: Long
     ): Flow<List<FinancialSummary>>
-
+    fun getTransactionsYear(
+        startDate: Long,
+        endDate: Long
+    ): Flow<List<TransactionDetails>>
 }
