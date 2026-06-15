@@ -53,7 +53,7 @@ import com.cbmoney.utils.exts.rawClickable
 import com.cbmoney.utils.exts.shadowCustom
 import org.koin.androidx.compose.koinViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun BudgetSettingsScreen(
     onBackNavigation: () -> Unit,
@@ -112,12 +112,12 @@ fun BudgetSettingsContent(
                     }
             )
             Text(
-                text = stringResource(R.string.budget_settings),
+                text = stringResource(R.string.str_budget_settings),
                 style = CBMoneyTypography.Body.Large.Bold,
                 modifier = Modifier.align(Alignment.Center)
             )
             Text(
-                text = stringResource(R.string.save),
+                text = stringResource(R.string.str_save),
                 color = CBMoneyColors.Primary.Primary,
                 style = CBMoneyTypography.Body.Large.Bold,
                 modifier = Modifier
@@ -146,7 +146,7 @@ fun BudgetSettingsContent(
                 .padding(Spacing.md),
         ) {
             Text(
-                text = stringResource(R.string.total_budget).uppercase(),
+                text = stringResource(R.string.str_total_budget).uppercase(),
                 style = CBMoneyTypography.Body.Large.Bold,
             )
             Spacer(modifier = Modifier.height(Spacing.sm))
@@ -174,7 +174,7 @@ fun BudgetSettingsContent(
                     decorationBox = { innerTextField ->
                         if (uiState.totalBudget?.amount == 0L) {
                             Text(
-                                text = stringResource(R.string.not_set),
+                                text = stringResource(R.string.str_not_set),
                                 style = CBMoneyTypography.Title.Large.Regular.copy(
                                     color = CBMoneyColors.Neutral.NeutralGray,
                                     fontStyle = FontStyle.Italic
@@ -201,7 +201,7 @@ fun BudgetSettingsContent(
             )
             Spacer(modifier = Modifier.height(Spacing.md))
             Text(
-                text = stringResource(R.string.allocation_details),
+                text = stringResource(R.string.str_allocation_details),
                 style = CBMoneyTypography.Body.Medium.Bold,
             )
             Spacer(modifier = Modifier.height(Spacing.sm))
@@ -209,7 +209,7 @@ fun BudgetSettingsContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "${stringResource(R.string.total_budget_category)}: ",
+                    text = "${stringResource(R.string.str_total_budget_category)}: ",
                     style = CBMoneyTypography.Body.Small.Regular,
                 )
                 val totalBudget = uiState.budgetsCategory.values.sumOf { it.budget.amount }
@@ -245,7 +245,7 @@ fun ExpenditureCategory(
             .fillMaxWidth()
     ) {
         Text(
-            text = stringResource(R.string.budget_by_category),
+            text = stringResource(R.string.str_budget_by_category),
             modifier = Modifier.padding(horizontal = Spacing.sm),
             style = CBMoneyTypography.Body.Large.Bold
         )
@@ -279,7 +279,7 @@ fun ExpenditureCategory(
             item {
                 Spacer(modifier = Modifier.height(Spacing.md))
                 ButtonPrimary(
-                    text = stringResource(R.string.add_category),
+                    text = stringResource(R.string.str_add_category),
                     onClick = {
                         navigateToAddCategory()
                     },
@@ -303,7 +303,7 @@ fun ExpenditureCategory(
 
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Preview
 @Composable
 private fun BudgetSettingsBottomSheetPreview() {

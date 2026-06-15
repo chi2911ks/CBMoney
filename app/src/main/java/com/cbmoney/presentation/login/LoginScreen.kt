@@ -135,12 +135,12 @@ fun LoginScreenContent(
                     .align(Alignment.CenterHorizontally)
             )
             Text(
-                text = stringResource(R.string.login_h1),
+                text = stringResource(R.string.str_login_h1),
                 style = CBMoneyTypography.Headline.Large.ExtraBold,
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                text = stringResource(R.string.login_h3),
+                text = stringResource(R.string.str_login_h3),
                 color = CBMoneyColors.Neutral.NeutralGray,
                 style = CBMoneyTypography.Body.Large.Regular,
             )
@@ -191,7 +191,7 @@ fun AuthForm(
     Column(modifier = modifier.fillMaxWidth()) {
         OutlinedText(
             value = email,
-            label = stringResource(R.string.email),
+            label = stringResource(R.string.str_email),
             onValueChange = { email = it },
             placeholderText = "name@example.com",
             leadingIcon = {
@@ -202,7 +202,7 @@ fun AuthForm(
         Spacer(Modifier.height(16.dp))
         OutlinedText(
             value = password,
-            label = stringResource(R.string.password),
+            label = stringResource(R.string.str_password),
             onValueChange = { password = it },
             placeholderText = "******",
             leadingIcon = {
@@ -221,7 +221,7 @@ fun AuthForm(
         Spacer(Modifier.height(16.dp))
         Text(
             modifier = Modifier.align(Alignment.End),
-            text = stringResource(R.string.forgot_password),
+            text = stringResource(R.string.str_forgot_password),
             color = CBMoneyColors.Blue,
             style = CBMoneyTypography.Title.Small.Bold
         )
@@ -238,7 +238,7 @@ fun AuthForm(
 
                 )
             },
-            text = stringResource(R.string.login),
+            text = stringResource(R.string.str_login),
             colors = ButtonDefaults.buttonColors(
                 containerColor = CBMoneyColors.Primary.Primary,
                 contentColor = CBMoneyColors.Text.TextPrimary,
@@ -251,7 +251,7 @@ fun AuthForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            text = stringResource(R.string.register_new_account),
+            text = stringResource(R.string.str_register_new_account),
             colors = ButtonDefaults.outlinedButtonColors(
                 containerColor = CBMoneyColors.White,
                 contentColor = CBMoneyColors.Text.TextPrimary,
@@ -271,7 +271,7 @@ fun AuthProviders(
     onLoginWithApple: () -> Unit
 ) {
     Column(modifier = modifier) {
-        DividerWithText(stringResource(R.string.continue_with))
+        DividerWithText(stringResource(R.string.str_continue_with))
         Spacer(Modifier.height(16.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),

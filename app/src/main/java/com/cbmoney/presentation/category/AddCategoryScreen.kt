@@ -115,7 +115,7 @@ fun AddCategoryScreenContent(
                         }
                 )
                 Text(
-                    text = stringResource(R.string.add_category),
+                    text = stringResource(R.string.str_add_category),
                     style = CBMoneyTypography.Body.Large.Bold,
                     modifier = Modifier.align(Alignment.Center)
 
@@ -154,7 +154,7 @@ fun AddCategoryScreenContent(
 
                 ){
                     RadioButtonText(
-                        text = stringResource(R.string.expense),
+                        text = stringResource(R.string.str_expense),
                         selected = uiState.type == CategoryType.EXPENSE,
                         onOptionSelected = {
                             processIntent(AddCategoryIntent.OnTypeChanged(CategoryType.EXPENSE))
@@ -162,7 +162,7 @@ fun AddCategoryScreenContent(
                     )
                     Spacer(modifier = Modifier.width(Spacing.sm))
                     RadioButtonText(
-                        text = stringResource(R.string.income),
+                        text = stringResource(R.string.str_income),
                         selected = uiState.type == CategoryType.INCOME,
                         onOptionSelected = {
                             processIntent(AddCategoryIntent.OnTypeChanged(CategoryType.INCOME))
@@ -172,7 +172,7 @@ fun AddCategoryScreenContent(
 
                 }
                 Text(
-                    stringResource(R.string.name_category),
+                    stringResource(R.string.str_name_category),
                     style = CBMoneyTypography.Body.Large.Bold
                 )
                 Spacer(modifier = Modifier.height(Spacing.sm))
@@ -204,7 +204,7 @@ fun AddCategoryScreenContent(
                     modifier = Modifier.fillMaxWidth(),
                     placeholder = {
                         Text(
-                            stringResource(R.string.example_category),
+                            stringResource(R.string.str_example_category),
                             style = CBMoneyTypography.Body.Medium.Regular
                         )
                     },
@@ -233,7 +233,7 @@ fun AddCategoryScreenContent(
                     .padding(Spacing.md)
             ){
                 ButtonPrimary(
-                    text = stringResource(R.string.save),
+                    text = stringResource(R.string.str_save),
                     modifier = Modifier
                         .fillMaxWidth()
                     ,

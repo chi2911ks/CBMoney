@@ -134,7 +134,7 @@ fun CategoryCard(
                 )
                 if (!isDefault){
                     Text(
-                        text = stringResource(R.string.customize),
+                        text = stringResource(R.string.str_customize),
                         color = CBMoneyColors.Neutral.NeutralGray,
                         style = CBMoneyTypography.Body.Small.Regular
                     )

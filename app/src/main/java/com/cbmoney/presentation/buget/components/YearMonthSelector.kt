@@ -24,7 +24,7 @@ import com.cbmoney.utils.DateUtils
 import com.cbmoney.utils.exts.shadowCustom
 import java.time.YearMonth
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun YearMonthSelector(
     modifier: Modifier = Modifier,

@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 class BudgetViewModel(
     private val getBudgetsCategoryUseCase: GetBudgetsCategoryUseCase
 ) : BaseMviViewModel<BudgetState, BudgetEvent, BudgetIntent>() {

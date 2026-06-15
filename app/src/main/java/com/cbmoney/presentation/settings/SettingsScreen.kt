@@ -73,7 +73,7 @@ fun SettingScreenContent(
                     }
             )
             Text(
-                text = stringResource(R.string.app_setting),
+                text = stringResource(R.string.str_app_setting),
                 modifier = Modifier
                     .align(Alignment.Center),
                 style = CBMoneyTypography.Body.Large.Medium,
@@ -93,7 +93,7 @@ private fun FinanceContent(
     onShowCurrencyBottomSheet: () -> Unit
 ) {
     Text(
-        text = stringResource(R.string.finance).uppercase(),
+        text = stringResource(R.string.str_finance).uppercase(),
         color = NeutralGray,
         style = CBMoneyTypography.Title.Small.Medium,
         modifier = Modifier.padding(8.dp)
@@ -104,7 +104,7 @@ private fun FinanceContent(
             .background(Color.White)
     ) {
         SettingItem(
-            title = stringResource(R.string.finance),
+            title = stringResource(R.string.str_finance),
             subtitle = "VND",
             leadingIcon = Icons.Default.AttachMoney,
             trailingIcon = Icons.Default.ChevronRight
@@ -121,12 +121,12 @@ fun CustomizeContent(
     val context = LocalContext.current
     val languageText = stringResource(
         if (context.getLanguageCode() == "vi")
-            R.string.vietnamese
+            R.string.str_vietnamese
         else
-            R.string.english
+            R.string.str_english
     )
     Text(
-        text = stringResource(R.string.customize).uppercase(),
+        text = stringResource(R.string.str_customize).uppercase(),
         color = NeutralGray,
         style = CBMoneyTypography.Title.Small.Medium,
         modifier = Modifier.padding(8.dp)
@@ -137,7 +137,7 @@ fun CustomizeContent(
             .background(Color.White)
     ) {
         SettingItem(
-            title = stringResource(R.string.language),
+            title = stringResource(R.string.str_language),
             subtitle = languageText,
             leadingIcon = Icons.Default.Language,
             trailingIcon = Icons.Default.ChevronRight
@@ -146,7 +146,7 @@ fun CustomizeContent(
         }
         var isDarkTheme by remember { mutableStateOf(false) }
         SettingToggleItem(
-            stringResource(R.string.dark_mode),
+            stringResource(R.string.str_dark_mode),
             checked = isDarkTheme,
             onCheckedChange = {
                 isDarkTheme = it
@@ -162,7 +162,7 @@ fun NotificationContent(
 ) {
     var isNotification by remember { mutableStateOf(false) }
     Text(
-        text = stringResource(R.string.notification).uppercase(),
+        text = stringResource(R.string.str_notification).uppercase(),
         color = NeutralGray,
         style = CBMoneyTypography.Title.Small.Medium,
         modifier = Modifier.padding(8.dp)
@@ -173,7 +173,7 @@ fun NotificationContent(
             .background(Color.White)
     ) {
         SettingToggleItem(
-            stringResource(R.string.expense_reminder),
+            stringResource(R.string.str_expense_reminder),
             checked = isNotification,
             onCheckedChange = {
                 isNotification = it

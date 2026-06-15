@@ -6,21 +6,21 @@ import com.cbmoney.data.provider.model.AuthError
 
 fun AuthError.toMessage(context: Context): String {
     return when (this) {
-        AuthError.EmptyField -> context.getString(R.string.error_empty_field)
+        AuthError.EmptyField -> context.getString(R.string.str_error_empty_field)
         AuthError.InvalidCredential ->
-            context.getString(R.string.error_unknown)
+            context.getString(R.string.str_error_unknown)
         AuthError.InvalidAccount ->
-            context.getString(R.string.error_invalid_account)
+            context.getString(R.string.str_error_invalid_account)
         AuthError.InvalidEmail ->
-            context.getString(R.string.error_invalid_email)
+            context.getString(R.string.str_error_invalid_email)
 
         AuthError.WrongPassword ->
-            context.getString(R.string.error_wrong_password)
+            context.getString(R.string.str_error_wrong_password)
 
         AuthError.EmailAlreadyInUse ->
-            context.getString(R.string.error_email_exists)
+            context.getString(R.string.str_error_email_exists)
 
         AuthError.Fail ->
-            context.getString(R.string.error_unknown)
+            context.getString(R.string.str_error_unknown)
     }
 }

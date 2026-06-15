@@ -1,157 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- string autherror-->
-    <string name="error_empty_field">Empty field</string>
-    <string name="error_invalid_email">Invalid email</string>
-    <string name="error_wrong_password">Wrong password</string>
-    <string name="error_email_exists">Email already in use</string>
-    <string name="error_unknown">Something went wrong</string>
-    <string name="error_invalid_account">Invalid email or password</string>
+    <string name="str_error_empty_field">Empty field</string>
+    <string name="str_error_invalid_email">Invalid email</string>
+    <string name="str_error_wrong_password">Wrong password</string>
+    <string name="str_error_email_exists">Email already in use</string>
+    <string name="str_error_unknown">Something went wrong</string>
+    <string name="str_error_invalid_account">Invalid email or password</string>
+    <string name="str_error_amount_empty">Amount must be greater than 0</string>
+    <string name="str_error_category_empty">Please select a category</string>
+    <string name="str_today">Today</string>
+    <string name="str_yesterday">Yesterday</string>
+    <string name="str_monday">Monday</string>
+    <string name="str_tuesday">Tuesday</string>
+    <string name="str_wednesday">Wednesday</string>
+    <string name="str_thursday">Thursday</string>
+    <string name="str_friday">Friday</string>
+    <string name="str_saturday">Saturday</string>
+    <string name="str_sunday">Sunday</string>
 
-    <string name="app_name">CBMoney</string>
-    <string name="onboarding_get_started">Get Started</string>
-    <string name="already_account">Already have an account?</string>
+    <string name="str_app_name">CBMoney</string>
+    <string name="str_onboarding_get_started">Get Started</string>
+    <string name="str_already_account">Already have an account?</string>
 
-    <string name="login">Login</string>
-    <string name="register">Register</string>
-    <string name="register_new_account">Register new account</string>
-    <string name="forgot_password">Forgot password?</string>
-    <string name="expense_management">Expense management</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="confirm_password">Confirm password</string>
+    <string name="str_login">Login</string>
+    <string name="str_register">Register</string>
+    <string name="str_register_new_account">Register new account</string>
+    <string name="str_forgot_password">Forgot password?</string>
+    <string name="str_expense_management">Expense management</string>
+    <string name="str_email">Email</string>
+    <string name="str_password">Password</string>
+    <string name="str_confirm_password">Confirm password</string>
 
 
 
-    <string name="smart_money_management">Smart money management</string>
+    <string name="str_smart_money_management">Smart money management</string>
 
-    <string name="language">Language</string>
-    <string name="english">English</string>
-    <string name="vietnamese">Tiếng Việt</string>
+    <string name="str_language">Language</string>
+    <string name="str_english">English</string>
+    <string name="str_vietnamese">Vietnamese</string>
 
-    <string name="login_h1">Hello!</string>
-    <string name="login_h3">Manage your expenses easily &amp; effectively.</string>
+    <string name="str_login_h1">Hello!</string>
+    <string name="str_login_h3">Manage your expenses easily &amp; effectively.</string>
 
-    <string name="continue_with">Or continue with</string>
+    <string name="str_continue_with">Or continue with</string>
 
-    <string name="create_account">Create account</string>
-    <string name="signup_manage">Sign up to manage your spending more effectively.</string>
-    <string name="full_name">Full name</string>
-    <string name="back_to_login">Back to login</string>
-    <string name="or_register_with">Or register with</string>
+    <string name="str_create_account">Create account</string>
+    <string name="str_signup_manage">Sign up to manage your spending more effectively.</string>
+    <string name="str_full_name">Full name</string>
+    <string name="str_back_to_login">Back to login</string>
+    <string name="str_or_register_with">Or register with</string>
 
 
     //Bottom Nav
-    <string name="home">Home</string>
-    <string name="reports">Reports</string>
-    <string name="budget">Budget</string>
-    <string name="profile">Profile</string>
+    <string name="str_home">Home</string>
+    <string name="str_reports">Reports</string>
+    <string name="str_budget">Budget</string>
+    <string name="str_profile">Profile</string>
 
 
     //Home
-    <string name="hello_user">Hello,</string>
-    <string name="cash_and_bank">Cash + Bank accounts</string>
+    <string name="str_hello_user">Hello,</string>
+    <string name="str_cash_and_bank">Cash + Bank accounts</string>
 
-    <string name="total_expense">Total Spending</string>
-    <string name="total_income">Total Income</string>
+    <string name="str_total_expense">Total Spending</string>
+    <string name="str_total_income">Total Income</string>
 
 
-    <string name="total_balance">Total balance</string>
+    <string name="str_total_balance">Total balance</string>
 
-    <string name="monthly_spending">Monthly spending</string>
+    <string name="str_monthly_spending">Monthly spending</string>
 
-    <string name="additional_expenses">Additional expenses</string>
-    <string name="additional_income">Additional income</string>
+    <string name="str_additional_expenses">Additional expenses</string>
+    <string name="str_additional_income">Additional income</string>
 
-    <string name="recent_transactions">Recent transactions</string>
+    <string name="str_recent_transactions">Recent transactions</string>
 
     <!-- Months (Short - UI) -->
-    <string name="month_1">Jan</string>
-    <string name="month_2">Feb</string>
-    <string name="month_3">Mar</string>
-    <string name="month_4">Apr</string>
-    <string name="month_5">May</string>
-    <string name="month_6">Jun</string>
-    <string name="month_7">Jul</string>
-    <string name="month_8">Aug</string>
-    <string name="month_9">Sep</string>
-    <string name="month_10">Oct</string>
-    <string name="month_11">Nov</string>
-    <string name="month_12">Dec</string>
+    <string name="str_month_1">Jan</string>
+    <string name="str_month_2">Feb</string>
+    <string name="str_month_3">Mar</string>
+    <string name="str_month_4">Apr</string>
+    <string name="str_month_5">May</string>
+    <string name="str_month_6">Jun</string>
+    <string name="str_month_7">Jul</string>
+    <string name="str_month_8">Aug</string>
+    <string name="str_month_9">Sep</string>
+    <string name="str_month_10">Oct</string>
+    <string name="str_month_11">Nov</string>
+    <string name="str_month_12">Dec</string>
 
     <!-- Profile Screen -->
-    <string name="settings_account">Account settings</string>
-    <string name="person_info">Personal information</string>
-    <string name="bank_account">Account &amp; Bank</string>
+    <string name="str_settings_account">Account settings</string>
+    <string name="str_person_info">Personal information</string>
+    <string name="str_bank_account">Account &amp; Bank</string>
 
 
-    <string name="application">Application</string>
-    <string name="app_setting">Settings</string>
-    <string name="help_center">Help center</string>
-    <string name="logout">Logout</string>
+    <string name="str_application">Application</string>
+    <string name="str_app_setting">Settings</string>
+    <string name="str_help_center">Help center</string>
+    <string name="str_logout">Logout</string>
 
     <!-- Setting Screen -->
-    <string name="notification">Notification</string>
-    <string name="expense_reminder">Expense reminder</string>
-    <string name="currency">Currency</string>
-    <string name="customize">Customize</string>
+    <string name="str_notification">Notification</string>
+    <string name="str_expense_reminder">Expense reminder</string>
+    <string name="str_currency">Currency</string>
+    <string name="str_customize">Customize</string>
 
 
-    <string name="select_language">Select Language</string>
-    <string name="select_display_language">Please select a display language</string>
-    <string name="confirm">Confirm</string>
-    <string name="dark_mode">Dark Mode</string>
-    <string name="finance">Finance</string>
+    <string name="str_select_language">Select Language</string>
+    <string name="str_select_display_language">Please select a display language</string>
+    <string name="str_confirm">Confirm</string>
+    <string name="str_dark_mode">Dark Mode</string>
+    <string name="str_finance">Finance</string>
 
 
-    <string name="add_transaction">Add transaction</string>
-    <string name="amount">Amount</string>
-    <string name="categories">Categories</string>
-    <string name="income">Income</string>
-    <string name="expense">Expense</string>
-    <string name="date">Date</string>
-    <string name="note">Note</string>
-    <string name="add_trans_des">Add transaction description…</string>
-    <string name="cancel">Cancel</string>
-    <string name="select">Select</string>
-    <string name="add_income_des">Add income description…</string>
-    <string name="save_transaction">Save transaction</string>
-    <string name="see_all">See all</string>
+    <string name="str_add_transaction">Add transaction</string>
+    <string name="str_amount">Amount</string>
+    <string name="str_categories">Categories</string>
+    <string name="str_income">Income</string>
+    <string name="str_expense">Expense</string>
+    <string name="str_date">Date</string>
+    <string name="str_note">Note</string>
+    <string name="str_add_trans_des">Add transaction description…</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_select">Select</string>
+    <string name="str_add_income_des">Add income description…</string>
+    <string name="str_save_transaction">Save transaction</string>
+    <string name="str_see_all">See all</string>
 
-    <string name="category_management">Category management</string>
-    <string name="category_list">Category list</string>
-    <string name="add_category">Add category</string>
-    <string name="edit_category">Edit category</string>
-    <string name="color">Color</string>
-    <string name="icon">Icon</string>
-    <string name="name_category">Name category</string>
-    <string name="example_category">Example: Food, Transport, etc.</string>
-    <string name="save">Save</string>
+    <string name="str_category_management">Category management</string>
+    <string name="str_category_list">Category list</string>
+    <string name="str_add_category">Add category</string>
+    <string name="str_edit_category">Edit category</string>
+    <string name="str_color">Color</string>
+    <string name="str_icon">Icon</string>
+    <string name="str_name_category">Name category</string>
+    <string name="str_example_category">Example: Food, Transport, etc.</string>
+    <string name="str_save">Save</string>
 
-    <string name="budget_management">Budget management</string>
+    <string name="str_budget_management">Budget management</string>
 
-    <string name="remaining">Remaining</string>
+    <string name="str_remaining">Remaining</string>
 
-    <string name="budget_settings">Budget settings</string>
-    <string name="total_budget">Total budget</string>
-    <string name="not_set">Not set</string>
-    <string name="allocation_details">Allocation details</string>
-    <string name="total_budget_category">Total budget by category</string>
+    <string name="str_budget_settings">Budget settings</string>
+    <string name="str_total_budget">Total budget</string>
+    <string name="str_not_set">Not set</string>
+    <string name="str_allocation_details">Allocation details</string>
+    <string name="str_total_budget_category">Total budget by category</string>
 
-    <string name="expenditure_category">Expenditure category</string>
+    <string name="str_expenditure_category">Expenditure category</string>
 
-    <string name="budget_by_category">Budget by Category</string>
-    <string name="spent">Spent</string>
-    <string name="expense_statistics">Expense Statistics</string>
-    <string name="no_transactions">No transactions yet</string>
-    <string name="detailed_report">Detailed Report</string>
-    <string name="add_transaction_to_view_report">Add transactions to view the detailed report here</string>
-    <string name="transaction">Transaction</string>
-    <string name="transactions">Transactions</string>
-    <string name="spending_by_category">Spending by Category</string>
-    <string name="month">Month</string>
-    <string name="unknown">Unknown</string>
-    <string name="save_success">Saved successfully</string>
-    <string name="transaction_list">Transaction List</string>
-
+    <string name="str_budget_by_category">Budget by Category</string>
+    <string name="str_spent">Spent</string>
+    <string name="str_expense_statistics">Expense Statistics</string>
+    <string name="str_no_transactions">No transactions yet</string>
+    <string name="str_detailed_report">Detailed Report</string>
+    <string name="str_add_transaction_to_view_report">Add transactions to view the detailed report here</string>
+    <string name="str_transaction">Transaction</string>
+    <string name="str_transactions">Transactions</string>
+    <string name="str_spending_by_category">Spending by Category</string>
+    <string name="str_month">Month</string>
+    <string name="str_unknown">Unknown</string>
+    <string name="str_save_success">Saved successfully</string>
+    <string name="str_transaction_list">Transaction List</string>
+    <string name="str_type">Type</string>
+    <string name="str_all">All</string>
 </resources>

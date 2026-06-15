@@ -1,145 +1,157 @@
 <resources>
 
-    <string name="error_empty_field">Không được để trống</string>
-    <string name="error_invalid_email">Email không hợp lệ</string>
-    <string name="error_wrong_password">Sai mật khẩu</string>
-    <string name="error_email_exists">Email đã được sử dụng</string>
-    <string name="error_unknown">Có lỗi xảy ra</string>
-    <string name="error_invalid_account">Email hoặc mật khẩu không hợp lệ</string>
+    <string name="str_error_empty_field">Không được để trống</string>
+    <string name="str_error_invalid_email">Email không hợp lệ</string>
+    <string name="str_error_wrong_password">Sai mật khẩu</string>
+    <string name="str_error_email_exists">Email đã được sử dụng</string>
+    <string name="str_error_unknown">Có lỗi xảy ra</string>
+    <string name="str_error_invalid_account">Email hoặc mật khẩu không hợp lệ</string>
+    <string name="str_error_amount_empty">Số tiền phải lớn hơn 0</string>
+    <string name="str_error_category_empty">Vui lòng chọn danh mục</string>
+    <string name="str_today">Hôm nay</string>
+    <string name="str_yesterday">Hôm qua</string>
+    <string name="str_monday">Thứ Hai</string>
+    <string name="str_tuesday">Thứ Ba</string>
+    <string name="str_wednesday">Thứ Tư</string>
+    <string name="str_thursday">Thứ Năm</string>
+    <string name="str_friday">Thứ Sáu</string>
+    <string name="str_saturday">Thứ Bảy</string>
+    <string name="str_sunday">Chủ Nhật</string>
 
-    <string name="app_name">CBMoney</string>
-    <string name="onboarding_get_started">Bắt đầu</string>
-    <string name="already_account">Đã có tài khoản?</string>
+    <string name="str_app_name">CBMoney</string>
+    <string name="str_onboarding_get_started">Bắt đầu</string>
+    <string name="str_already_account">Đã có tài khoản?</string>
 
-    <string name="login">Đăng nhập</string>
-    <string name="register">Đăng ký</string>
-    <string name="register_new_account">Đăng ký tài khoản mới</string>
-    <string name="forgot_password">Quên mật khẩu?</string>
-    <string name="email">Email</string>
-    <string name="password">Mật khẩu</string>
-    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="str_login">Đăng nhập</string>
+    <string name="str_register">Đăng ký</string>
+    <string name="str_register_new_account">Đăng ký tài khoản mới</string>
+    <string name="str_forgot_password">Quên mật khẩu?</string>
+    <string name="str_email">Email</string>
+    <string name="str_password">Mật khẩu</string>
+    <string name="str_confirm_password">Xác nhận mật khẩu</string>
 
-    <string name="expense_management">Quản lý chi tiêu</string>
-    <string name="smart_money_management">Quản lý tiền bạc thông minh</string>
+    <string name="str_expense_management">Quản lý chi tiêu</string>
+    <string name="str_smart_money_management">Quản lý tiền bạc thông minh</string>
 
-    <string name="language">Ngôn ngữ</string>
-    <string name="english">Tiếng Anh</string>
-    <string name="vietnamese">Tiếng Việt"</string>
+    <string name="str_language">Ngôn ngữ</string>
+    <string name="str_english">Tiếng Anh</string>
+    <string name="str_vietnamese">Tiếng Việt"</string>
 
-    <string name="login_h1">Xin chào!</string>
-    <string name="login_h3">Quản lý chi tiêu dễ dàng &amp; hiệu quả.</string>
+    <string name="str_login_h1">Xin chào!</string>
+    <string name="str_login_h3">Quản lý chi tiêu dễ dàng &amp; hiệu quả.</string>
 
-    <string name="continue_with">Hoặc tiếp tục với</string>
-    <string name="create_account">Tạo tài khoản</string>
-    <string name="signup_manage">Đăng ký để quản lý chi tiêu hiệu quả hơn.</string>
-    <string name="full_name">Họ và tên</string>
-    <string name="back_to_login">Quay lại đăng nhập</string>
-    <string name="or_register_with">Hoặc đăng ký với</string>
+    <string name="str_continue_with">Hoặc tiếp tục với</string>
+    <string name="str_create_account">Tạo tài khoản</string>
+    <string name="str_signup_manage">Đăng ký để quản lý chi tiêu hiệu quả hơn.</string>
+    <string name="str_full_name">Họ và tên</string>
+    <string name="str_back_to_login">Quay lại đăng nhập</string>
+    <string name="str_or_register_with">Hoặc đăng ký với</string>
 
-    <string name="home">Trang chủ</string>
-    <string name="reports">Báo cáo</string>
-    <string name="budget">Ngân sách</string>
-    <string name="profile">Tài khoản</string>
-
-
-    <string name="hello_user">Xin chào,</string>
-    <string name="cash_and_bank">"Ví tiền mặt + Tài khoản"</string>
+    <string name="str_home">Trang chủ</string>
+    <string name="str_reports">Báo cáo</string>
+    <string name="str_budget">Ngân sách</string>
+    <string name="str_profile">Tài khoản</string>
 
 
-    <string name="total_expense">Tổng chi</string>
-    <string name="total_income">Tổng thu</string>
+    <string name="str_hello_user">Xin chào,</string>
+    <string name="str_cash_and_bank">"Ví tiền mặt + Tài khoản"</string>
 
 
-    <string name="total_balance">Tổng số dư</string>
-    <string name="monthly_spending">Chi tiêu hàng tháng</string>
-    <string name="additional_expenses">Thêm chi tiêu</string>
-    <string name="additional_income">Thêm thu nhập</string>
-    <string name="recent_transactions">Giao dịch gần đây</string>
+    <string name="str_total_expense">Tổng chi</string>
+    <string name="str_total_income">Tổng thu</string>
+
+
+    <string name="str_total_balance">Tổng số dư</string>
+    <string name="str_monthly_spending">Chi tiêu hàng tháng</string>
+    <string name="str_additional_expenses">Thêm chi tiêu</string>
+    <string name="str_additional_income">Thêm thu nhập</string>
+    <string name="str_recent_transactions">Giao dịch gần đây</string>
 
     <!-- Months (Short - UI) -->
-    <string name="month_1">Th1</string>
-    <string name="month_2">Th2</string>
-    <string name="month_3">Th3</string>
-    <string name="month_4">Th4</string>
-    <string name="month_5">Th5</string>
-    <string name="month_6">Th6</string>
-    <string name="month_7">Th7</string>
-    <string name="month_8">Th8</string>
-    <string name="month_9">Th9</string>
-    <string name="month_10">Th10</string>
-    <string name="month_11">Th11</string>
-    <string name="month_12">Th12</string>
+    <string name="str_month_1">Th1</string>
+    <string name="str_month_2">Th2</string>
+    <string name="str_month_3">Th3</string>
+    <string name="str_month_4">Th4</string>
+    <string name="str_month_5">Th5</string>
+    <string name="str_month_6">Th6</string>
+    <string name="str_month_7">Th7</string>
+    <string name="str_month_8">Th8</string>
+    <string name="str_month_9">Th9</string>
+    <string name="str_month_10">Th10</string>
+    <string name="str_month_11">Th11</string>
+    <string name="str_month_12">Th12</string>
 
     <!-- Profile Screen -->
-    <string name="settings_account">Cài đặt tài khoản</string>
-    <string name="person_info">Thông tin cá nhân</string>
-    <string name="bank_account">Tài khoản &amp; Ngân hàng</string>
-    <string name="application">Ứng dụng</string>
-    <string name="app_setting">Cài đặt</string>
-    <string name="help_center">Trung tâm trợ giúp</string>
-    <string name="logout">Đăng xuất</string>
+    <string name="str_settings_account">Cài đặt tài khoản</string>
+    <string name="str_person_info">Thông tin cá nhân</string>
+    <string name="str_bank_account">Tài khoản &amp; Ngân hàng</string>
+    <string name="str_application">Ứng dụng</string>
+    <string name="str_app_setting">Cài đặt</string>
+    <string name="str_help_center">Trung tâm trợ giúp</string>
+    <string name="str_logout">Đăng xuất</string>
 
 
     <!-- Setting Screen -->
-    <string name="notification">Thông báo</string>
-    <string name="expense_reminder">Nhắc nhở chi tiêu</string>
-    <string name="currency">Tiền tệ</string>
-    <string name="customize">Tuỳ chỉnh</string>
+    <string name="str_notification">Thông báo</string>
+    <string name="str_expense_reminder">Nhắc nhở chi tiêu</string>
+    <string name="str_currency">Tiền tệ</string>
+    <string name="str_customize">Tuỳ chỉnh</string>
 
-    <string name="select_language">Chọn ngôn ngữ</string>
-    <string name="select_display_language">Vui lòng chọn ngôn ngữ hiển thị</string>
-    <string name="confirm">Xác nhận</string>
-    <string name="dark_mode">Chế độ tối</string>
-    <string name="finance">Tài chính</string>
+    <string name="str_select_language">Chọn ngôn ngữ</string>
+    <string name="str_select_display_language">Vui lòng chọn ngôn ngữ hiển thị</string>
+    <string name="str_confirm">Xác nhận</string>
+    <string name="str_dark_mode">Chế độ tối</string>
+    <string name="str_finance">Tài chính</string>
 
 
-    <string name="add_transaction">Thêm giao dịch</string>
-    <string name="amount">Số tiền</string>
-    <string name="categories">Danh mục</string>
-    <string name="income">Thu nhập</string>
-    <string name="expense">Chi tiêu</string>
-    <string name="date">Ngày</string>
-    <string name="note">Ghi chú</string>
-    <string name="add_trans_des">Thêm mô tả giao dịch…</string>
-    <string name="cancel">Huỷ</string>
-    <string name="select">Chọn</string>
-    <string name="add_income_des">Thêm mô tả thu nhập…</string>
-    <string name="save_transaction">Lưu giao dịch</string>
-    <string name="see_all">Xem tất cả</string>
+    <string name="str_add_transaction">Thêm giao dịch</string>
+    <string name="str_amount">Số tiền</string>
+    <string name="str_categories">Danh mục</string>
+    <string name="str_income">Thu nhập</string>
+    <string name="str_expense">Chi tiêu</string>
+    <string name="str_date">Ngày</string>
+    <string name="str_note">Ghi chú</string>
+    <string name="str_add_trans_des">Thêm mô tả giao dịch…</string>
+    <string name="str_cancel">Huỷ</string>
+    <string name="str_select">Chọn</string>
+    <string name="str_add_income_des">Thêm mô tả thu nhập…</string>
+    <string name="str_save_transaction">Lưu giao dịch</string>
+    <string name="str_see_all">Xem tất cả</string>
 
-    <string name="category_management">Quản lý danh mục</string>
+    <string name="str_category_management">Quản lý danh mục</string>
 
-    <string name="category_list">Danh sách danh mục</string>
-    <string name="add_category">Thêm danh mục</string>
-    <string name="edit_category">Chỉnh sửa danh mục</string>
-    <string name="color">Màu sắc</string>
-    <string name="icon">Biểu tượng</string>
-    <string name="name_category">Tên danh mục</string>
-    <string name="example_category">Ví dụ: Thức ăn, Di chuyển…</string>
-    <string name="save">Lưu</string>
-    <string name="budget_management">Quản lý ngân sách</string>
-    <string name="remaining">Còn lại</string>
+    <string name="str_category_list">Danh sách danh mục</string>
+    <string name="str_add_category">Thêm danh mục</string>
+    <string name="str_edit_category">Chỉnh sửa danh mục</string>
+    <string name="str_color">Màu sắc</string>
+    <string name="str_icon">Biểu tượng</string>
+    <string name="str_name_category">Tên danh mục</string>
+    <string name="str_example_category">Ví dụ: Thức ăn, Di chuyển…</string>
+    <string name="str_save">Lưu</string>
+    <string name="str_budget_management">Quản lý ngân sách</string>
+    <string name="str_remaining">Còn lại</string>
 
-    <string name="budget_settings">Cài đặt ngân sách</string>
-    <string name="total_budget">Tổng ngân sách</string>
-    <string name="not_set">Chưa được đặt</string>
+    <string name="str_budget_settings">Cài đặt ngân sách</string>
+    <string name="str_total_budget">Tổng ngân sách</string>
+    <string name="str_not_set">Chưa được đặt</string>
 
-    <string name="allocation_details">Chi tiết phân bổ</string>
-    <string name="total_budget_category">Tổng ngân sách theo hạng mục</string>
-    <string name="expenditure_category">Hạng mục chi tiêu</string>
-    <string name="budget_by_category">Ngân sách theo mục</string>
-    <string name="spent">Đã chi</string>
-    <string name="expense_statistics">Thống kê chi tiêu</string>
-    <string name="no_transactions">Chưa có giao dịch</string>
-    <string name="detailed_report">Báo cáo chi tiết</string>
-    <string name="add_transaction_to_view_report">Hãy thêm giao dịch để xem báo cáo chi tiết tại đây</string>
+    <string name="str_allocation_details">Chi tiết phân bổ</string>
+    <string name="str_total_budget_category">Tổng ngân sách theo hạng mục</string>
+    <string name="str_expenditure_category">Hạng mục chi tiêu</string>
+    <string name="str_budget_by_category">Ngân sách theo mục</string>
+    <string name="str_spent">Đã chi</string>
+    <string name="str_expense_statistics">Thống kê chi tiêu</string>
+    <string name="str_no_transactions">Chưa có giao dịch</string>
+    <string name="str_detailed_report">Báo cáo chi tiết</string>
+    <string name="str_add_transaction_to_view_report">Hãy thêm giao dịch để xem báo cáo chi tiết tại đây</string>
 
-    <string name="transaction">Giao dịch</string>
-    <string name="transactions">Giao dịch</string>
-    <string name="spending_by_category">Chi tiêu theo danh mục</string>
-    <string name="month">Tháng</string>
-    <string name="unknown">Không xác định</string>
-    <string name="save_success">Lưu thành công</string>
-    <string name="transaction_list">Danh sách giao dịch</string>
-
+    <string name="str_transaction">Giao dịch</string>
+    <string name="str_transactions">Giao dịch</string>
+    <string name="str_spending_by_category">Chi tiêu theo danh mục</string>
+    <string name="str_month">Tháng</string>
+    <string name="str_unknown">Không xác định</string>
+    <string name="str_save_success">Lưu thành công</string>
+    <string name="str_transaction_list">Danh sách giao dịch</string>
+    <string name="str_type">Loại</string>
+    <string name="str_all">Tất cả</string>
 </resources>

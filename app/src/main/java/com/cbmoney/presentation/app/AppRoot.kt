@@ -1,8 +1,6 @@
 package com.cbmoney.presentation.app
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -17,16 +15,16 @@ import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.utils.getStringRes
 import org.koin.compose.koinInject
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AppRoot(
-    snackbarManager: SnackbarManager = koinInject()
+    snackBarManager: SnackbarManager = koinInject()
 ) {
     val context = LocalContext.current
     val snackBarHostState = remember { SnackbarHostState() }
     LaunchedEffect(Unit) {
-        snackbarManager.messages.collect {
+        snackBarManager.messages.collect {
             when(it){
                 is UiMessage.Res -> snackBarHostState.showSnackbar(getStringRes(context,it.resId))
                 is UiMessage.Text -> snackBarHostState.showSnackbar(it.text)

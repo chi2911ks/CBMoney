@@ -91,12 +91,12 @@ fun OnboardingHeader(modifier: Modifier = Modifier) {
         )
         Spacer(Modifier.height(16.dp))
         Text(
-            text = stringResource(R.string.expense_management),
+            text = stringResource(R.string.str_expense_management),
             style = CBMoneyTypography.Headline.Medium.Bold
         )
         Spacer(Modifier.height(8.dp))
         Text(
-            text = stringResource(R.string.smart_money_management),
+            text = stringResource(R.string.str_smart_money_management),
             color = CBMoneyColors.Neutral.NeutralGray,
             style = CBMoneyTypography.Title.Small.Bold,
         )
@@ -120,7 +120,7 @@ fun OnboardingGetStarted(modifier: Modifier = Modifier, onContinueClicked: () ->
             onClick = { onContinueClicked() })
         {
             Text(
-                text = stringResource(R.string.onboarding_get_started),
+                text = stringResource(R.string.str_onboarding_get_started),
                 style = CBMoneyTypography.Body.Large.Medium
             )
             Spacer(modifier = Modifier.width(8.dp))
@@ -139,7 +139,7 @@ fun OnboardingGetStarted(modifier: Modifier = Modifier, onContinueClicked: () ->
                     fontStyle = CBMoneyTypography.Body.Medium.Medium.fontStyle,
                 )
             ) {
-                append(stringResource(R.string.already_account))
+                append(stringResource(R.string.str_already_account))
             }
             append(" ")
             pushLink(
@@ -157,7 +157,7 @@ fun OnboardingGetStarted(modifier: Modifier = Modifier, onContinueClicked: () ->
                     fontStyle = CBMoneyTypography.Title.Small.Bold.fontStyle
                 )
             ) {
-                append(stringResource(R.string.login))
+                append(stringResource(R.string.str_login))
             }
 
             pop()

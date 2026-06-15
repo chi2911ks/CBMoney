@@ -10,7 +10,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 object DateUtils {
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun getYearMonthFormat(
         yearMonth: YearMonth = YearMonth.now(),
         isStartAndEndDate: Boolean = true
@@ -59,7 +59,7 @@ object DateUtils {
         return start to end
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    
     fun formatTransactionDate(timeMillis: Long): String {
         val zoneId = ZoneId.systemDefault()
         val dateTime = Instant.ofEpochMilli(timeMillis).atZone(zoneId)

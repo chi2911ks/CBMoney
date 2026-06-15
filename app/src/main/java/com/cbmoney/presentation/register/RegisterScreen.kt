@@ -133,12 +133,12 @@ fun RegisterScreenContent(
                     .align(Alignment.CenterHorizontally)
             )
             Text(
-                text = stringResource(R.string.create_account),
+                text = stringResource(R.string.str_create_account),
                 style = CBMoneyTypography.Headline.Large.ExtraBold
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                text = stringResource(R.string.signup_manage),
+                text = stringResource(R.string.str_signup_manage),
                 color = CBMoneyColors.Neutral.NeutralGray,
                 style = CBMoneyTypography.Body.Large.Regular
             )
@@ -191,7 +191,7 @@ fun SignUpForm(
     Column(modifier = Modifier.fillMaxWidth()) {
 //        OutlinedText(
 //            value = fullName,
-//            label = stringResource(R.string.full_name),
+//            label = stringResource(R.string.str_full_name),
 //            onValueChange = { fullName = it },
 //            placeholderText = "Alice Ninja",
 //            leadingIcon = {
@@ -202,7 +202,7 @@ fun SignUpForm(
         Spacer(Modifier.height(8.dp))
         OutlinedText(
             value = email,
-            label = stringResource(R.string.email),
+            label = stringResource(R.string.str_email),
             onValueChange = { email = it },
             placeholderText = "name@example.com",
             leadingIcon = {
@@ -217,7 +217,7 @@ fun SignUpForm(
         Spacer(Modifier.height(8.dp))
         PasswordInput(
             value = password,
-            label = stringResource(R.string.password),
+            label = stringResource(R.string.str_password),
             onValueChange = { password = it },
             isPasswordVisible = isPasswordVisible,
             onVisibilityChange = { isPasswordVisible = it }
@@ -225,7 +225,7 @@ fun SignUpForm(
         Spacer(Modifier.height(8.dp))
         PasswordInput(
             value = confirmPassword,
-            label = stringResource(R.string.confirm_password),
+            label = stringResource(R.string.str_confirm_password),
             onValueChange = { confirmPassword = it },
             isPasswordVisible = isPasswordVisible,
             onVisibilityChange = { isPasswordVisible = it }
@@ -235,7 +235,7 @@ fun SignUpForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            text = stringResource(R.string.register),
+            text = stringResource(R.string.str_register),
             onClick = {
                 onRegister(
                     email,
@@ -250,7 +250,7 @@ fun SignUpForm(
         )
 
         Text(
-            text = stringResource(R.string.back_to_login),
+            text = stringResource(R.string.str_back_to_login),
             fontSize = 14.sp,
             color = CBMoneyColors.Neutral.NeutralGray,
             style = MaterialTheme.typography.titleLarge,

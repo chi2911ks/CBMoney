@@ -77,10 +77,10 @@ fun BottomNavBar(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     val title = when(tab){
-                        MainTab.HOME -> stringResource(R.string.home)
-                        MainTab.REPORTS -> stringResource(R.string.reports)
-                        MainTab.BUDGET -> stringResource(R.string.budget)
-                        MainTab.PROFILE -> stringResource(R.string.profile)
+                        MainTab.HOME -> stringResource(R.string.str_home)
+                        MainTab.REPORTS -> stringResource(R.string.str_reports)
+                        MainTab.BUDGET -> stringResource(R.string.str_budget)
+                        MainTab.PROFILE -> stringResource(R.string.str_profile)
                     }
 
                     Icon(

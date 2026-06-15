@@ -85,7 +85,7 @@ fun HomeScreen(
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun HomeScreenContent(
     uiState: HomeState,
@@ -172,7 +172,7 @@ fun HomeScreenContent(
                 modifier = Modifier
                     .shadowCustom()
                     .weight(1f),
-                text = stringResource(R.string.additional_expenses),
+                text = stringResource(R.string.str_additional_expenses),
                 onClick = {
                     navigateToTransaction(CategoryType.EXPENSE)
                 },
@@ -183,7 +183,7 @@ fun HomeScreenContent(
                 modifier = Modifier
                     .shadowCustom()
                     .weight(1f),
-                text = stringResource(R.string.additional_income),
+                text = stringResource(R.string.str_additional_income),
                 onClick = {
                     navigateToTransaction(CategoryType.INCOME)
                 },
@@ -250,7 +250,7 @@ fun HeaderSection(
             Spacer(Modifier.width(Spacing.sm))
             Column {
                 Text(
-                    text = stringResource(R.string.hello_user),
+                    text = stringResource(R.string.str_hello_user),
                     color = CBMoneyColors.Neutral.NeutralGray,
                     style = CBMoneyTypography.Title.Small.Regular
                 )
@@ -304,12 +304,12 @@ fun RecentTransactions(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = stringResource(R.string.recent_transactions),
+            text = stringResource(R.string.str_recent_transactions),
             style = CBMoneyTypography.Body.Large.Bold,
         )
 
         Text(
-            text = stringResource(R.string.see_all),
+            text = stringResource(R.string.str_see_all),
             color = CBMoneyColors.Primary.Primary,
             style = CBMoneyTypography.Body.Medium.Regular.copy(
                 textDecoration = TextDecoration.Underline

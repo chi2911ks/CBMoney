@@ -1,7 +1,5 @@
 package com.cbmoney.presentation.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -15,6 +13,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.cbmoney.domain.model.CategoryType
 import com.cbmoney.presentation.buget.BudgetSettingsScreen
 import com.cbmoney.presentation.category.AddCategoryScreen
 import com.cbmoney.presentation.category.CategoriesScreen
@@ -31,7 +30,7 @@ import com.cbmoney.presentation.transaction.AddTransactionScreen
 import com.cbmoney.presentation.transaction.TransactionListScreen
 import com.cbmoney.utils.exts.clearAll
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavRoutes() {
@@ -139,7 +138,7 @@ fun NavRoutes() {
                     onBackNavigation = {
                         backStack.removeLastOrNull()
                     },
-                    navigateToCategory = {type->
+                    navigateToCategory = { type ->
                         backStack.add(Destination.Categories(type))
                     },
                     navigateToTransactionList = {
@@ -148,7 +147,13 @@ fun NavRoutes() {
                 )
             }
             entry<Destination.TransactionList> {
-                TransactionListScreen()
+                TransactionListScreen(
+                    onBackNavigation = { backStack.removeLastOrNull() },
+                    navigateToAddTransaction = {
+                        backStack.add(Destination.AddTransaction(CategoryType.EXPENSE))
+                    }
+                )
+
             }
             entry<Destination.Categories> {
                 CategoriesScreen(
@@ -180,7 +185,7 @@ fun NavRoutes() {
                     }
                 )
             }
-            entry<Destination.BudgetSettings>{
+            entry<Destination.BudgetSettings> {
                 BudgetSettingsScreen(
                     onBackNavigation = {
                         backStack.removeLastOrNull()

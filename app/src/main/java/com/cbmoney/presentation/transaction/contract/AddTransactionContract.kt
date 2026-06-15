@@ -17,7 +17,7 @@ data class AddTransactionState(
 sealed class AddTransactionEvent: MviEvent {
     object SaveTransactionSuccess: AddTransactionEvent()
     data class SaveTransactionError(val message: String): AddTransactionEvent()
-
+    data class ValidationError(val resId: Int): AddTransactionEvent()
 }
 sealed class AddTransactionIntent: MviIntent{
     data class ChangeTab(val type: CategoryType): AddTransactionIntent()

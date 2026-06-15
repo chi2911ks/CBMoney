@@ -1,5 +1,6 @@
 package com.cbmoney.presentation.components.button
 
+import android.os.SystemClock
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -92,11 +98,19 @@ fun ButtonPrimary(
     trailingIcon: @Composable (() -> Unit)? = null
 ) {
     val shape = RoundedCornerShape(24.dp)
+    val currentOnClick by rememberUpdatedState(onClick)
+    var lastClickTime by remember { mutableLongStateOf(0L) }
     Button(
         modifier = modifier,
         shape = shape,
         colors = colors,
-        onClick = { onClick() })
+        onClick = {
+            val now = SystemClock.elapsedRealtime()
+            if (now - lastClickTime >= 500) {
+                currentOnClick()
+                lastClickTime = now
+            }
+        })
     {
         if (leadingIcon != null) leadingIcon()
         Spacer(Modifier.width(4.dp))
