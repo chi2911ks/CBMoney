@@ -1,6 +1,5 @@
 package com.cbmoney.presentation.forgotpassword
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -82,7 +81,6 @@ fun ForgotPasswordScreen(
 
     ForgotPasswordContent(
         uiState = uiState,
-        context = context,
         onBackNavigation = onBackNavigation,
         processIntent = forgotPasswordViewModel::processIntent
     )
@@ -91,7 +89,6 @@ fun ForgotPasswordScreen(
 @Composable
 fun ForgotPasswordContent(
     uiState: ForgotPasswordState,
-    context: Context,
     onBackNavigation: () -> Unit,
     processIntent: (ForgotPasswordIntent) -> Unit
 ) {
