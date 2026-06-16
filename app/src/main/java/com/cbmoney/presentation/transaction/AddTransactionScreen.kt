@@ -1,7 +1,5 @@
 package com.cbmoney.presentation.transaction
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -62,7 +60,6 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AddTransactionScreen(
     currentType: CategoryType = CategoryType.EXPENSE,
@@ -70,7 +67,7 @@ fun AddTransactionScreen(
     navigateToCategory: (CategoryType) -> Unit,
     navigateToTransactionList: () -> Unit,
     viewModel: AddTransactionViewModel = koinViewModel(),
-    snackbarManager: SnackbarManager = koinInject()
+    snackBarManager: SnackbarManager = koinInject()
 ) {
     val uiState by viewModel.viewState.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
@@ -80,13 +77,18 @@ fun AddTransactionScreen(
         viewModel.singleEvent.collectLatest {
             when(it){
                 AddTransactionEvent.SaveTransactionSuccess -> {
-                    snackbarManager.show(
-                        UiMessage.Res(R.string.save_success)
+                    snackBarManager.show(
+                        UiMessage.Res(R.string.str_save_success)
                     )
                 }
                 is AddTransactionEvent.SaveTransactionError -> {
-                    snackbarManager.show(
+                    snackBarManager.show(
                         UiMessage.Text(it.message)
+                    )
+                }
+                is AddTransactionEvent.ValidationError -> {
+                    snackBarManager.show(
+                        UiMessage.Res(it.resId)
                     )
                 }
             }
@@ -102,7 +104,7 @@ fun AddTransactionScreen(
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun TransactionScreenContent(
     uiState: AddTransactionState,
@@ -143,7 +145,7 @@ fun TransactionScreenContent(
             )
 
             Text(
-                text = stringResource(R.string.add_transaction),
+                text = stringResource(R.string.str_add_transaction),
                 style = CBMoneyTypography.Body.Large.Bold,
                 modifier = Modifier.align(Alignment.Center)
             )
@@ -174,7 +176,7 @@ fun TransactionScreenContent(
         ) {
 
             Text(
-                text = stringResource(R.string.amount),
+                text = stringResource(R.string.str_amount),
                 style = CBMoneyTypography.Body.Large.Bold
             )
             AmountInput(
@@ -205,9 +207,9 @@ fun TransactionScreenContent(
             DateInputDialog(datePickerState)
             Spacer(modifier = Modifier.height(Spacing.sm))
             NoteTextField(
-                label = stringResource(R.string.note),
+                label = stringResource(R.string.str_note),
                 value = uiState.note,
-                placeholder = stringResource(R.string.add_trans_des),
+                placeholder = stringResource(R.string.str_add_trans_des),
                 onValueChange = {
                     processIntent(AddTransactionIntent.ChangeNote(it))
                 }
@@ -215,7 +217,7 @@ fun TransactionScreenContent(
         }
         Spacer(modifier = Modifier.height(Spacing.md))
         ButtonPrimary(
-            text = stringResource(R.string.save_transaction),
+            text = stringResource(R.string.str_save_transaction),
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 processIntent(AddTransactionIntent.SaveTransaction)
@@ -245,11 +247,11 @@ fun CategoriesContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(R.string.categories),
+                text = stringResource(R.string.str_categories),
                 style = CBMoneyTypography.Body.Large.Bold,
             )
             Text(
-                text = stringResource(R.string.see_all),
+                text = stringResource(R.string.str_see_all),
                 style = CBMoneyTypography.Body.Medium.Medium,
                 textDecoration = TextDecoration.Underline,
                 color = CBMoneyColors.Primary.Primary,

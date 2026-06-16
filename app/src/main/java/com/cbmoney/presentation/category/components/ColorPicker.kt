@@ -117,7 +117,7 @@ fun ColorPicker(
         horizontalArrangement = Arrangement.SpaceBetween
     ){
         Text(
-            text = stringResource(R.string.color),
+            text = stringResource(R.string.str_color),
             style = CBMoneyTypography.Body.Large.Bold
         )
         Row(
@@ -134,7 +134,7 @@ fun ColorPicker(
                 tint = CBMoneyColors.Green2
             )
             Text(
-                text = stringResource(R.string.customize),
+                text = stringResource(R.string.str_customize),
                 color = CBMoneyColors.Green2,
                 style = CBMoneyTypography.Body.Small.Bold
             )

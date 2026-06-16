@@ -54,7 +54,7 @@ fun MonthlySpendingCard(
     listData: List<MonthlyData>,
     modifier: Modifier = Modifier
 ) {
-    val labelMonthly = listData.getOrNull(selectedIndex)?.label ?: stringResource(R.string.month_1)
+    val labelMonthly = listData.getOrNull(selectedIndex)?.label ?: stringResource(R.string.str_month_1)
 
     Box(
         modifier = modifier
@@ -78,7 +78,7 @@ fun MonthlySpendingCard(
             ) {
                 Column {
                     Text(
-                        text = stringResource(R.string.monthly_spending),
+                        text = stringResource(R.string.str_monthly_spending),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -203,9 +203,9 @@ fun BarItem(
 private fun BarChartPreview() {
     var selectedIndex by remember { mutableIntStateOf(0) }
     val listData = listOf(
-        MonthlyData(stringResource(R.string.month_1), 100000000L, 20000000L),
-        MonthlyData(stringResource(R.string.month_2), 7000000L, 2000000L),
-        MonthlyData(stringResource(R.string.month_3), 20000000L, 10000000L),
+        MonthlyData(stringResource(R.string.str_month_1), 100000000L, 20000000L),
+        MonthlyData(stringResource(R.string.str_month_2), 7000000L, 2000000L),
+        MonthlyData(stringResource(R.string.str_month_3), 20000000L, 10000000L),
     )
     MonthlySpendingCard(
         selectedIndex = selectedIndex,

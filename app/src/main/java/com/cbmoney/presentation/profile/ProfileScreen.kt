@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -92,7 +93,7 @@ fun ProfileScreenContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            text = stringResource(R.string.logout),
+            text = stringResource(R.string.str_logout),
             leadingIcon = {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.Logout,
@@ -113,8 +114,9 @@ fun ProfileScreenContent(
     if (uiState.isLoading) {
         Box(
             modifier = Modifier
+                .fillMaxSize()
                 .background(Color.Transparent)
-                .fillMaxSize(),
+                .pointerInput(Unit) {},
             contentAlignment = Alignment.Center
         ) {
             LottieView(
@@ -174,7 +176,7 @@ fun UserProfileSettings(
 ) {
 
     Text(
-        text = stringResource(R.string.settings_account).uppercase(),
+        text = stringResource(R.string.str_settings_account).uppercase(),
         color = NeutralGray,
         style = CBMoneyTypography.Title.Small.Medium,
         modifier = Modifier.padding(8.dp)
@@ -185,14 +187,14 @@ fun UserProfileSettings(
             .background(Color.White)
     ) {
         SettingItem(
-            title = stringResource(R.string.person_info),
+            title = stringResource(R.string.str_person_info),
             leadingIcon = Icons.Default.Person,
             trailingIcon = Icons.Default.ChevronRight,
         ) {
             navigateToPersonInfo()
         }
         SettingItem(
-            title = stringResource(R.string.bank_account),
+            title = stringResource(R.string.str_bank_account),
             leadingIcon = Icons.Default.Wallet,
             trailingIcon = Icons.Default.ChevronRight,
         ) {
@@ -200,7 +202,7 @@ fun UserProfileSettings(
         }
     }
     Text(
-        text = stringResource(R.string.application).uppercase(),
+        text = stringResource(R.string.str_application).uppercase(),
         color = NeutralGray,
         style = CBMoneyTypography.Title.Small.Medium,
         modifier = Modifier.padding(8.dp)
@@ -211,7 +213,7 @@ fun UserProfileSettings(
             .background(Color.White)
     ) {
         SettingItem(
-            title = stringResource(R.string.app_setting),
+            title = stringResource(R.string.str_app_setting),
             leadingIcon = Icons.Default.Settings,
             trailingIcon = Icons.Default.ChevronRight,
             tintColor = Color.Black
@@ -219,7 +221,7 @@ fun UserProfileSettings(
             navigateToSettings()
         }
         SettingItem(
-            title = stringResource(R.string.help_center),
+            title = stringResource(R.string.str_help_center),
             leadingIcon = Icons.AutoMirrored.Filled.HelpCenter,
             trailingIcon = Icons.Default.ChevronRight,
             tintColor = Color.Black

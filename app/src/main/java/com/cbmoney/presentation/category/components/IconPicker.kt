@@ -36,7 +36,7 @@ fun IconPicker(
     onIconSelected: (String) -> Unit,
 ) {
     Text(
-        text = stringResource(R.string.icon),
+        text = stringResource(R.string.str_icon),
         style = CBMoneyTypography.Body.Large.Bold
     )
     Spacer(modifier = Modifier.height(Spacing.sm))

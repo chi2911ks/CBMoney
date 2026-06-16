@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 class BudgetSettingsViewModel(
     private val saveBudgetsUseCase: SaveBudgetsUseCase,
     private val getBudgetsSettingUseCase: GetBudgetsSettingUseCase

@@ -55,13 +55,22 @@ class AddTransactionViewModel(
         }
 
     }
-    private fun saveTransaction(){
+    private fun saveTransaction() {
+        if (currentState.amount <= 0) {
+            sendEvent(AddTransactionEvent.ValidationError(com.cbmoney.R.string.str_error_amount_empty))
+            return
+        }
+        if (currentState.selectedCategory == null) {
+            sendEvent(AddTransactionEvent.ValidationError(com.cbmoney.R.string.str_error_category_empty))
+            return
+        }
+
         viewModelScope.launch {
-            currentState.selectedCategory?.let {
+            currentState.selectedCategory?.let { category ->
                 val transaction = Transaction(
                     amount = currentState.amount,
                     type = currentState.selectedType.name.lowercase(),
-                    categoryId = it.id,
+                    categoryId = category.id,
                     description = currentState.note,
                     date = currentState.date,
                     createdAt = System.currentTimeMillis(),
@@ -82,8 +91,6 @@ class AddTransactionViewModel(
                     }
                 )
             }
-
-
         }
     }
 }

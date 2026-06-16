@@ -23,7 +23,7 @@ import com.cbmoney.presentation.theme.Spacing
 import com.cbmoney.utils.exts.toFormatDate
 
 
-@RequiresApi(Build.VERSION_CODES.O)
+
 @Composable
 fun DateInputDialog(
     datePickerState: DatePickerState,
@@ -34,7 +34,7 @@ fun DateInputDialog(
             onDismissRequest = { showDialog = false },
             confirmButton = {
                 Text(
-                    text = stringResource(R.string.select),
+                    text = stringResource(R.string.str_select),
                     color = CBMoneyColors.Primary.Primary,
                     style = CBMoneyTypography.Body.Large.Bold,
                     modifier = Modifier
@@ -44,7 +44,7 @@ fun DateInputDialog(
             },
             dismissButton = {
                 Text(
-                    text = stringResource(R.string.cancel),
+                    text = stringResource(R.string.str_cancel),
                     color = CBMoneyColors.Black,
                     style = CBMoneyTypography.Body.Large.Bold,
                     modifier = Modifier
@@ -83,7 +83,7 @@ fun DateInputDialog(
 
 
     DatePickerField(
-        label = stringResource(R.string.date).uppercase(),
+        label = stringResource(R.string.str_date).uppercase(),
         value = formattedDate,
         onClick = { showDialog = true },
     )

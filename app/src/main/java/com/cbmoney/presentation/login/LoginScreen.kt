@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -55,6 +56,7 @@ import com.cbmoney.presentation.theme.CBMoneyColors.Neutral.NeutralGray
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.utils.exts.getLanguageCode
 import com.cbmoney.utils.exts.handleOnSaveLanguage
+import com.cbmoney.utils.exts.rawClickable
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -64,6 +66,7 @@ import org.koin.compose.koinInject
 fun LoginScreen(
     navigateToHome: () -> Unit,
     onRegister: () -> Unit,
+    navigateToForgotPassword: () -> Unit,
     loginViewModel: LoginViewModel = koinViewModel(),
     snackbarManager: SnackbarManager = koinInject()
 ) {
@@ -87,6 +90,7 @@ fun LoginScreen(
 
     LoginScreenContent(
         onRegister = onRegister,
+        onForgotPassword = navigateToForgotPassword,
         uiState = uiState,
         context = context,
         processIntent = loginViewModel::processIntent
@@ -96,6 +100,7 @@ fun LoginScreen(
 @Composable
 fun LoginScreenContent(
     onRegister: () -> Unit,
+    onForgotPassword: () -> Unit,
     uiState: LoginState,
     context: Context,
     processIntent: (LoginIntent) -> Unit
@@ -135,12 +140,12 @@ fun LoginScreenContent(
                     .align(Alignment.CenterHorizontally)
             )
             Text(
-                text = stringResource(R.string.login_h1),
+                text = stringResource(R.string.str_login_h1),
                 style = CBMoneyTypography.Headline.Large.ExtraBold,
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                text = stringResource(R.string.login_h3),
+                text = stringResource(R.string.str_login_h3),
                 color = CBMoneyColors.Neutral.NeutralGray,
                 style = CBMoneyTypography.Body.Large.Regular,
             )
@@ -150,7 +155,8 @@ fun LoginScreenContent(
 
                     processIntent(LoginIntent.EmailLogin(username, pwd))
                 },
-                onRegister = onRegister
+                onRegister = onRegister,
+                onForgotPassword = onForgotPassword
             )
             AuthProviders(
                 modifier = Modifier
@@ -167,8 +173,9 @@ fun LoginScreenContent(
     if (uiState.isLoading) {
         Box(
             modifier = Modifier
+                .fillMaxSize()
                 .background(Color.Black.copy(alpha = 0.5f))
-                .fillMaxSize(),
+                .pointerInput(Unit) {},
             contentAlignment = Alignment.Center
         ) {
             LottieView(
@@ -183,7 +190,8 @@ fun LoginScreenContent(
 fun AuthForm(
     modifier: Modifier = Modifier,
     onLogin: (String, String) -> Unit,
-    onRegister: () -> Unit
+    onRegister: () -> Unit,
+    onForgotPassword: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -191,7 +199,7 @@ fun AuthForm(
     Column(modifier = modifier.fillMaxWidth()) {
         OutlinedText(
             value = email,
-            label = stringResource(R.string.email),
+            label = stringResource(R.string.str_email),
             onValueChange = { email = it },
             placeholderText = "name@example.com",
             leadingIcon = {
@@ -202,7 +210,7 @@ fun AuthForm(
         Spacer(Modifier.height(16.dp))
         OutlinedText(
             value = password,
-            label = stringResource(R.string.password),
+            label = stringResource(R.string.str_password),
             onValueChange = { password = it },
             placeholderText = "******",
             leadingIcon = {
@@ -220,8 +228,10 @@ fun AuthForm(
         )
         Spacer(Modifier.height(16.dp))
         Text(
-            modifier = Modifier.align(Alignment.End),
-            text = stringResource(R.string.forgot_password),
+            modifier = Modifier
+                .align(Alignment.End)
+                .rawClickable { onForgotPassword() },
+            text = stringResource(R.string.str_forgot_password),
             color = CBMoneyColors.Blue,
             style = CBMoneyTypography.Title.Small.Bold
         )
@@ -238,7 +248,7 @@ fun AuthForm(
 
                 )
             },
-            text = stringResource(R.string.login),
+            text = stringResource(R.string.str_login),
             colors = ButtonDefaults.buttonColors(
                 containerColor = CBMoneyColors.Primary.Primary,
                 contentColor = CBMoneyColors.Text.TextPrimary,
@@ -251,7 +261,7 @@ fun AuthForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            text = stringResource(R.string.register_new_account),
+            text = stringResource(R.string.str_register_new_account),
             colors = ButtonDefaults.outlinedButtonColors(
                 containerColor = CBMoneyColors.White,
                 contentColor = CBMoneyColors.Text.TextPrimary,
@@ -271,7 +281,7 @@ fun AuthProviders(
     onLoginWithApple: () -> Unit
 ) {
     Column(modifier = modifier) {
-        DividerWithText(stringResource(R.string.continue_with))
+        DividerWithText(stringResource(R.string.str_continue_with))
         Spacer(Modifier.height(16.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),

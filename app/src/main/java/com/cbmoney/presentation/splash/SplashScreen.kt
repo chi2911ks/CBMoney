@@ -64,7 +64,7 @@ fun SplashScreen(
 //        )
 
         Text(
-            text = stringResource(R.string.app_name),
+            text = stringResource(R.string.str_app_name),
             style = CBMoneyTypography.Headline.Large.ExtraBold.copy(
                 shadow = Shadow(
                     color = Color.Black.copy(alpha = 0.7f),

@@ -107,7 +107,7 @@ fun BudgetCategoryItem(
                                 fontWeight = CBMoneyTypography.Body.Small.Regular.fontWeight,
                             )
                         ) {
-                            append(stringResource(R.string.remaining))
+                            append(stringResource(R.string.str_remaining))
                         }
                         append(": ")
                         withStyle(
@@ -132,7 +132,7 @@ fun BudgetCategoryItem(
                 ) {
                     if (budgetAmount != null && spentAmount != null) {
                         val text =
-                            "${stringResource(R.string.spent)}: ${spentAmount.formatMoney()} / ${budgetAmount.formatMoney()} đ"
+                            "${stringResource(R.string.str_spent)}: ${spentAmount.formatMoney()} / ${budgetAmount.formatMoney()} đ"
                         Text(
                             text = text,
                             color = CBMoneyColors.Text.TextPrimary,

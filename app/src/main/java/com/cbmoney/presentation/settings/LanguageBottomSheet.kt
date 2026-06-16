@@ -60,11 +60,11 @@ fun LanguageBottomSheet() {
             .padding(Spacing.md),
     ) {
         Text(
-            text = stringResource(R.string.select_language),
+            text = stringResource(R.string.str_select_language),
             style = CBMoneyTypography.Title.Large.Medium
         )
         Text(
-            text = stringResource(R.string.select_display_language),
+            text = stringResource(R.string.str_select_display_language),
             color = Color.Gray,
             style = CBMoneyTypography.Body.Small.Regular
         )
@@ -86,7 +86,7 @@ fun LanguageBottomSheet() {
             },
             content = {
                 Text(
-                    text = stringResource(R.string.confirm),
+                    text = stringResource(R.string.str_confirm),
                     style = MaterialTheme.typography.labelLarge
                 )
             },

@@ -92,7 +92,7 @@ fun ExpenditureCategoryItem(
             decorationBox = {innerTextField->
                 if (budget.isEmpty()){
                     Text(
-                        text = stringResource(R.string.not_set),
+                        text = stringResource(R.string.str_not_set),
                         style = CBMoneyTypography.Body.Large.Regular.copy(
                             color = CBMoneyColors.Neutral.NeutralGray,
                             fontStyle = FontStyle.Italic,

@@ -16,6 +16,9 @@ sealed interface Destination : NavKey {
     data object Login : Destination
 
     @Serializable
+    data object ForgotPassword : Destination
+
+    @Serializable
     data object Register : Destination
 
     @Serializable
