@@ -34,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -163,8 +164,9 @@ fun RegisterScreenContent(
     if (uiState.isLoading) {
         Box(
             modifier = Modifier
+                .fillMaxSize()
                 .background(CBMoneyColors.Black.copy(alpha = 0.5f))
-                .fillMaxSize(),
+                .pointerInput(Unit) {},
             contentAlignment = Alignment.Center
         ) {
             LottieView(

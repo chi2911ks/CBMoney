@@ -18,6 +18,7 @@ import com.cbmoney.presentation.buget.BudgetSettingsScreen
 import com.cbmoney.presentation.category.AddCategoryScreen
 import com.cbmoney.presentation.category.CategoriesScreen
 import com.cbmoney.presentation.category.EditCategoryScreen
+import com.cbmoney.presentation.forgotpassword.ForgotPasswordScreen
 import com.cbmoney.presentation.login.LoginScreen
 import com.cbmoney.presentation.main.MainNavigator
 import com.cbmoney.presentation.main.MainScreen
@@ -73,9 +74,19 @@ fun NavRoutes() {
                     },
                     onRegister = {
                         backStack.add(Destination.Register)
+                    },
+                    navigateToForgotPassword = {
+                        backStack.add(Destination.ForgotPassword)
                     }
                 )
 
+            }
+            entry<Destination.ForgotPassword> {
+                ForgotPasswordScreen(
+                    onBackNavigation = {
+                        backStack.removeLastOrNull()
+                    }
+                )
             }
             entry<Destination.Register> {
                 RegisterScreen(

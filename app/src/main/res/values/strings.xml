@@ -166,4 +166,9 @@
     <string name="str_transaction_list">Transaction List</string>
     <string name="str_type">Type</string>
     <string name="str_all">All</string>
+    <string name="str_empty_transaction_body">Start tracking your spending by adding your first transaction today.</string>
+    <string name="str_forgot_password_title">Reset Password</string>
+    <string name="str_forgot_password_desc">Enter your email to receive password reset instructions.</string>
+    <string name="str_send_verification_code">Send verification code</string>
+    <string name="str_password_reset_sent">Password reset instructions sent. Please check your email.</string>
 </resources>

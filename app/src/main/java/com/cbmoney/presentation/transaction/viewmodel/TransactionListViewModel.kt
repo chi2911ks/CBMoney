@@ -11,12 +11,16 @@ import com.cbmoney.presentation.transaction.contract.TransactionListState
 import com.cbmoney.utils.DateUtils
 import com.cbmoney.utils.exts.toFormatDate
 import com.cbmoney.utils.exts.toStartOfDay
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class TransactionListViewModel(
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getTransactionListUseCase: GetTransactionListUseCase,
 ) : BaseMviViewModel<TransactionListState, TransactionListEvent, TransactionListIntent>() {
+
+    private var transactionJob: Job? = null
+
     init {
         loadCategories()
         val currentMonth = java.time.LocalDate.now().monthValue
@@ -28,7 +32,12 @@ class TransactionListViewModel(
     override fun processIntent(intent: TransactionListIntent) {
         when (intent) {
             is TransactionListIntent.LoadTransactions -> getTransactionMonth(intent.month)
-
+            is TransactionListIntent.FilterTransactions -> {
+                updateState {
+                    copy(filterType = intent.type, filterCategory = intent.categoryName)
+                }
+                applyFilters()
+            }
         }
     }
 
@@ -39,16 +48,27 @@ class TransactionListViewModel(
     }
 
     private fun loadTransactions(startDate: Long, endDate: Long) {
-        viewModelScope.launch {
-            getTransactionListUseCase(startDate, endDate).collect {
-                val groupedTransactions = it.groupBy { transactionDetails ->
-                    transactionDetails.transaction.date.toStartOfDay()
-                }
-                Log.d(TAG, "loadTransactions: $groupedTransactions")
+        transactionJob?.cancel()
+        transactionJob = viewModelScope.launch {
+            getTransactionListUseCase(startDate, endDate).collect { transactions ->
                 updateState {
-                    copy(transactions = groupedTransactions)
+                    copy(allTransactions = transactions)
                 }
+                applyFilters()
             }
+        }
+    }
+
+    private fun applyFilters() {
+        val state = viewState.value
+        val filtered = state.allTransactions.filter { details ->
+            val matchType = state.filterType == null || details.transaction.type.equals(state.filterType.name, ignoreCase = true)
+            val matchCategory = state.filterCategory == null || details.categoryName == state.filterCategory
+            matchType && matchCategory
+        }
+        val groupedTransactions = filtered.groupBy { it.transaction.date.toStartOfDay() }
+        updateState {
+            copy(transactions = groupedTransactions)
         }
     }
 

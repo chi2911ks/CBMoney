@@ -50,4 +50,14 @@ class EmailAuthClient(
         }
     }
 
+    suspend fun resetPassword(email: String): AuthResult {
+        return try {
+            firebaseAuth.sendPasswordResetEmail(email).await()
+            AuthResult.Success(null)
+        } catch (e: Exception) {
+            Log.w(tag, "resetPassword:failure", e)
+            AuthResult.Failure(AuthError.Fail)
+        }
+    }
+
 }

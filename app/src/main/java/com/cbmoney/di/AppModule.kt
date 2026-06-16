@@ -49,6 +49,7 @@ import com.cbmoney.presentation.buget.viewmodel.BudgetViewModel
 import com.cbmoney.presentation.category.viewmodel.AddCategoryViewModel
 import com.cbmoney.presentation.category.viewmodel.CategoriesViewModel
 import com.cbmoney.presentation.category.viewmodel.EditCategoryViewModel
+import com.cbmoney.presentation.forgotpassword.viewmodel.ForgotPasswordViewModel
 import com.cbmoney.presentation.home.HomeViewModel
 import com.cbmoney.presentation.login.LoginViewModel
 import com.cbmoney.presentation.main.MainViewModel
@@ -133,6 +134,7 @@ val viewModelModule = module {
     viewModelOf(::SplashViewModel)
     viewModelOf(::LoginViewModel)
     viewModelOf(::RegisterViewModel)
+    viewModelOf(::ForgotPasswordViewModel)
     viewModelOf(::MainViewModel)
     viewModelOf(::HomeViewModel)
     viewModelOf(::ProfileViewModel)

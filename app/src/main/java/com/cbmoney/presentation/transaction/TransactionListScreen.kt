@@ -12,12 +12,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Search
@@ -32,8 +34,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -95,9 +99,13 @@ fun TransactionListScreenContent(
     var typeSelected by remember { mutableStateOf<CategoryType?>(null) }
     var cateSelected by remember { mutableStateOf<String?>(null) }
 
-    LaunchedEffect(monthSelected, typeSelected, cateSelected) {
+    LaunchedEffect(monthSelected) {
         val monthNumber = months.indexOf(monthSelected) + 1
         processIntent(TransactionListIntent.LoadTransactions(monthNumber))
+    }
+
+    LaunchedEffect(typeSelected, cateSelected) {
+        processIntent(TransactionListIntent.FilterTransactions(typeSelected, cateSelected))
     }
     Box(
         modifier = Modifier
@@ -105,7 +113,7 @@ fun TransactionListScreenContent(
             .background(CBMoneyColors.BackGround.BackgroundPrimary)
             .statusBarsPadding()
             .padding(horizontal = Spacing.md)
-    ){
+    ) {
 
         Column(
             modifier = Modifier
@@ -178,7 +186,7 @@ fun TransactionListScreenContent(
                     items = uiState.mapCategory.keys.toList(),
                     selected = typeSelected,
                     itemLabel = {
-                        when(it){
+                        when (it) {
                             CategoryType.EXPENSE -> stringResource(R.string.str_expense)
                             CategoryType.INCOME -> stringResource(R.string.str_income)
                             else -> stringResource(R.string.str_type)
@@ -186,7 +194,10 @@ fun TransactionListScreenContent(
 
                     },
                     onSelected = {
-                        typeSelected = it
+                        if (typeSelected != it) {
+                            typeSelected = it
+                            cateSelected = null
+                        }
                     }
                 )
             }
@@ -196,9 +207,9 @@ fun TransactionListScreenContent(
                 verticalArrangement = Arrangement.spacedBy(Spacing.sm),
             ) {
                 uiState.transactions.forEach { (date, details) ->
-                    item {
+                    item(key = "date-$date") {
                         Text(
-                            text = date.toRelativeDateGroup(context),
+                            text = date.toRelativeDateGroup(context).uppercase(),
                             style = CBMoneyTypography.Body.Medium.Bold,
                             modifier = Modifier.padding(vertical = Spacing.xs)
                         )
@@ -211,32 +222,84 @@ fun TransactionListScreenContent(
                             it.transaction,
                             it.categoryName,
                             it.categoryIcon,
-                            it.iconColor
+                            it.iconColor,
+                            it.transaction.date
                         )
                     }
                 }
             }
+            if (uiState.transactions.isEmpty()){
+                EmptyTransaction()
+            }
         }
-        IconButton(
-            onClick = navigateToAddTransaction,
-            modifier = Modifier
+        Box(
+            Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp),
-            shape = CircleShape,
-            colors = androidx.compose.material3.IconButtonDefaults.iconButtonColors(
-                containerColor = CBMoneyColors.Primary.Primary,
-                contentColor = CBMoneyColors.White
-            )
         ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = null,
+            IconButton(
+                onClick = navigateToAddTransaction,
                 modifier = Modifier
+                    .size(48.dp)
+                    .align(Alignment.BottomEnd),
+                shape = CircleShape,
+                colors = androidx.compose.material3.IconButtonDefaults.iconButtonColors(
+                    containerColor = CBMoneyColors.Primary.Primary,
+                    contentColor = CBMoneyColors.White
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null,
+                    modifier = Modifier
+                )
+            }
+        }
+
+    }
+}
+
+@Composable
+fun EmptyTransaction(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ){
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(horizontal = 32.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape)
+                    .background(CBMoneyColors.Primary.Primary.copy(alpha = 0.1f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    modifier = Modifier.size(40.dp),
+                    imageVector = Icons.AutoMirrored.Filled.ReceiptLong,
+                    contentDescription = null,
+                    tint = CBMoneyColors.Primary.Primary
+                )
+            }
+            Spacer(Modifier.height(24.dp))
+            Text(
+                text = stringResource(R.string.str_no_transactions),
+                style = CBMoneyTypography.Title.Medium.Bold,
+                color = CBMoneyColors.Text.TextPrimary
+            )
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.str_empty_transaction_body),
+                style = CBMoneyTypography.Body.Medium.Regular,
+                color = CBMoneyColors.Text.TextTertiary,
+                textAlign = TextAlign.Center
             )
         }
     }
 }
-
 @SuppressLint("ViewModelConstructorInComposable")
 @Preview
 @Composable

@@ -28,6 +28,7 @@ import com.cbmoney.presentation.theme.CBMoneyColors
 import com.cbmoney.presentation.theme.CBMoneyShapes
 import com.cbmoney.presentation.theme.CBMoneyTypography
 import com.cbmoney.presentation.theme.Spacing
+import com.cbmoney.utils.DateUtils
 import com.cbmoney.utils.exts.formatMoney
 import com.cbmoney.utils.exts.shadowCustom
 import com.cbmoney.utils.fromPeriod
@@ -37,7 +38,8 @@ fun TransactionItem(
     transaction: Transaction,
     categoryName: String?,
     categoryIcon: String?,
-    iconColor: String?
+    iconColor: String?,
+    date: Long
 ) {
     if (categoryIcon.isNullOrBlank() || categoryName.isNullOrBlank() || iconColor.isNullOrBlank()) return
     val color = Color(iconColor.toColorInt())
@@ -73,7 +75,7 @@ fun TransactionItem(
                 style = CBMoneyTypography.Body.Medium.Medium
             )
             Text(
-                text = categoryName,
+                text = "${DateUtils.formatDateToHour(date)} • $categoryName",
                 style  = CBMoneyTypography.Body.Small.Regular,
                 color = CBMoneyColors.Gray.Gray5)
         }

@@ -23,7 +23,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -52,7 +53,6 @@ android {
 dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
 
-    implementation("me.nikhilchaudhari:composeNeumorphism:1.0.0-alpha02")
 
     //firebase
     implementation(platform("com.google.firebase:firebase-bom:34.8.0"))

@@ -1,8 +1,6 @@
 package com.cbmoney.utils
 
 import android.icu.util.Calendar
-import android.os.Build
-import androidx.annotation.RequiresApi
 import java.time.Instant
 import java.time.LocalDate
 import java.time.YearMonth
@@ -76,5 +74,10 @@ object DateUtils {
                 dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
             }
         }
+    }
+    fun formatDateToHour(timeMillis: Long): String {
+        val zoneId = ZoneId.systemDefault()
+        val dateTime = Instant.ofEpochMilli(timeMillis).atZone(zoneId)
+        return "${dateTime.format(DateTimeFormatter.ofPattern("HH:mm"))}"
     }
 }
